@@ -4,7 +4,8 @@ from .models import Scripts, Purpose, Size, Institute, Orderer
 class ScriptSerializer(serializers.ModelSerializer):
     class Meta:
         model = Scripts
-        fields = ["id", "title", "entry_date", "orderer", "institute", "created_at"]
+        fields = ["id", "title", "entry_date", "created_at"]
+
     def create(self, validated_data):
         """
         Untuk shell

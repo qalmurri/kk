@@ -6,8 +6,9 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.auth",
-    "rest_framework",          
-    'scripts'
+    "rest_framework",         
+    "rest_framework.authtoken",
+    "scripts"
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
