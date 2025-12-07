@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vw-*r6!19!*7tg9@k(&h&h4as*!6kietj1jxr-tu)&(vwp*2es'
 DEBUG = True
@@ -8,6 +9,7 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "rest_framework",         
     "rest_framework.authtoken",
+    'rest_framework_simplejwt.token_blacklist',
     "scripts"
 ]
 MIDDLEWARE = [
@@ -28,8 +30,16 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework.parsers.JSONParser",
     ],
-    # Tidak pakai Session / CSRF
     "UNAUTHENTICATED_USER": None,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # Menggunakan JWT untuk semua API yang dilindungi
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # Anda mungkin juga ingin menyertakan SessionAuthentication untuk sesi browser
+        'rest_framework.authentication.SessionAuthentication', 
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -43,3 +53,26 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080"
 ]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+SIMPLE_JWT = {
+    # Access token harus berumur pendek (misalnya, 5 menit)
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5), 
+    
+    # Refresh token berumur panjang (misalnya, 1 hari)
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    
+    # URL untuk mendapatkan token baru (refresh) dari refresh token
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+
+    # Mengatur algoritma dan kunci signing
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY, 
+    'VERIFYING_KEY': None,
+    
+    # Header yang digunakan untuk otentikasi (Penting: 'Bearer')
+    'AUTH_HEADER_TYPES': ('Bearer',), 
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+}

@@ -13,6 +13,7 @@ class MainController(QObject):
         self.api_client = api_client
         self.auth_manager = auth_manager 
         self.settings = QSettings()
+        print(f"DEBUG: QSettings!!!!!!!!!!!!!!!!!!!! path: {self.settings.fileName()}")
         
         self.model = ItemTableModel()
         self.view = MainWindow()

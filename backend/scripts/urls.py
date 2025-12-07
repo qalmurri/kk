@@ -1,14 +1,17 @@
 from django.urls import path
 from .views.scripts import ScriptsView
-from .views.authentification import LoginView
 from .views.purpose import PurposeCreateView, PurposeByCodeView, PurposeUpdateView, PurposeAllView
 from .views.size import SizeCreatedView, SizeAllView, SizeUpdateView
 from .views.orderer import OrdererAllView, OrdererCreatedView, OrdererUpdateView
 from .views.institute import InstituteAllView, InstituteCreatedView, InstituteUpdateView
+from .views.logout import LogoutView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
 urlpatterns = [
-    path("login/", LoginView.as_view()), #done
+    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('logout/', LogoutView.as_view(), name='auth_logout'),
     path("scripts/", ScriptsView.as_view()),
     path("purpose/", PurposeCreateView.as_view()), #done
     path("purpose/all/", PurposeAllView.as_view()), #done
