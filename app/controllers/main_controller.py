@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, Signal, QSize
+from PySide6.QtCore import QObject, Signal, QSize, QModelIndex
 from core.api_client import APIClient
 from core.auth_manager import AuthManager 
 from views.ui_main_window import MainWindow
@@ -23,10 +23,17 @@ class MainController(QObject):
         self.view.btn_edit.clicked.connect(self.handle_edit_item)
         self.view.btn_delete.clicked.connect(self.handle_delete_item)
         
-        # 2. KONEKSI SINYAL DARI MENU BAR
+# Aksi File/Refresh/Logout
         self.view.action_refresh.triggered.connect(self.fetch_data)
         self.view.action_logout.triggered.connect(self.auth_manager.logout_user)
-        self.view.action_exit.triggered.connect(self.view.close) # Menutup jendela
+        self.view.action_exit.triggered.connect(self.view.close)
+
+        # Aksi CRUD dari Toolbar/Menu Data
+        self.view.action_add.triggered.connect(self.handle_add_item)
+        self.view.action_edit.triggered.connect(self.handle_edit_item)
+        self.view.action_delete.triggered.connect(self.handle_delete_item)
+
+        self.view.table_view.doubleClicked.connect(self.handle_double_click)
 
 # --- KONEKSI SINYAL INFO (BARU) ---
         self.view.action_info_token.triggered.connect(self.show_token_info)
@@ -97,9 +104,11 @@ class MainController(QObject):
         # Di sini akan ada logika menampilkan form dialog baru dan memanggil api_client.create_item()
         pass
 
-    def handle_edit_item(self):
-        # Ambil baris yang sedang dipilih
+    def handle_edit_item(self): 
+        # Ambil indeks baris yang sedang dipilih
         selected_indexes = self.view.table_view.selectionModel().selectedRows()
+        
+        # Karena kita set SelectionMode ke SingleSelection, kita hanya perlu mengecek yang pertama
         if not selected_indexes:
             QMessageBox.warning(self.view, "Peringatan", "Pilih baris yang ingin diedit.")
             return
@@ -108,10 +117,9 @@ class MainController(QObject):
         item_data = self.model.get_item_at_row(row)
         
         if item_data:
-            print(f"Mengedit item ID: {item_data['id']}")
-            # Di sini akan ada logika menampilkan form dialog dengan data yang sudah terisi
-            # dan memanggil api_client.update_item(item_data['id'], new_data)
-        pass
+            print(f"Mengedit item ID: {item_data['id']} dan Judul: {item_data['title']}")
+            # Lanjutkan dengan logika membuka form edit
+        # ...
 
     def handle_delete_item(self):
         selected_indexes = self.view.table_view.selectionModel().selectedRows()
@@ -171,3 +179,40 @@ class MainController(QObject):
             "Backend API: Django Rest Framework."
         )
         QMessageBox.about(self.view, "Tentang Aplikasi", about_text)
+
+    def handle_double_click(self, index: QModelIndex):
+            """
+            Menangani event double-click pada baris tabel.
+            Menampilkan detail data baris tersebut dalam QMessageBox.
+            """
+            # index yang diterima adalah QModelIndex dari sel yang diklik
+            row = index.row() 
+
+            # Ambil seluruh data objek (dictionary) dari model pada baris tersebut
+            item_data = self.model.get_item_at_row(row)
+
+            if item_data:
+                # Format data dictionary menjadi string yang mudah dibaca
+                detail_text = ""
+                for key, value in item_data.items():
+                    # Ubah format timestamp/entry_date menjadi string yang ramah pengguna jika perlu
+                    if key == 'created_at':
+                        import datetime
+                        # Asumsi created_at adalah Unix Timestamp (integer)
+                        try:
+                            value_str = datetime.datetime.fromtimestamp(value).strftime('%Y-%m-%d %H:%M:%S')
+                        except (TypeError, ValueError):
+                             value_str = str(value)
+                    else:
+                        value_str = str(value)
+
+                    detail_text += f"**{key.replace('_', ' ').title()}:** {value_str}\n"
+
+                # Tampilkan detail dalam kotak pesan
+                QMessageBox.information(
+                    self.view, 
+                    f"Detail Skrip ID: {item_data.get('id', 'N/A')}", 
+                    detail_text
+                )
+            else:
+                QMessageBox.warning(self.view, "Error", "Gagal mengambil detail data baris ini.")
