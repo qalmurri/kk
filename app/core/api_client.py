@@ -85,3 +85,28 @@ class APIClient:
     def create_item(self, data):
         pass
     # ...
+# core/api_client.py (Tambahkan endpoint ini)
+
+    def logout(self):
+        """Panggil endpoint logout di server Django."""
+        url = f"{self.BASE_URL}/logout/"
+        
+        try:
+            # Gunakan header yang sudah disetel oleh set_token
+            response = self.session.post(url, timeout=5)
+            
+            if response.status_code in [200, 204]:
+                print("Logout berhasil di server.")
+                return True
+            else:
+                print(f"Logout gagal di server, status: {response.status_code}")
+                # Tetap anggap logout lokal berhasil meskipun server gagal
+                return True 
+                
+        except requests.exceptions.RequestException as e:
+            print(f"Error koneksi saat logout: {e}")
+            return True # Tetap logout lokal agar user bisa mencoba lagi
+
+# Tambahkan get_token di APIClient
+    def get_token(self):
+        return self._token

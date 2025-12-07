@@ -20,14 +20,19 @@ class LoginController(QObject):
     def handle_login(self):
         username = self.view.input_username.text()
         password = self.view.input_password.text()
+
+        if not username or not password:
+            self.view.label_status.setText("Username dan password wajib diisi.")
+            return
         
         self.view.label_status.setText("Sedang mencoba login...")
         
         token = self.api_client.login(username, password)
         
         if token:
-            # Panggil AuthManager untuk menyelesaikan proses otentikasi
-            self.auth_manager.authenticate_user(token) 
-            # AuthManager akan memancarkan sinyal logged_in yang ditangkap oleh main.py
+            self.auth_manager.authenticate_user(token)
+            self.view.input_username.clear()
+            self.view.input_password.clear()
+        # ...
         else:
             self.view.label_status.setText("Login Gagal. Cek kredensial (user/pass).")

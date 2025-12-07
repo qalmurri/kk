@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, Signal, QSize, QModelIndex
+from PySide6.QtCore import QObject, Signal, QSize, QModelIndex, QSettings
 from core.api_client import APIClient
 from core.auth_manager import AuthManager 
 from views.ui_main_window import MainWindow
@@ -12,10 +12,13 @@ class MainController(QObject):
         super().__init__()
         self.api_client = api_client
         self.auth_manager = auth_manager 
+        self.settings = QSettings()
         
         self.model = ItemTableModel()
         self.view = MainWindow()
         self.view.table_view.setModel(self.model)
+
+        self.load_column_widths()
 
         # 1. KONEKSI SINYAL DARI TOMBOL (CRUD Bawah)
         self.view.btn_refresh.clicked.connect(self.fetch_data)
@@ -216,3 +219,36 @@ class MainController(QObject):
                 )
             else:
                 QMessageBox.warning(self.view, "Error", "Gagal mengambil detail data baris ini.")
+
+    def save_column_widths(self):
+        """Menyimpan lebar setiap kolom tabel ke QSettings."""
+        
+        table_view = self.view.table_view
+        header = table_view.horizontalHeader()
+        
+        # Iterasi melalui setiap bagian (kolom) header
+        for i in range(header.count()):
+            key = f"main_dashboard/column_width_{i}"
+            # sectionSize(i) mengembalikan lebar kolom pada indeks i
+            self.settings.setValue(key, header.sectionSize(i))
+        
+        print("Pengaturan lebar kolom telah disimpan.")
+
+    def load_column_widths(self):
+        """Memuat lebar setiap kolom tabel dari QSettings dan menerapkannya."""
+        
+        table_view = self.view.table_view
+        header = table_view.horizontalHeader()
+        
+        # Iterasi melalui setiap bagian (kolom) header
+        for i in range(header.count()):
+            key = f"main_dashboard/column_width_{i}"
+            
+            # Memuat nilai. Jika tidak ada, gunakan default (misalnya 150)
+            # type=int memastikan nilai dikembalikan sebagai integer
+            width = self.settings.value(key, 150, type=int) 
+            
+            # Terapkan lebar kolom
+            header.resizeSection(i, width)
+        
+        print("Pengaturan lebar kolom telah dimuat.")
