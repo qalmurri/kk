@@ -1,0 +1,62 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from scripts.repositories import PurposeRepository
+from scripts.serializers import PurposeSerializer, PurposeAllSerializer
+from scripts.utils import current_timestamp
+
+class PurposeByCodeView(APIView):
+    def get(self, request, code):
+        obj = PurposeRepository.get_by_code(code)
+        if not obj:
+            return Response({
+                "success": False,
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = PurposeSerializer(obj, many=True)
+        return Response({
+            "data": serializer.data
+        }, status=status.HTTP_200_OK)
+
+class PurposeAllView(APIView):
+    def get(self, request):
+        queryset = PurposeRepository.list_all()
+        serializer = PurposeAllSerializer(queryset, many=True)
+
+        return Response({
+            "data": serializer.data
+        }, status=status.HTTP_200_OK)
+
+class PurposeCreateView(APIView):
+    def post(self, request):
+        code = request.data.get("code")
+        purpose = request.data.get("purpose")
+        if code is None or purpose is None:
+            return Response({
+                "success": False,
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        PurposeRepository.create(
+            code=code,
+            purpose=purpose
+        )
+        return Response({
+            "success": True,
+        }, status=status.HTTP_201_CREATED)
+    
+class PurposeUpdateView(APIView):
+    def patch(self, request, id):
+        obj = PurposeRepository.get_by_id(id)
+        if not obj:
+            return Response({
+                "success": False,
+            }, status=status.HTTP_404_NOT_FOUND)
+        purpose = request.data.get("purpose")
+        PurposeRepository.update(
+            id=id,
+            purpose=purpose,
+            updated_at=current_timestamp()
+        )
+        return Response({
+            "success": True,
+        }, status=status.HTTP_200_OK)
