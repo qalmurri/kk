@@ -13,37 +13,41 @@ class AuthManager(QObject):
         self._api_client = api_client
         self._is_authenticated = False
         self._current_user_data = {}
+        print("AuthManager: Instance diinisialisasi.")
 
     def authenticate_user(self, access_token: str, refresh_token: str, user_data: dict = None):
         """
-        Dipanggil setelah login berhasil. Mengatur token dan status.
+        Dipanggil setelah login berhasil atau auto-login sukses. Mengatur token dan status.
         """
-        self._api_client.set_access_token(access_token)
-        self._api_client.set_refresh_token(refresh_token)
+        print("AuthManager: Mengatur token dan status autentikasi.")
+        self._api_client.set_token(access_token, refresh_token)
 
         settings = QSettings()
-        settings.setValue("auth/refresh_token", refresh_token) # Gunakan key yang lebih spesifik
-        settings.sync() # Paksa penulisan
+        settings.setValue("auth/refresh_token", refresh_token)
+        settings.sync()
 
         self._is_authenticated = True
         self._current_user_data = user_data if user_data else {}
         self.logged_in.emit()
+        print("AuthManager: Sinyal logged_in dikirim.")
 
     def logout_user(self):
         """
         Melakukan logout (memanggil API logout Django) dan membersihkan status.
         """
+        print("AuthManager: Memulai proses logout...")
         self._api_client.logout() 
 
-        self._api_client.set_access_token(None)
-        self._api_client.set_refresh_token(None)
+        self._api_client.set_token(None, None)
 
         self._is_authenticated = False
         self._current_user_data = {}
 
         settings = QSettings()
         settings.remove("auth/refresh_token")
+        print("AuthManager: Token dihapus dari QSettings.")
         self.logged_out.emit()
+        print("AuthManager: Sinyal logged_out dikirim.")
         
     def is_authenticated(self):
         """Memeriksa apakah user saat ini sudah login."""

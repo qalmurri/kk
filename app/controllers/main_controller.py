@@ -6,14 +6,13 @@ from models.item_model import ItemTableModel
 from PySide6.QtWidgets import QMessageBox
 
 class MainController(QObject):
-    # ... (kode lainnya) ...
     
     def __init__(self, api_client: APIClient, auth_manager: AuthManager):
         super().__init__()
         self.api_client = api_client
         self.auth_manager = auth_manager 
         self.settings = QSettings()
-        print(f"QSettings path: {self.settings.fileName()}")
+        print("MainController: Instance diinisialisasi.")
         
         self.model = ItemTableModel()
         self.view = MainWindow()
@@ -21,31 +20,25 @@ class MainController(QObject):
 
         self.load_column_widths()
 
-        # 1. KONEKSI SINYAL DARI TOMBOL (CRUD Bawah)
         self.view.btn_refresh.clicked.connect(self.fetch_data)
         self.view.btn_add.clicked.connect(self.handle_add_item)
         self.view.btn_edit.clicked.connect(self.handle_edit_item)
         self.view.btn_delete.clicked.connect(self.handle_delete_item)
         
-# Aksi File/Refresh/Logout
         self.view.action_refresh.triggered.connect(self.fetch_data)
         self.view.action_logout.triggered.connect(self.auth_manager.logout_user)
         self.view.action_exit.triggered.connect(self.view.close)
 
-        # Aksi CRUD dari Toolbar/Menu Data
         self.view.action_add.triggered.connect(self.handle_add_item)
         self.view.action_edit.triggered.connect(self.handle_edit_item)
         self.view.action_delete.triggered.connect(self.handle_delete_item)
 
         self.view.table_view.doubleClicked.connect(self.handle_double_click)
 
-# --- KONEKSI SINYAL INFO (BARU) ---
         self.view.action_info_token.triggered.connect(self.show_token_info)
         self.view.action_info_user.triggered.connect(self.show_user_info)
         self.view.action_about.triggered.connect(self.show_about_info)
 
-        # 3. KONEKSI SINYAL DARI CONTEXT MENU
-        # Kita menghubungkan sinyal saat Context Menu ditampilkan
         self.view.table_view.customContextMenuRequested.connect(self._connect_context_menu_actions)
         
         self.view.table_view.horizontalHeader().setStretchLastSection(True)
@@ -55,80 +48,65 @@ class MainController(QObject):
     def _connect_context_menu_actions(self, pos):
         """
         Menghubungkan aksi Context Menu ke controller saat menu dipanggil.
-        Ini memastikan bahwa aksi selalu mengambil data yang benar.
         """
         index = self.view.table_view.indexAt(pos)
         
-        # Hanya menghubungkan jika item valid
         if index.isValid():
-            # Hapus koneksi sebelumnya untuk menghindari koneksi berulang
             try:
                 self.view.action_table_edit.triggered.disconnect()
                 self.view.action_table_delete.triggered.disconnect()
             except RuntimeError:
-                pass # Abaikan jika belum ada koneksi
+                pass
 
-            # Hubungkan aksi ke metode handler CRUD
             self.view.action_table_edit.triggered.connect(self.handle_context_edit)
             self.view.action_table_delete.triggered.connect(self.handle_context_delete)
         
-        # Memanggil _show_context_menu untuk menampilkan menu
         self.view._show_context_menu(pos)
 
 
-    # --- Metode Handler Khusus Context Menu ---
-    
     def handle_context_edit(self):
         """Memanggil logika edit setelah aksi Context Menu diklik."""
-        # Logika edit di sini harus memastikan baris yang dipilih masih valid
         self.handle_edit_item()
 
     def handle_context_delete(self):
         """Memanggil logika delete setelah aksi Context Menu diklik."""
-        # Logika delete di sini harus memastikan baris yang dipilih masih valid
         self.handle_delete_item()
 
     def fetch_data(self):
         """Mengambil data item dari API dan memperbarui Model."""
-        # APIClient harus sudah memiliki token saat ini dipanggil
-        print("Mengambil data...")
+        print("MainController: Memulai pengambilan data...")
         data = self.api_client.get_items()
         
         if data is not None:
             self.model.update_data(data)
-            print(f"Data berhasil dimuat: {len(data)} baris.")
+            print(f"MainController: Data berhasil dimuat: {len(data)} baris.")
         else:
             QMessageBox.critical(self.view, "Error", "Gagal mengambil data dari server. Mungkin token kedaluwarsa.")
-            # Di sini Anda bisa menambahkan sinyal untuk kembali ke halaman login
-
-    # --- Metode untuk Operasi CRUD ---
+            print("MainController ERROR: Gagal mengambil data. Menampilkan pesan error.")
 
     def handle_add_item(self):
-        print("Tombol Tambah ditekan. Buka form input...")
-        # Di sini akan ada logika menampilkan form dialog baru dan memanggil api_client.create_item()
+        print("MainController: Tombol Tambah ditekan. Buka form input...")
         pass
 
     def handle_edit_item(self): 
-        # Ambil indeks baris yang sedang dipilih
         selected_indexes = self.view.table_view.selectionModel().selectedRows()
         
-        # Karena kita set SelectionMode ke SingleSelection, kita hanya perlu mengecek yang pertama
         if not selected_indexes:
             QMessageBox.warning(self.view, "Peringatan", "Pilih baris yang ingin diedit.")
+            print("MainController WARNING: Edit dibatalkan, tidak ada baris yang dipilih.")
             return
 
         row = selected_indexes[0].row()
         item_data = self.model.get_item_at_row(row)
         
         if item_data:
-            print(f"Mengedit item ID: {item_data['id']} dan Judul: {item_data['title']}")
-            # Lanjutkan dengan logika membuka form edit
-        # ...
+            print(f"MainController: Mengedit item ID: {item_data.get('id', 'N/A')} dan Judul: {item_data.get('title', 'N/A')}")
 
     def handle_delete_item(self):
         selected_indexes = self.view.table_view.selectionModel().selectedRows()
         if not selected_indexes:
             QMessageBox.warning(self.view, "Peringatan", "Pilih baris yang ingin dihapus.")
+            print("MainController WARNING: Delete dibatalkan, tidak ada baris yang dipilih.")
             return
 
         row = selected_indexes[0].row()
@@ -140,20 +118,21 @@ class MainController(QObject):
                 QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
             if reply == QMessageBox.Yes:
-                print(f"Menghapus item ID: {item_data['id']}...")
-                # Di sini panggil: success = self.api_client.delete_item(item_data['id'])
-                # if success: self.fetch_data() # Muat ulang data
+                print(f"MainController: Menghapus item ID: {item_data['id']}...")
+                print("MainController: Logic delete API akan dipanggil di sini.")
         pass
 
     def show_token_info(self):
         """Menampilkan token aktif saat ini."""
-        token = self.api_client._token # Akses langsung ke atribut _token di APIClient
+        token = self.api_client.get_token()
         
         if token:
-            info = f"Token Aktif:\n\n{token[:10]}...{token[-5:]}" # Menampilkan sebagian token
+            info = f"Token Aktif:\n\n{token[:10]}...{token[-5:]}"
             QMessageBox.information(self.view, "Info Token", info)
+            print("MainController: Menampilkan Token Info.")
         else:
             QMessageBox.warning(self.view, "Info Token", "Tidak ada token aktif.")
+            print("MainController WARNING: Menampilkan Info Token: Tidak ada token.")
 
     def show_user_info(self):
         """Menampilkan data user yang sedang login."""
@@ -162,16 +141,16 @@ class MainController(QObject):
         if self.auth_manager.is_authenticated():
             info = "Status: Login Berhasil\n"
             if user_data:
-                 # Jika server Django Anda mengembalikan data user, tampilkan di sini
-                 info += f"Username: {user_data.get('username', 'N/A')}\n"
-                 info += f"ID: {user_data.get('id', 'N/A')}"
+                info += f"Username: {user_data.get('username', 'N/A')}\n"
+                info += f"ID: {user_data.get('id', 'N/A')}"
             else:
-                 # Jika server login hanya mengembalikan token, tampilkan ini
-                 info += "Data user belum dimuat. Hanya token yang tersedia."
-                 
+                info += "Data user belum dimuat. Hanya token yang tersedia."
+                
             QMessageBox.information(self.view, "Info User Login", info)
+            print("MainController: Menampilkan User Info.")
         else:
             QMessageBox.warning(self.view, "Info User Login", "Anda belum login.")
+            print("MainController WARNING: Menampilkan User Info: Belum login.")
 
     def show_about_info(self):
         """Menampilkan informasi tentang aplikasi."""
@@ -183,43 +162,39 @@ class MainController(QObject):
             "Backend API: Django Rest Framework."
         )
         QMessageBox.about(self.view, "Tentang Aplikasi", about_text)
+        print("MainController: Menampilkan About Info.")
 
     def handle_double_click(self, index: QModelIndex):
-            """
-            Menangani event double-click pada baris tabel.
-            Menampilkan detail data baris tersebut dalam QMessageBox.
-            """
-            # index yang diterima adalah QModelIndex dari sel yang diklik
-            row = index.row() 
+        """
+        Menangani event double-click pada baris tabel.
+        Menampilkan detail data baris tersebut dalam QMessageBox.
+        """
+        row = index.row() 
+        item_data = self.model.get_item_at_row(row)
 
-            # Ambil seluruh data objek (dictionary) dari model pada baris tersebut
-            item_data = self.model.get_item_at_row(row)
-
-            if item_data:
-                # Format data dictionary menjadi string yang mudah dibaca
-                detail_text = ""
-                for key, value in item_data.items():
-                    # Ubah format timestamp/entry_date menjadi string yang ramah pengguna jika perlu
-                    if key == 'created_at':
-                        import datetime
-                        # Asumsi created_at adalah Unix Timestamp (integer)
-                        try:
-                            value_str = datetime.datetime.fromtimestamp(value).strftime('%Y-%m-%d %H:%M:%S')
-                        except (TypeError, ValueError):
-                             value_str = str(value)
-                    else:
+        if item_data:
+            print(f"MainController: Double-click pada item ID: {item_data.get('id', 'N/A')}. Memuat detail...")
+            detail_text = ""
+            for key, value in item_data.items():
+                if key == 'created_at':
+                    import datetime
+                    try:
+                        value_str = datetime.datetime.fromtimestamp(value).strftime('%Y-%m-%d %H:%M:%S')
+                    except (TypeError, ValueError):
                         value_str = str(value)
+                else:
+                    value_str = str(value)
 
-                    detail_text += f"**{key.replace('_', ' ').title()}:** {value_str}\n"
+                detail_text += f"**{key.replace('_', ' ').title()}:** {value_str}\n"
 
-                # Tampilkan detail dalam kotak pesan
-                QMessageBox.information(
-                    self.view, 
-                    f"Detail Skrip ID: {item_data.get('id', 'N/A')}", 
-                    detail_text
-                )
-            else:
-                QMessageBox.warning(self.view, "Error", "Gagal mengambil detail data baris ini.")
+            QMessageBox.information(
+                self.view, 
+                f"Detail Skrip ID: {item_data.get('id', 'N/A')}", 
+                detail_text
+            )
+        else:
+            QMessageBox.warning(self.view, "Error", "Gagal mengambil detail data baris ini.")
+            print("MainController ERROR: Double-click gagal memuat detail data.")
 
     def save_column_widths(self):
         """Menyimpan lebar setiap kolom tabel ke QSettings."""
@@ -227,13 +202,11 @@ class MainController(QObject):
         table_view = self.view.table_view
         header = table_view.horizontalHeader()
         
-        # Iterasi melalui setiap bagian (kolom) header
         for i in range(header.count()):
             key = f"main_dashboard/column_width_{i}"
-            # sectionSize(i) mengembalikan lebar kolom pada indeks i
             self.settings.setValue(key, header.sectionSize(i))
         
-        print("Pengaturan lebar kolom telah disimpan.")
+        print("MainController: Pengaturan lebar kolom telah disimpan.")
 
     def load_column_widths(self):
         """Memuat lebar setiap kolom tabel dari QSettings dan menerapkannya."""
@@ -241,15 +214,11 @@ class MainController(QObject):
         table_view = self.view.table_view
         header = table_view.horizontalHeader()
         
-        # Iterasi melalui setiap bagian (kolom) header
         for i in range(header.count()):
             key = f"main_dashboard/column_width_{i}"
             
-            # Memuat nilai. Jika tidak ada, gunakan default (misalnya 150)
-            # type=int memastikan nilai dikembalikan sebagai integer
             width = self.settings.value(key, 150, type=int) 
             
-            # Terapkan lebar kolom
             header.resizeSection(i, width)
         
-        print("Load pengaturan lebar kolom.")
+        print("MainController: Load pengaturan lebar kolom.")
