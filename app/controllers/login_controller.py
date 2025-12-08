@@ -27,12 +27,19 @@ class LoginController(QObject):
         
         self.view.label_status.setText("Sedang mencoba login...")
         
-        token = self.api_client.login(username, password)
-        
-        if token:
-            self.auth_manager.authenticate_user(token)
-            self.view.input_username.clear()
-            self.view.input_password.clear()
-        # ...
+        access_token = self.api_client.login(username, password)
+        if access_token:
+            refresh_token = self.api_client.get_refresh_token()
+            if refresh_token:
+                self.auth_manager.authenticate_user(
+                    access_token=access_token, 
+                    refresh_token=refresh_token
+                )
+                self.view.input_username.clear()
+                self.view.input_password.clear()
+                self.login_successful.emit() # Sinyal login sukses
+            else:
+                 # Ini seharusnya tidak terjadi jika login API berhasil
+                self.view.label_status.setText("Login Gagal. Server tidak mengirim Refresh Token.")
         else:
-            self.view.label_status.setText("Login Gagal. Cek kredensial (user/pass).")
+            self.view.label_status.setText("Login Gagal. Cek kredensial (user/pass) atau koneksi server.")

@@ -13,7 +13,7 @@ class MainController(QObject):
         self.api_client = api_client
         self.auth_manager = auth_manager 
         self.settings = QSettings()
-        print(f"DEBUG: QSettings!!!!!!!!!!!!!!!!!!!! path: {self.settings.fileName()}")
+        print(f"QSettings path: {self.settings.fileName()}")
         
         self.model = ItemTableModel()
         self.view = MainWindow()
@@ -252,4 +252,4 @@ class MainController(QObject):
             # Terapkan lebar kolom
             header.resizeSection(i, width)
         
-        print("Pengaturan lebar kolom telah dimuat.")
+        print("Load pengaturan lebar kolom.")

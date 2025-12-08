@@ -14,11 +14,17 @@ class AuthManager(QObject):
         self._is_authenticated = False
         self._current_user_data = {}
 
-    def authenticate_user(self, token: str, user_data: dict = None):
+    def authenticate_user(self, access_token: str, refresh_token: str, user_data: dict = None):
         """
         Dipanggil setelah login berhasil. Mengatur token dan status.
         """
-        self._api_client.set_token(token)
+        self._api_client.set_access_token(access_token)
+        self._api_client.set_refresh_token(refresh_token)
+
+        settings = QSettings()
+        settings.setValue("auth/refresh_token", refresh_token) # Gunakan key yang lebih spesifik
+        settings.sync() # Paksa penulisan
+
         self._is_authenticated = True
         self._current_user_data = user_data if user_data else {}
         self.logged_in.emit()
@@ -28,11 +34,15 @@ class AuthManager(QObject):
         Melakukan logout (memanggil API logout Django) dan membersihkan status.
         """
         self._api_client.logout() 
-        self._api_client.set_token(None)
+
+        self._api_client.set_access_token(None)
+        self._api_client.set_refresh_token(None)
+
         self._is_authenticated = False
         self._current_user_data = {}
+
         settings = QSettings()
-        settings.remove("auth/token")
+        settings.remove("auth/refresh_token")
         self.logged_out.emit()
         
     def is_authenticated(self):
