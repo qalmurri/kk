@@ -13,23 +13,42 @@ class AppMainWindow(QMainWindow):
         super().__init__()
         self.settings = settings
         self.main_controller = main_controller
-        self.setWindowTitle("Enterprise App PySide6")
+        self.setWindowTitle("KK")
         self.setCentralWidget(self.main_controller.view) 
         self.load_settings()
         print("AppMainWindow: Jendela Utama diinisialisasi dan ditampilkan.")
 
     def load_settings(self):
-        """Memuat ukuran dan posisi jendela terakhir."""
-        width = self.settings.value("main/window_width", 850, type=int) 
-        height = self.settings.value("main/window_height", 650, type=int)
-        self.resize(width, height)
-        print(f"AppMainWindow: Memuat ukuran jendela: {width}x{height}.")
+        """Memuat ukuran, posisi, dan status jendela (normal/maximized) terakhir."""
+        
+        # --- LOGIKA LAMA (Hanya resize) ---
+        # width = self.settings.value("main/window_width", 850, type=int) 
+        # height = self.settings.value("main/window_height", 650, type=int)
+        # self.resize(width, height)
+        
+        # --- LOGIKA BARU (Menggunakan Geometry dan Status Maximize) ---
+        geometry = self.settings.value("main/geometry", None)
+        is_maximized = self.settings.value("main/is_maximized", False, type=bool)
+        
+        if geometry:
+            self.restoreGeometry(geometry)
+            print("AppMainWindow: Memuat posisi dan ukuran jendela dari QSettings.")
+        else:
+             self.resize(850, 650) # Ukuran default jika tidak ada settings
+
+        if is_maximized:
+            self.showMaximized()
+            print("AppMainWindow: Memuat status jendela: Maximized.")
+        else:
+            # Jika tidak maximized, pastikan ia show normal, karena showMaximized() telah dipanggil
+            # Catatan: Kita memanggil .show() di main() nanti, jadi ini aman.
+            pass
 
     def closeEvent(self, event):
         """Dipanggil saat jendela ditutup. Simpan preferensi dan token."""
         print("AppMainWindow: Jendela ditutup. Menyimpan pengaturan...")
-        self.settings.setValue("main/window_width", self.width())
-        self.settings.setValue("main/window_height", self.height())
+        self.settings.setValue("main/geometry", self.saveGeometry())
+        self.settings.setValue("main/is_maximized", self.isMaximized())
 
         api_client = self.main_controller.auth_manager.get_api_client()
         refresh_token = api_client.get_refresh_token()

@@ -7,10 +7,10 @@ class LoginDialog(QDialog):
     """
     def __init__(self, login_widget: QWidget, parent: QWidget = None):
         super().__init__(parent)
-        self.setWindowTitle("Login Aplikasi Enterprise")
+        self.setWindowTitle("Login KK")
         
         # 1. Atur ukuran tetap kecil
-        self.setFixedSize(400, 300) 
+        self.setFixedSize(200, 250) 
         
         # 2. Setup Layout dan Sisipkan LoginWidget
         self.login_widget = login_widget 

@@ -209,6 +209,7 @@ class MainController(QObject):
         
         print("MainController: Pengaturan lebar kolom telah disimpan.")
 
+    # --- Ini sudah dipanggil di __init__ MainController ---
     def load_column_widths(self):
         """Memuat lebar setiap kolom tabel dari QSettings dan menerapkannya."""
         
@@ -218,6 +219,7 @@ class MainController(QObject):
         for i in range(header.count()):
             key = f"main_dashboard/column_width_{i}"
             
+            # Gunakan lebar default (150) jika belum ada
             width = self.settings.value(key, 150, type=int) 
             
             header.resizeSection(i, width)
