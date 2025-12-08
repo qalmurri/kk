@@ -46,17 +46,24 @@ def main():
     QApplication.setApplicationName("EnterpriseApp")
     settings = QSettings() 
     api_client = APIClient()
+
+    saved_base_url = settings.value("app/base_url", None)
+    if saved_base_url:
+        api_client.set_base_url(saved_base_url)
+
     auth_manager = AuthManager(api_client)
     login_controller = LoginController(api_client, auth_manager) 
+
+    if saved_base_url:
+        login_controller.view.input_url.setText(saved_base_url)
+        
     main_controller = MainController(api_client, auth_manager) 
 
     saved_refresh_token = settings.value("auth/refresh_token", None)
     main_window = None
-    if saved_refresh_token:
+
+    if saved_refresh_token and api_client.get_base_url():
         print("Token ditemukan. Mencoba Auto-Login...")
-        
-        # --- PERBAIKAN 4: Coba refresh token untuk mendapatkan Access Token baru ---
-        # Ini adalah otentikasi non-interaktif
         new_access_token = api_client.refresh_access_token(saved_refresh_token)
 
         if new_access_token:
@@ -67,7 +74,6 @@ def main():
                 refresh_token=saved_refresh_token
             )
             print("Auto-Login berhasil menggunakan Refresh Token.")
-
             # Lanjutkan menampilkan Main Window
             main_window = AppMainWindow(settings, main_controller)
             main_window.show()
@@ -77,6 +83,8 @@ def main():
         else:
             print("Auto-Login gagal (Refresh Token expired atau invalid). Memerlukan login manual.")
             settings.remove("auth/refresh_token") # Hapus token yang rusak
+    elif saved_refresh_token and not api_client.get_base_url():
+        print("Gagal Auto-Login: Refresh Token ditemukan, tetapi BASE URL belum pernah disimpan.")
 
     # --- PERBAIKAN 5: Logic Login Manual (Jika Auto-Login Gagal/Tidak Ada Token) ---
     if not main_window:

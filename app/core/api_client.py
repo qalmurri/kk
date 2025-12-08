@@ -1,17 +1,46 @@
 import requests
+import re
 
 class APIClient:
     """Klien HTTP yang menangani komunikasi API dan otentikasi."""
-    BASE_URL = "http://127.0.0.1:8000/" 
-    LOGIN_URL = BASE_URL + "login/"
-    LOGOUT_URL = BASE_URL + "logout/"
-    ITEMS_URL = BASE_URL + "scripts/"
-    REFRESH_URL = BASE_URL + "token/refresh/"
-
     def __init__(self):
         self._access_token = None     # Access token (untuk header 'Bearer')
         self._refresh_token = None    # Refresh token (untuk logout dan refresh)
+        self._base_url = "http://127.0.0.1:8000/" # Nilai default awal
         self.session = requests.Session()
+
+    def set_base_url(self, base_url: str):
+        """Menyetel BASE URL dan memastikan diakhiri dengan slash (/)."""
+        if not base_url.endswith('/'):
+            base_url += '/'
+        self._base_url = base_url
+        print(f"BASE URL diatur ke: {self._base_url}")
+        
+    def get_base_url(self):
+        """Mengambil BASE URL yang sedang aktif."""
+        return self._base_url
+
+    def _get_url(self, endpoint: str):
+        """Helper untuk membuat URL lengkap dari BASE_URL."""
+        # Membersihkan endpoint dari leading slash jika ada
+        endpoint = re.sub(r'^/', '', endpoint) 
+        return f"{self._base_url}{endpoint}"
+
+    @property
+    def LOGIN_URL(self):
+        return self._get_url("login/")
+    
+    @property
+    def LOGOUT_URL(self):
+        return self._get_url("logout/")
+
+    @property
+    def ITEMS_URL(self):
+        return self._get_url("scripts/")
+
+    @property
+    def REFRESH_URL(self):
+        return self._get_url("token/refresh/")
 
     def login(self, username, password):
         """Melakukan permintaan POST untuk mendapatkan token login dari server backend."""
