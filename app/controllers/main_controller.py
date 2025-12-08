@@ -13,6 +13,7 @@ class MainController(QObject):
         self.auth_manager = auth_manager 
         self.settings = QSettings()
         print("MainController: Instance diinisialisasi.")
+        print(f"MainController: QSettings path: {self.settings.fileName()}")
         
         self.model = ItemTableModel()
         self.view = MainWindow()
