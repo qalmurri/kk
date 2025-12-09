@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QTableView, 
-    QPushButton, QMenu, QAbstractItemView, QToolBar, QMenuBar
+    QPushButton, QMenu, QAbstractItemView, QToolBar, QMenuBar, QTabWidget
 )
 from PySide6.QtGui import QAction, QIcon
 from PySide6.QtCore import Qt, QPoint
@@ -23,6 +23,8 @@ class MainWindow(QMainWindow):
 
         # 3. Setup Central Widget (Tabel dan Tombol CRUD)
         self._setup_central_widget()
+
+        self._setup_dashboard_tab()
         
     def _setup_actions(self):
         """Mendefinisikan semua QAction yang akan digunakan di Menu, Toolbar, dan Context Menu."""
@@ -81,39 +83,16 @@ class MainWindow(QMainWindow):
         
     def _setup_central_widget(self):
         """Mengatur Central Widget, QTableView, dan tombol CRUD."""
-        self.central_widget = QWidget()
-        self.setCentralWidget(self.central_widget)
-        main_layout = QVBoxLayout(self.central_widget)
-
-        # 1. Tabel Data (QTableView)
-        self.table_view = QTableView()
-        self.table_view.verticalHeader().hide()
-
-        # Pengaturan Seleksi
-        self.table_view.setSelectionBehavior(QAbstractItemView.SelectRows) # Pilih seluruh baris
-        self.table_view.setSelectionMode(QAbstractItemView.SingleSelection) # Hanya satu baris yang bisa dipilih
-        self.table_view.setMouseTracking(True) 
-
-        # Aktifkan Context Menu
-        self.table_view.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.table_view.customContextMenuRequested.connect(self._show_context_menu)
+        self.tab_widget = QTabWidget() # <<< BUAT QTabWidget
+        self.setCentralWidget(self.tab_widget) # <<< ATUR SEBAGAI CENTRAL WIDGET BARU
         
-        main_layout.addWidget(self.table_view)
+        # 1. Buat Widget Dashboard/Tabel
+        self.dashboard_widget = QWidget()
+        self.tab_widget.addTab(self.dashboard_widget, "Dashboard Data")
 
-        # 2. Kontrol CRUD (Bottom Layout)
-        self.btn_refresh = QPushButton("Refresh Data")
-        self.btn_add = QPushButton("Tambah Baru (Create)")
-        self.btn_edit = QPushButton("Edit (Update)")
-        self.btn_delete = QPushButton("Hapus (Delete)")
-
-        self.crud_layout = QHBoxLayout()
-        self.crud_layout.addWidget(self.btn_refresh)
-        self.crud_layout.addStretch(1) 
-        self.crud_layout.addWidget(self.btn_add)
-        self.crud_layout.addWidget(self.btn_edit)
-        self.crud_layout.addWidget(self.btn_delete)
-        
-        main_layout.addLayout(self.crud_layout)
+        # 2. Widget untuk Fitur Lain (Contoh/Placeholder)
+        self.settings_widget = QWidget()
+        self.tab_widget.addTab(self.settings_widget, "Pengaturan")
 
     def _show_context_menu(self, pos: QPoint):
         """Membuat dan menampilkan Context Menu saat klik kanan di tabel."""
@@ -134,3 +113,41 @@ class MainWindow(QMainWindow):
         
         # Tampilkan menu di posisi kursor
         context_menu.exec(self.table_view.viewport().mapToGlobal(pos))
+
+    def _setup_dashboard_tab(self):
+        """Mengatur layout dan widget spesifik untuk Tab Dashboard (Tabel)."""
+        
+        # Main Layout untuk Dashboard Widget
+        dashboard_layout = QVBoxLayout(self.dashboard_widget)
+
+        # 1. Tabel Data (QTableView)
+        self.table_view = QTableView()
+        self.table_view.verticalHeader().hide()
+
+        # Pengaturan Seleksi (Sama seperti sebelumnya)
+        self.table_view.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_view.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.table_view.setMouseTracking(True) 
+
+        # Aktifkan Context Menu (Sama seperti sebelumnya)
+        self.table_view.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.table_view.customContextMenuRequested.connect(self._show_context_menu)
+        
+        dashboard_layout.addWidget(self.table_view) # Tambahkan tabel ke layout dashboard
+
+        # 2. Kontrol CRUD (Bottom Layout, Sama seperti sebelumnya)
+        self.btn_refresh = QPushButton("Refresh Data")
+        self.btn_add = QPushButton("Tambah Baru (Create)")
+        self.btn_edit = QPushButton("Edit (Update)")
+        self.btn_delete = QPushButton("Hapus (Delete)")
+
+        self.crud_layout = QHBoxLayout()
+        self.crud_layout.addWidget(self.btn_refresh)
+        self.crud_layout.addStretch(1) 
+        self.crud_layout.addWidget(self.btn_add)
+        self.crud_layout.addWidget(self.btn_edit)
+        self.crud_layout.addWidget(self.btn_delete)
+        
+        dashboard_layout.addLayout(self.crud_layout)
+
+        
