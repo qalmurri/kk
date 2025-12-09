@@ -144,35 +144,35 @@ class ScriptsIsbn(TimeStampedModel): #PurposeDone #MigrateDone
         related_name="purpose_ScriptsIsbn"
     )
 
-class ScriptOrderer(TimeStampedModel):
+class ScriptsOrderer(TimeStampedModel):
     scripts = models.ForeignKey(
         Scripts,
         on_delete=models.CASCADE,
-        related_name="scripts_ScriptOrderer"
+        related_name="scripts_ScriptsOrderer"
     )
     orderer = models.ForeignKey(
         Orderer,
         on_delete=models.CASCADE,
-        related_name="orderer_ScriptOrderer"
+        related_name="orderer_ScriptsOrderer"
     )
 
-class ScriptInstitute(TimeStampedModel):
+class ScriptsInstitute(TimeStampedModel):
     scripts = models.ForeignKey(
         Scripts,
         on_delete=models.CASCADE,
-        related_name="scripts_ScriptInstitute"
+        related_name="scripts_ScriptsInstitute"
     )
     institute = models.ForeignKey(
         Institute,
         on_delete=models.CASCADE,
-        related_name="institute_ScriptInstitute"
+        related_name="institute_ScriptsInstitute"
     )
 
 class ScriptsDescription(TimeStampedModel):
     scripts = models.ForeignKey(
         Scripts,
         on_delete=models.CASCADE,
-        related_name="scripts_ScriptDescription"
+        related_name="scripts_ScriptsDescription"
     )
     description = models.CharField(
         max_length=255
@@ -183,28 +183,28 @@ class Size(TimeStampedModel): #MigrateDone
         max_length=255
     )
 
-class ScriptSize(TimeStampedModel):
+class ScriptsSize(TimeStampedModel):
     scripts = models.ForeignKey(
         Scripts,
         on_delete=models.CASCADE,
-        related_name="scripts_ScriptSize"
+        related_name="scripts_ScriptsSize"
     )
     size = models.ForeignKey(
         Size,
         on_delete=models.CASCADE,
-        related_name="size_ScriptSize"
+        related_name="size_ScriptsSize"
     )
 
-class ScriptStatus(TimeStampedModel): #PurposeDone
+class ScriptsStatus(TimeStampedModel): #PurposeDone
     scripts = models.ForeignKey(
         Scripts,
         on_delete=models.CASCADE,
-        related_name="scripts_ScriptStatus"
+        related_name="scripts_ScriptsStatus"
     )
     purpose = models.ForeignKey(
         Purpose,
         on_delete=models.CASCADE,
-        related_name="purpose_ScriptStatus"
+        related_name="purpose_ScriptsStatus"
     )
 
 class CoverStatus(TimeStampedModel): #PurposeDone

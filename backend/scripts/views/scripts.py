@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from scripts.models import Scripts
-from scripts.serializers import ScriptSerializer, ScriptsSerializer
+from scripts.serializers.scripts import ScriptSerializer, ScriptsSerializer
 from rest_framework.permissions import IsAuthenticated
 
 class ScriptsView(APIView):
@@ -10,7 +10,7 @@ class ScriptsView(APIView):
 
     def get(self, request):
         queryset = Scripts.objects.all().prefetch_related(
-            "scripts_ScriptOrderer__orderer__institute"
+            "scripts_ScriptsOrderer__orderer__institute"
         )
 
         serializer = ScriptsSerializer(queryset, many=True)

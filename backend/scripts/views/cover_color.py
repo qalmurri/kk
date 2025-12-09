@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from scripts.repositories import CoverColorRepository
-from scripts.serializers import CoverColorSerializer
+from scripts.serializers.color import CoverColorSerializer
 from scripts.utils import current_timestamp
 
 class CoverColorAllView(APIView):

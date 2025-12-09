@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from scripts.repositories import InstituteRepository
-from scripts.serializers import InstituteSerializer
+from scripts.serializers.institute import InstituteSerializer
 from scripts.utils import current_timestamp
 
 class InstituteAllView(APIView):

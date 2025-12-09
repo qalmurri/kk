@@ -1,7 +1,7 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from .models import Purpose, Institute, Orderer, Scripts, Size, CoverColor
+from .models import Purpose, Institute, Orderer, Scripts, Size, CoverColor, ScriptsOrderer
 
 @receiver(post_migrate)
 def create_default_table(sender, **kwargs):
@@ -126,4 +126,13 @@ def create_default_table(sender, **kwargs):
     for item in color:
         CoverColor.objects.get_or_create(
             color=item
+        )
+
+    cek = [
+        {"scripts": 1, "orderer": 1},
+    ]
+    for item in cek:
+        ScriptsOrderer.objects.get_or_create(
+            scripts_id=item["scripts"],
+            orderer_id=item["orderer"]
         )
