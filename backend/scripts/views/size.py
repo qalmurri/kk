@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from scripts.repositories import SizeRepository
+from scripts.repositories.size import SizeRepository
 from scripts.serializers.size import SizeSerializer
 from scripts.utils import current_timestamp
 

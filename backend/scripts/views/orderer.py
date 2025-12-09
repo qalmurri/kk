@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from scripts.repositories import OrdererRepository
+from scripts.repositories.orderer import OrdererRepository
 from scripts.serializers.orderer import OrdererAllSerializer
 from scripts.utils import current_timestamp
 

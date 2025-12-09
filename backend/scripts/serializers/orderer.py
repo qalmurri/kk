@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from scripts.models import Scripts, Purpose, Size, Institute, Orderer, CoverColor, ScriptsOrderer
+from scripts.models import Orderer, CoverColor, ScriptsOrderer
 from .institute import InstituteSerializer
 
 class OrdererAllSerializer(serializers.ModelSerializer):
