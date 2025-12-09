@@ -50,12 +50,12 @@ class OrdererUpdateView(APIView):
             return Response({
                 "success": False,
             }, status=status.HTTP_404_NOT_FOUND)
-        orderer = request.data.get("orderer")
+        name = request.data.get("name")
         no = request.data.get("no")
         institute = request.data.get("institute")
         OrdererRepository.update(
             id=id,
-            orderer=orderer,
+            name=name,
             no=no,
             institute=institute,
             updated_at=current_timestamp()

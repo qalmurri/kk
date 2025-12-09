@@ -3,7 +3,7 @@ from scripts.models.timestamped import TimeStampedModel
 from scripts.models.institute import Institute
 
 class Orderer(TimeStampedModel): #MigrateDone
-    orderer = models.CharField(
+    name = models.CharField(
         max_length=255
     )
     no = models.IntegerField(

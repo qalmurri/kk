@@ -15,4 +15,4 @@ class OrdererSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Orderer
-        fields = ["id", "orderer", "no", "institute"]
+        fields = ["id", "name", "no", "institute"]

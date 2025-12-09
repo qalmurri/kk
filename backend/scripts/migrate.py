@@ -68,18 +68,19 @@ def create_default_table(sender, **kwargs):
             institute=item
         )
 
-    orderer = [
-        {"orderer": "Orderer 1", "no": 12345678},
-        {"orderer": "Orderer 2", "no": 56498742},
-        {"orderer": "Orderer 3", "no": 32122244},
-        {"orderer": "Orderer 4", "no": 65464556},
-        {"orderer": "Orderer 5", "no": 46545668},
-        {"orderer": "Orderer 6", "no": 98454665},
+    name = [
+        {"name": "Prof. Anjar", "no": 12345678, "institute": 1},
+        {"name": "Prof. Tiwul", "no": 56498742, "institute": 2},
+        {"name": "Prof. Sukiman", "no": 32122244, "institute": 3},
+        {"name": "Prof. Andi", "no": 65464556, "institute": 4},
+        {"name": "Prof. Alam", "no": 46545668, "institute": 5},
+        {"name": "Prof. Sujiwo", "no": 98454665, "institute": 6},
     ]
-    for item in orderer:
+    for item in name:
         Orderer.objects.get_or_create(
-            orderer=item["orderer"],
-            no=item["no"]
+            name=item["name"],
+            no=item["no"],
+            institute_id=item["institute"]
         )
 
     scripts = [
@@ -130,6 +131,7 @@ def create_default_table(sender, **kwargs):
 
     cek = [
         {"scripts": 1, "orderer": 1},
+        {"scripts": 1, "orderer": 3}
     ]
     for item in cek:
         ScriptsOrderer.objects.get_or_create(

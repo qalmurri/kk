@@ -2,9 +2,9 @@ from scripts.models import Orderer
 
 class OrdererRepository:
     @staticmethod
-    def create(orderer: str, no: int) -> Orderer:
+    def create(name: str, no: int) -> Orderer:
         return Orderer.objects.create(
-            orderer=orderer,
+            name=name,
             no=no
         )
 
