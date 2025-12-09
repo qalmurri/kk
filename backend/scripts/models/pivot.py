@@ -1,12 +1,11 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
 from scripts.models.scripts import Scripts
-from scripts.models.institute import Institute
 from scripts.models.orderer import Orderer
 from scripts.models.size import Size
 from scripts.models.purpose import Purpose
 
-class ScriptsOrderer(TimeStampedModel):
+class ScriptsOrderer(TimeStampedModel): 
     scripts = models.ForeignKey(
         Scripts,
         on_delete=models.CASCADE,
@@ -16,18 +15,6 @@ class ScriptsOrderer(TimeStampedModel):
         Orderer,
         on_delete=models.CASCADE,
         related_name="orderer_ScriptsOrderer"
-    )
-
-class ScriptsInstitute(TimeStampedModel):
-    scripts = models.ForeignKey(
-        Scripts,
-        on_delete=models.CASCADE,
-        related_name="scripts_ScriptsInstitute"
-    )
-    institute = models.ForeignKey(
-        Institute,
-        on_delete=models.CASCADE,
-        related_name="institute_ScriptsInstitute"
     )
 
 class ScriptsSize(TimeStampedModel):

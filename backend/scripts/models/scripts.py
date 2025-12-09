@@ -1,6 +1,7 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
 from scripts.models.purpose import Purpose
+from scripts.models.institute import Institute
 
 class Order(TimeStampedModel): #nomer dibuat
     title = models.CharField(
@@ -20,6 +21,13 @@ class Scripts(TimeStampedModel): #MigrateDone
         max_length=255
     )
     entry_date = models.DateField(
+        null=True,
+        blank=True
+    )
+    institute = models.ForeignKey(
+        Institute,
+        on_delete=models.CASCADE,
+        related_name="institute_Scripts",
         null=True,
         blank=True
     )

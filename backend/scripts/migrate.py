@@ -84,18 +84,13 @@ def create_default_table(sender, **kwargs):
         )
 
     scripts = [
-        "Values of Life",
-        "The Power of Core Values",
-        "Values That Shape Us",
-        "Living with Purpose and Values",
-        "Hidden Values",
-        "Values in Motion",
-        "Timeless Values",
-        "The Architecture of Values"
+        {"title": "Values of Life", "institute": 1},
+        {"title": "The Power of Core Values", "institute": 1}
     ]
     for item in scripts:
         Scripts.objects.get_or_create(
-            title=item
+            title=item["title"],
+            institute_id=item["institute"]
         )
 
     size = [
@@ -129,11 +124,11 @@ def create_default_table(sender, **kwargs):
             color=item
         )
 
-    cek = [
+    scriptsorderer = [
         {"scripts": 1, "orderer": 1},
         {"scripts": 1, "orderer": 3}
     ]
-    for item in cek:
+    for item in scriptsorderer:
         ScriptsOrderer.objects.get_or_create(
             scripts_id=item["scripts"],
             orderer_id=item["orderer"]
