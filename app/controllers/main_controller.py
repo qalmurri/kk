@@ -28,7 +28,6 @@ class MainController(QObject):
         
         self.view.action_refresh.triggered.connect(self.fetch_data)
         self.view.action_logout.triggered.connect(self.auth_manager.logout_user)
-        self.view.action_exit.triggered.connect(self.view.close)
 
         self.view.action_add.triggered.connect(self.handle_add_item)
         self.view.action_edit.triggered.connect(self.handle_edit_item)

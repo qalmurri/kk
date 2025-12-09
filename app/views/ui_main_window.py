@@ -30,7 +30,6 @@ class MainWindow(QMainWindow):
         # Aksi File/Sistem
         self.action_refresh = QAction(QIcon.fromTheme("view-refresh"), "Refresh Data", self)
         self.action_logout = QAction(QIcon.fromTheme("system-log-out"), "Logout", self)
-        self.action_exit = QAction(QIcon.fromTheme("application-exit"), "Exit", self)
         
         # Aksi CRUD (Data)
         self.action_add = QAction(QIcon.fromTheme("list-add"), "Tambah Baru...", self)
@@ -51,7 +50,6 @@ class MainWindow(QMainWindow):
         menu_file.addAction(self.action_refresh)
         menu_file.addSeparator()
         menu_file.addAction(self.action_logout)
-        menu_file.addAction(self.action_exit)
 
         # Menu Data (Opsional, untuk menampung CRUD Actions)
         menu_data = menu_bar.addMenu("&Data")

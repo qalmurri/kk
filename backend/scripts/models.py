@@ -62,7 +62,20 @@ class Orderer(TimeStampedModel): #MigrateDone
         blank=True
     )
 
+class Order(TimeStampedModel):
+    title = models.CharField(
+        max_length=255
+    )
+    status = models.BooleanField(default=False)
+
 class Scripts(TimeStampedModel): #MigrateDone
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name="order_Scripts",
+        null=True,
+        blank=True
+    )
     title = models.CharField(
         max_length=255
     )
@@ -70,10 +83,51 @@ class Scripts(TimeStampedModel): #MigrateDone
         null=True,
         blank=True
     )
-    completion_date = models.DateField(
+
+class Completeness(TimeStampedModel):
+    scripts = models.ForeignKey(
+        Scripts,
+        on_delete=models.CASCADE,
+        related_name="scripts_Completeness"
+    )
+    file = models.BooleanField(default=False)
+    editor = models.BooleanField(default=False)
+    photo = models.BooleanField(default=False)
+    preface = models.BooleanField(default=False) #kata pengantar
+    cv = models.BooleanField(default=False)
+    loc = models.BooleanField(default=False) #list of contents / daftar isi
+    synopsis = models.BooleanField(default=False)
+    references = models.BooleanField(default=False) #daftar pustaka
+
+class CoverColor(TimeStampedModel): # nanti ini banyak data, warna 1, warna 2, warna 3, atau lebih
+    covercolor = models.CharField(
+        max_length=255
+    )
+
+class CoverOther(TimeStampedModel):
+    finishing = models.BooleanField(default=False)
+    foil = models.BooleanField(default=False)
+    emboss = models.BooleanField(default=False)
+
+class CoverSpecifications(TimeStampedModel):
+    scripts = models.ForeignKey(
+        Scripts,
+        on_delete=models.CASCADE,
+        related_name="scripts_CoverSpecifications")
+    covercolor = models.ForeignKey(
+        CoverColor,
+        on_delete=models.CASCADE,
+        related_name="covercolor_CoverSpecifications",
         null=True,
         blank=True
-    )
+        )
+    coverother = models.ForeignKey(
+        CoverOther,
+        on_delete=models.CASCADE,
+        related_name="coverother_CoverSpecifications",
+        null=True,
+        blank=True
+        )
 
 class ScriptsIsbn(TimeStampedModel): #PurposeDone #MigrateDone
     scripts = models.ForeignKey(
