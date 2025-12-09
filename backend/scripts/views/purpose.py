@@ -6,6 +6,10 @@ from scripts.serializers import PurposeSerializer, PurposeAllSerializer
 from scripts.utils import current_timestamp
 
 class PurposeByCodeView(APIView):
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
+
     def get(self, request, code):
         obj = PurposeRepository.get_by_code(code)
         if not obj:
@@ -19,6 +23,10 @@ class PurposeByCodeView(APIView):
         }, status=status.HTTP_200_OK)
 
 class PurposeAllView(APIView):
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
+
     def get(self, request):
         queryset = PurposeRepository.list_all()
         serializer = PurposeAllSerializer(queryset, many=True)
@@ -28,6 +36,10 @@ class PurposeAllView(APIView):
         }, status=status.HTTP_200_OK)
 
 class PurposeCreateView(APIView):
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
+
     def post(self, request):
         code = request.data.get("code")
         purpose = request.data.get("purpose")
@@ -45,6 +57,10 @@ class PurposeCreateView(APIView):
         }, status=status.HTTP_201_CREATED)
     
 class PurposeUpdateView(APIView):
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
+    
     def patch(self, request, id):
         obj = PurposeRepository.get_by_id(id)
         if not obj:

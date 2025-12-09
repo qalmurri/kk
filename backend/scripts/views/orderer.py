@@ -6,6 +6,10 @@ from scripts.serializers import OrdererAllSerializer
 from scripts.utils import current_timestamp
 
 class OrdererAllView(APIView):
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
+    
     def get(self, request):
         queryset = OrdererRepository.list_all()
         serializer = OrdererAllSerializer(queryset, many=True)
@@ -36,6 +40,10 @@ class OrdererCreatedView(APIView):
         )
     
 class OrdererUpdateView(APIView):
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
+    
     def patch(self, request, id):
         obj = OrdererRepository.get_by_id(id)
         if not obj:

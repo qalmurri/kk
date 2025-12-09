@@ -99,8 +99,8 @@ class Completeness(TimeStampedModel):
     synopsis = models.BooleanField(default=False)
     references = models.BooleanField(default=False) #daftar pustaka
 
-class CoverColor(TimeStampedModel): # nanti ini banyak data, warna 1, warna 2, warna 3, atau lebih
-    covercolor = models.CharField(
+class CoverColor(TimeStampedModel): #migrateDone
+    color = models.CharField(
         max_length=255
     )
 

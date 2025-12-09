@@ -6,6 +6,10 @@ from scripts.serializers import InstituteSerializer
 from scripts.utils import current_timestamp
 
 class InstituteAllView(APIView):
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
+
     def get(self, request):
         queryset = InstituteRepository.list_all()
         serializer = InstituteSerializer(queryset, many=True)
@@ -17,6 +21,10 @@ class InstituteAllView(APIView):
         )
     
 class InstituteCreatedView(APIView):
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
+
     def post(self, request):
         institute = request.data.get("institute")
         if institute is None:
@@ -35,6 +43,10 @@ class InstituteCreatedView(APIView):
         )
     
 class InstituteUpdateView(APIView):
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
+    
     def patch(self, request, id):
         obj = InstituteRepository.get_by_id(id)
         if not obj:

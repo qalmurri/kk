@@ -1,7 +1,7 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from .models import Purpose, Institute, Orderer, Scripts, Size
+from .models import Purpose, Institute, Orderer, Scripts, Size, CoverColor
 
 @receiver(post_migrate)
 def create_default_table(sender, **kwargs):
@@ -115,4 +115,15 @@ def create_default_table(sender, **kwargs):
     for item in size:
         Size.objects.get_or_create(
             size=item
+        )
+
+    color = [
+        "Polos",
+        "2 Warna",
+        "3 Warna",
+        "4 Warna"
+    ]
+    for item in color:
+        CoverColor.objects.get_or_create(
+            color=item
         )

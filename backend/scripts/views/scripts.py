@@ -2,12 +2,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from scripts.models import Scripts
-from scripts.serializers import ScriptSerializer
+from scripts.serializers import ScriptSerializer, ScriptsSerializer
+from rest_framework.permissions import IsAuthenticated
 
 class ScriptsView(APIView):
+    permission_classes = []
+
     def get(self, request):
-        scripts = Scripts.objects.all()
-        serializer = ScriptSerializer(scripts, many=True)
+        queryset = Scripts.objects.all().prefetch_related(
+            "scripts_ScriptOrderer__orderer__institute"
+        )
+
+        serializer = ScriptsSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def post(self, request):
