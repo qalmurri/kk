@@ -22,28 +22,15 @@ def create_default_table(sender, **kwargs):
             )
 
     purpose = [
-        {"code": 1, "purpose": "Cetak"},
-        {"code": 1, "purpose": "E-Book"},
-        {"code": 1, "purpose": "Cetak & E-Book"},
-        {"code": 2, "purpose": "belum"},
-        {"code": 2, "purpose": "Proses"},
-        {"code": 2, "purpose": "Proval"},
-        {"code": 2, "purpose": "Selesai"},
-        {"code": 3, "purpose": "Cetak"},
-        {"code": 3, "purpose": "E-Book"},
-        {"code": 4, "purpose": "Belum"},
-        {"code": 4, "purpose": "Proses"},
-        {"code": 4, "purpose": "Selesai"},
+        {"code": 1, "sum": 1, "purpose": "belum"},
+        {"code": 1, "sum": 2, "purpose": "proses"},
+        {"code": 1, "sum": 3, "purpose": "proval"},
+        {"code": 1, "sum": 4, "purpose": "selesai"}
     ]
     for item in purpose:
-        """
-        1. ProductionEbookStatus
-        2. CoverStatus
-        3. ScriptIsbn
-        4. ScriptStatus
-        """
         Purpose.objects.get_or_create(
             code=item["code"],
+            sum=item["sum"],
             purpose=item["purpose"]
         )
 

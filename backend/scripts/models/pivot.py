@@ -22,21 +22,14 @@ class ScriptsStatus(TimeStampedModel): #PurposeDone
         on_delete=models.CASCADE,
         related_name="scripts_ScriptsStatus"
     )
+    code = models.IntegerField(
+        null=True,
+        blank=True
+    )
     purpose = models.ForeignKey(
         Purpose,
         on_delete=models.CASCADE,
         related_name="purpose_ScriptsStatus"
     )
 
-class ProductionEbookStatus(TimeStampedModel): #PurposeDone
-    scripts = models.ForeignKey(
-        Scripts,
-        on_delete=models.CASCADE,
-        related_name="scripts_ProductionEbookStatus"
-    )
-    purpose = models.ForeignKey(
-        Purpose,
-        on_delete=models.CASCADE,
-        related_name="purpose_ProductionEbookStatus"
-    )
 
