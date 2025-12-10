@@ -4,20 +4,7 @@ from scripts.models.purpose import Purpose
 from scripts.models.institute import Institute
 from scripts.models.size import Size
 
-class Order(TimeStampedModel): #nomer dibuat
-    title = models.CharField(
-        max_length=255
-    )
-    status = models.BooleanField(default=False)
-
 class Scripts(TimeStampedModel): #MigrateDone
-    order = models.ForeignKey(
-        Order,
-        on_delete=models.CASCADE,
-        related_name="order_Scripts",
-        null=True,
-        blank=True
-    )
     title = models.CharField(
         max_length=255
     )
@@ -37,6 +24,18 @@ class Scripts(TimeStampedModel): #MigrateDone
         Size,
         on_delete=models.CASCADE,
         related_name="size_Scripts",
+        null=True,
+        blank=True
+    )
+
+class No(TimeStampedModel):
+    no = models.CharField(
+        max_length=255
+    )
+    scripts = models.ForeignKey(
+        Scripts,
+        on_delete=models.CASCADE,
+        related_name="scripts_Order",
         null=True,
         blank=True
     )
