@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from scripts.models import Scripts, ScriptsOrderer, Orderer, Institute
+from scripts.models import Scripts, ScriptsOrderer, Orderer
 from .orderer import OrdererSerializer
 from .institute import InstituteSerializer
+from .size import SizeSerializer
 
 class ScriptSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,6 +27,7 @@ class ScriptsSerializer(serializers.ModelSerializer):
         source="scripts_ScriptsOrderer", many=True
     )
     institute = InstituteSerializer()
+    size = SizeSerializer()
 
     class Meta:
         model = Scripts
@@ -34,7 +36,8 @@ class ScriptsSerializer(serializers.ModelSerializer):
             "title",
             "entry_date",
             "orderers",
-            "institute"
+            "institute",
+            "size"
         ]
 
 class ScriptOrdererCreateSerializer(serializers.ModelSerializer):

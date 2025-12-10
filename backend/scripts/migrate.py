@@ -83,16 +83,6 @@ def create_default_table(sender, **kwargs):
             institute_id=item["institute"]
         )
 
-    scripts = [
-        {"title": "Values of Life", "institute": 1},
-        {"title": "The Power of Core Values", "institute": 1}
-    ]
-    for item in scripts:
-        Scripts.objects.get_or_create(
-            title=item["title"],
-            institute_id=item["institute"]
-        )
-
     size = [
         "160x250 (buku teks)",
         "A5",
@@ -111,6 +101,18 @@ def create_default_table(sender, **kwargs):
     for item in size:
         Size.objects.get_or_create(
             size=item
+        )
+
+
+    scripts = [
+        {"title": "Values of Life", "institute": 1, "size": 1},
+        {"title": "The Power of Core Values", "institute": 1, "size": 2}
+    ]
+    for item in scripts:
+        Scripts.objects.get_or_create(
+            title=item["title"],
+            institute_id=item["institute"],
+            size_id=item["size"]
         )
 
     color = [

@@ -2,6 +2,7 @@ from django.db import models
 from scripts.models.timestamped import TimeStampedModel
 from scripts.models.purpose import Purpose
 from scripts.models.institute import Institute
+from scripts.models.size import Size
 
 class Order(TimeStampedModel): #nomer dibuat
     title = models.CharField(
@@ -28,6 +29,14 @@ class Scripts(TimeStampedModel): #MigrateDone
         Institute,
         on_delete=models.CASCADE,
         related_name="institute_Scripts",
+        null=True,
+        blank=True
+    )
+
+    size = models.ForeignKey(
+        Size,
+        on_delete=models.CASCADE,
+        related_name="size_Scripts",
         null=True,
         blank=True
     )
