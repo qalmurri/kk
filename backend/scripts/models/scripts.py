@@ -65,17 +65,3 @@ class Completeness(TimeStampedModel):
     synopsis = models.BooleanField(default=False)
     references = models.BooleanField(default=False) #daftar pustaka
 
-class ScriptsIsbn(TimeStampedModel): #PurposeDone #MigrateDone
-    scripts = models.ForeignKey(
-        Scripts,
-        on_delete=models.CASCADE,
-        related_name="scripts_ScriptsIsbn"
-    )
-    isbn = models.CharField(
-        max_length=20
-    )
-    purpose = models.ForeignKey(
-        Purpose,
-        on_delete=models.CASCADE,
-        related_name="purpose_ScriptsIsbn"
-    )

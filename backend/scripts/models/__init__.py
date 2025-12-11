@@ -6,6 +6,7 @@ from .institute import Institute
 from .orderer import Orderer
 from .pivot import ScriptsOrderer, NoScripts, ScriptsStatus
 from .purpose import Purpose
-from .scripts import Scripts, No, ScriptsDescription, Completeness, ScriptsIsbn
+from .scripts import Scripts, No, ScriptsDescription, Completeness
 from .size import Size
 from .timestamped import TimeStampedModel
+from .isbn import ISBN

@@ -1,7 +1,7 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from .models import Purpose, Institute, Orderer, Scripts, Size, CoverColor, ScriptsOrderer, ScriptsStatusCode, ScriptsStatus
+from .models import Purpose, Institute, Orderer, Scripts, Size, CoverColor, ScriptsOrderer, ScriptsStatusCode, ScriptsStatus, ISBN
 
 @receiver(post_migrate)
 def create_default_table(sender, **kwargs):
@@ -141,4 +141,15 @@ def create_default_table(sender, **kwargs):
             scripts_id=item["scripts"],
             scriptsstatuscode_id=item["scriptsstatuscode"],
             purpose_id=item["purpose"]
+        )
+
+    isbn2 = [
+        {"scripts": 1, "isbn": "32123123", "code": 1},
+        {"scripts": 1, "isbn": "3212312323", "code": 2}
+    ]
+    for item in isbn2:
+        ISBN.objects.get_or_create(
+            scripts_id=item["scripts"],
+            isbn=item["isbn"],
+            code=item["code"]
         )

@@ -5,6 +5,7 @@ from .institute import InstituteSerializer
 from .size import SizeSerializer
 from .code import CodeSerializer
 from .purpose import PurposeSerializer
+from .isbn import ISBNSerializer
 
 class ScriptSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,13 +34,16 @@ class ScriptsStatusSerializer(serializers.ModelSerializer):
             "id",
             "purpose"
         ]
-
+        
 class ScriptsSerializer(serializers.ModelSerializer):
     orderers = ScriptOrdererSerializer(
         source="scripts_ScriptsOrderer", many=True
     )
     status = ScriptsStatusSerializer(
         source="scripts_ScriptsStatus", many=True
+    )
+    identification = ISBNSerializer(
+        source="scripts_ISBN", many=True
     )
     institute = InstituteSerializer()
     size = SizeSerializer()
@@ -52,6 +56,7 @@ class ScriptsSerializer(serializers.ModelSerializer):
             "entry_date",
             "orderers",
             "status",
+            "identification",
             "institute",
             "size"
         ]

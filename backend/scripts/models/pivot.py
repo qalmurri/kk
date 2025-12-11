@@ -46,5 +46,3 @@ class ScriptsStatus(TimeStampedModel): #PurposeDone
         on_delete=models.CASCADE,
         related_name="purpose_ScriptsStatus"
     )
-
-
