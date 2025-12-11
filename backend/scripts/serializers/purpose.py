@@ -9,4 +9,4 @@ class PurposeAllSerializer(serializers.ModelSerializer):
 class PurposeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Purpose
-        fields = ["id", "purpose"]
+        fields = ["id", "code", "sum", "label"]

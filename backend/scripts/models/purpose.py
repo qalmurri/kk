@@ -1,14 +1,10 @@
 from django.db import models
+from scripts.models.code import ScriptsStatusCode
 
 class Purpose(models.Model): #MigrateDone
-    code = models.IntegerField(db_index=True)
-    sum = models.IntegerField()
-    purpose = models.CharField(
-        max_length=255
+    label = models.IntegerField()
+    code = models.ForeignKey(
+        ScriptsStatusCode,
+        on_delete=models.CASCADE,
     )
-    class Meta:
-        unique_together = (
-            'code',
-            'sum',
-            'purpose'
-        )
+    sum = models.IntegerField()

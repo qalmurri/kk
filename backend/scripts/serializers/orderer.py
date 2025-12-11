@@ -10,9 +10,6 @@ class OrdererAllSerializer(serializers.ModelSerializer):
 class OrdererSerializer(serializers.ModelSerializer):
     institute = InstituteSerializer()
 
-    def get_institute(self, obj):
-        return obj.institute.institute if obj.institute else ""
-
     class Meta:
         model = Orderer
         fields = ["id", "name", "no", "institute"]

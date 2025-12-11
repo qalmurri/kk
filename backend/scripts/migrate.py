@@ -1,7 +1,7 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from .models import Purpose, Institute, Orderer, Scripts, Size, CoverColor, ScriptsOrderer
+from .models import Purpose, Institute, Orderer, Scripts, Size, CoverColor, ScriptsOrderer, ScriptsStatusCode, ScriptsStatus
 
 @receiver(post_migrate)
 def create_default_table(sender, **kwargs):
@@ -21,17 +21,26 @@ def create_default_table(sender, **kwargs):
                 password=u["password"]
             )
 
+    code = [
+        "status 1",
+        "status 2",
+        "status 3",
+        "status 4"
+    ]
+    for item in code:
+        ScriptsStatusCode.objects.get_or_create(
+            code=item
+        )
+
     purpose = [
-        {"code": 1, "sum": 1, "purpose": "belum"},
-        {"code": 1, "sum": 2, "purpose": "proses"},
-        {"code": 1, "sum": 3, "purpose": "proval"},
-        {"code": 1, "sum": 4, "purpose": "selesai"}
+        {"code": 1, "sum": 1, "label": 1},
+        {"code": 2, "sum": 2, "label": 1}
     ]
     for item in purpose:
         Purpose.objects.get_or_create(
-            code=item["code"],
+            code_id=item["code"],
             sum=item["sum"],
-            purpose=item["purpose"]
+            label=item["label"]
         )
 
     institute = [
@@ -121,4 +130,15 @@ def create_default_table(sender, **kwargs):
         ScriptsOrderer.objects.get_or_create(
             scripts_id=item["scripts"],
             orderer_id=item["orderer"]
+        )
+
+    code1 = [
+        {"scripts": 1, "scriptsstatuscode": 1, "purpose": 1},
+        {"scripts": 1, "scriptsstatuscode": 3, "purpose": 1}
+    ]
+    for item in code1:
+        ScriptsStatus.objects.get_or_create(
+            scripts_id=item["scripts"],
+            scriptsstatuscode_id=item["scriptsstatuscode"],
+            purpose_id=item["purpose"]
         )

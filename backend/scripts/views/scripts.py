@@ -6,6 +6,8 @@ from scripts.serializers.scripts import ScriptSerializer, ScriptsSerializer
 from rest_framework.permissions import IsAuthenticated
 
 class ScriptsView(APIView):
+    throttle_classes = []
+    authentication_classes = []
     permission_classes = []
 
     def get(self, request):

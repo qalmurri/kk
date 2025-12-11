@@ -1,8 +1,10 @@
 from rest_framework import serializers
-from scripts.models import Scripts, ScriptsOrderer, Orderer
+from scripts.models import Scripts, ScriptsOrderer, Orderer, ScriptsStatus
 from .orderer import OrdererSerializer
 from .institute import InstituteSerializer
 from .size import SizeSerializer
+from .code import CodeSerializer
+from .purpose import PurposeSerializer
 
 class ScriptSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,9 +24,22 @@ class ScriptOrdererSerializer(serializers.ModelSerializer):
         model = ScriptsOrderer
         fields = ["id", "orderer"]
 
+class ScriptsStatusSerializer(serializers.ModelSerializer):
+    purpose = PurposeSerializer()
+
+    class Meta:
+        model = ScriptsStatus
+        fields = [
+            "id",
+            "purpose"
+        ]
+
 class ScriptsSerializer(serializers.ModelSerializer):
     orderers = ScriptOrdererSerializer(
         source="scripts_ScriptsOrderer", many=True
+    )
+    status = ScriptsStatusSerializer(
+        source="scripts_ScriptsStatus", many=True
     )
     institute = InstituteSerializer()
     size = SizeSerializer()
@@ -36,6 +51,7 @@ class ScriptsSerializer(serializers.ModelSerializer):
             "title",
             "entry_date",
             "orderers",
+            "status",
             "institute",
             "size"
         ]
