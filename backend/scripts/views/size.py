@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from scripts.repositories.size import SizeRepository
+from scripts.repositories.size import SizeCommandRepository, SizeQueryRepository
 from scripts.serializers.size import SizeSerializer
 from scripts.utils import current_timestamp
 
@@ -11,7 +11,7 @@ class SizeAllView(APIView):
     permission_classes = []
 
     def get(self, request):
-        queryset = SizeRepository.list_all()
+        queryset = SizeQueryRepository.list_all()
         serializer = SizeSerializer(queryset, many=True)
         return Response(
             {
@@ -35,7 +35,7 @@ class SizeCreatedView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        SizeRepository.create(size=size)
+        SizeCommandRepository.create(size=size)
         return Response(
             {
                 "success": True,
@@ -49,13 +49,13 @@ class SizeUpdateView(APIView):
     permission_classes = []
     
     def patch(self, request, id):
-        obj = SizeRepository.get_by_id(id)
+        obj = SizeQueryRepository.get_by_id(id)
         if not obj:
             return Response({
                 "success": False,
             }, status=status.HTTP_404_NOT_FOUND)
         size = request.data.get("size")
-        SizeRepository.update(
+        SizeCommandRepository.update(
             id=id,
             size=size,
             updated_at=current_timestamp()
