@@ -1,5 +1,5 @@
-from scripts.models import Size
 from django.shortcuts import get_object_or_404
+from scripts.models import Size
 
 class SizeQueryRepository:
     @staticmethod
