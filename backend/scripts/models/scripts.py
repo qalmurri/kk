@@ -1,14 +1,18 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
-from scripts.models.purpose import Purpose
 from scripts.models.institute import Institute
 from scripts.models.size import Size
 
 class Scripts(TimeStampedModel): #MigrateDone
+    is_active = models.BooleanField(default=True)
     title = models.CharField(
         max_length=255
     )
     entry_date = models.DateField(
+        null=True,
+        blank=True
+    )
+    finish_date = models.DateField(
         null=True,
         blank=True
     )
@@ -39,29 +43,4 @@ class No(TimeStampedModel):
         null=True,
         blank=True
     )
-
-class ScriptsDescription(TimeStampedModel):
-    scripts = models.ForeignKey(
-        Scripts,
-        on_delete=models.CASCADE,
-        related_name="scripts_ScriptsDescription"
-    )
-    description = models.CharField(
-        max_length=255
-    )
-
-class Completeness(TimeStampedModel):
-    scripts = models.ForeignKey(
-        Scripts,
-        on_delete=models.CASCADE,
-        related_name="scripts_Completeness"
-    )
-    file = models.BooleanField(default=False)
-    editor = models.BooleanField(default=False)
-    photo = models.BooleanField(default=False)
-    preface = models.BooleanField(default=False) #kata pengantar
-    cv = models.BooleanField(default=False)
-    loc = models.BooleanField(default=False) #list of contents / daftar isi
-    synopsis = models.BooleanField(default=False)
-    references = models.BooleanField(default=False) #daftar pustaka
 

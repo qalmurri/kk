@@ -1,11 +1,12 @@
 from rest_framework import serializers
-from scripts.models import Scripts, ScriptsOrderer, Orderer, ScriptsStatus
+from scripts.models import Scripts, ScriptsOrderer, Orderer
 from .orderer import OrdererSerializer
 from .institute import InstituteSerializer
 from .size import SizeSerializer
-from .code import CodeSerializer
 from .purpose import PurposeSerializer
 from .isbn import ISBNSerializer
+from .bool import BoolSerializer
+from .description import DescriptionSerializer
 
 class ScriptSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,24 +24,20 @@ class ScriptOrdererSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ScriptsOrderer
-        fields = ["id", "orderer"]
-
-class ScriptsStatusSerializer(serializers.ModelSerializer):
-    purpose = PurposeSerializer()
-
-    class Meta:
-        model = ScriptsStatus
-        fields = [
-            "id",
-            "purpose"
-        ]
-        
+        fields = ["id", "orderer", "created_at", "updated_at"]
+       
 class ScriptsSerializer(serializers.ModelSerializer):
     orderers = ScriptOrdererSerializer(
         source="scripts_ScriptsOrderer", many=True
     )
-    status = ScriptsStatusSerializer(
-        source="scripts_ScriptsStatus", many=True
+    purpose = PurposeSerializer(
+        source="scripts_Purpose", many=True
+    )
+    bool = BoolSerializer(
+        source="scripts_Bool", many=True
+    )
+    description = DescriptionSerializer(
+        source="scripts_Description", many=True
     )
     identification = ISBNSerializer(
         source="scripts_ISBN", many=True
@@ -52,13 +49,19 @@ class ScriptsSerializer(serializers.ModelSerializer):
         model = Scripts
         fields = [
             "id",
+            "is_active",
             "title",
             "entry_date",
+            "finish_date",
             "orderers",
-            "status",
+            "purpose",
+            "bool",
+            "description",
             "identification",
             "institute",
-            "size"
+            "size",
+            "created_at",
+            "updated_at"
         ]
 
 class ScriptOrdererCreateSerializer(serializers.ModelSerializer):

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from scripts.models import Orderer, CoverColor, ScriptsOrderer
+from scripts.models import Orderer
 from .institute import InstituteSerializer
 
 class OrdererAllSerializer(serializers.ModelSerializer):
@@ -12,4 +12,4 @@ class OrdererSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Orderer
-        fields = ["id", "name", "no", "institute"]
+        fields = ["id", "name", "no", "institute", "created_at", "updated_at"]

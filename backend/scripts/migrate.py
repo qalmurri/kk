@@ -1,7 +1,7 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from .models import Purpose, Institute, Orderer, Scripts, Size, CoverColor, ScriptsOrderer, ScriptsStatusCode, ScriptsStatus, ISBN
+from .models import Purpose, Institute, Orderer, Scripts, Size, CoverColor, ScriptsOrderer, ScriptsStatusCode, ISBN, Bool, Description
 
 @receiver(post_migrate)
 def create_default_table(sender, **kwargs):
@@ -22,25 +22,14 @@ def create_default_table(sender, **kwargs):
             )
 
     code = [
-        "status 1",
-        "status 2",
-        "status 3",
-        "status 4"
+        "Belum",
+        "Proses",
+        "Pengajuan",
+        "Sudah",
     ]
     for item in code:
         ScriptsStatusCode.objects.get_or_create(
             code=item
-        )
-
-    purpose = [
-        {"code": 1, "sum": 1, "label": 1},
-        {"code": 2, "sum": 2, "label": 1}
-    ]
-    for item in purpose:
-        Purpose.objects.get_or_create(
-            code_id=item["code"],
-            sum=item["sum"],
-            label=item["label"]
         )
 
     institute = [
@@ -111,6 +100,18 @@ def create_default_table(sender, **kwargs):
             size_id=item["size"]
         )
 
+
+    purpose = [
+        {"scripts": 1, "code": 1,"label": 1},
+        {"scripts": 1, "code": 2, "label": 1}
+    ]
+    for item in purpose:
+        Purpose.objects.get_or_create(
+            scripts_id=item["scripts"],
+            code_id=item["code"],
+            label=item["label"]
+        )
+
     color = [
         "Polos",
         "2 Warna",
@@ -132,17 +133,6 @@ def create_default_table(sender, **kwargs):
             orderer_id=item["orderer"]
         )
 
-    code1 = [
-        {"scripts": 1, "scriptsstatuscode": 1, "purpose": 1},
-        {"scripts": 1, "scriptsstatuscode": 3, "purpose": 1}
-    ]
-    for item in code1:
-        ScriptsStatus.objects.get_or_create(
-            scripts_id=item["scripts"],
-            scriptsstatuscode_id=item["scriptsstatuscode"],
-            purpose_id=item["purpose"]
-        )
-
     isbn2 = [
         {"scripts": 1, "isbn": "32123123", "code": 1},
         {"scripts": 1, "isbn": "3212312323", "code": 2}
@@ -153,3 +143,26 @@ def create_default_table(sender, **kwargs):
             isbn=item["isbn"],
             code=item["code"]
         )
+
+    description = [
+        {"scripts": 1, "description": "hoalaaaaa ngantuk", "label": 1},
+        {"scripts": 1, "description": "ngantuk poooooolllllllll", "label": 2}
+    ]
+    for item in description:
+        Description.objects.get_or_create(
+            scripts_id=item["scripts"],
+            description=item["description"],
+            label=item["label"]
+        )
+
+    bool = [
+        {"scripts": 1, "label": 1, "boolean": False},
+        {"scripts": 1, "label": 3, "boolean": True}
+    ]
+    for item in bool:
+        Bool.objects.get_or_create(
+            scripts_id=item["scripts"],
+            label=item["label"],
+            boolean=item["boolean"]
+        )
+        

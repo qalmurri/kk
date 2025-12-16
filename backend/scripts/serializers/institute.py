@@ -4,5 +4,5 @@ from scripts.models import Institute
 class InstituteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Institute
-        fields = ["id", "institute"]
+        fields = ["id", "institute", "created_at", "updated_at"]
 

@@ -4,4 +4,4 @@ from scripts.models import ISBN
 class ISBNSerializer(serializers.ModelSerializer):
     class Meta:
         model = ISBN
-        fields = ["id", "isbn", "code"]
+        fields = ["id", "isbn", "code", "created_at", "updated_at"]
