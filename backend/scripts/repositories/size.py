@@ -1,18 +1,17 @@
+from typing import List, Optional
 from django.shortcuts import get_object_or_404
+from django.db.models import QuerySet
 from scripts.models import Size
 
 class SizeQueryRepository:
     @staticmethod
-    def list_all():
+    def list_all() -> QuerySet[Size]:
         return Size.objects.all()
     
     @staticmethod
-    def get_by_id(id: int) -> Size:
-        return get_object_or_404(
-            Size,
-            id=id
-        )
-    
+    def get_by_id(id: int) -> Optional[Size]:
+        return Size.objects.filter(id=id).first()
+
 class SizeCommandRepository:
     @staticmethod
     def create(size: str) -> Size:

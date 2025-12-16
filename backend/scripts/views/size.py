@@ -12,7 +12,10 @@ class SizeAllView(APIView):
 
     def get(self, request):
         queryset = SizeQueryRepository.list_all()
-        serializer = SizeSerializer(queryset, many=True)
+        serializer = SizeSerializer(
+            queryset,
+            many=True
+        )
         return Response(
             {
                 "data": serializer.data
@@ -26,7 +29,9 @@ class SizeCreatedView(APIView):
     permission_classes = []
 
     def post(self, request):
-        size = request.data.get("size")
+        size = request.data.get(
+            "size"
+        )
 
         if size is None:
             return Response(
@@ -49,17 +54,28 @@ class SizeUpdateView(APIView):
     permission_classes = []
     
     def patch(self, request, id):
-        obj = SizeQueryRepository.get_by_id(id)
+        obj = SizeQueryRepository.get_by_id(
+            id
+        )
+        print(obj)
         if not obj:
-            return Response({
-                "success": False,
-            }, status=status.HTTP_404_NOT_FOUND)
-        size = request.data.get("size")
-        SizeCommandRepository.update_safe(
+            return Response(
+                {
+                    "success": False,
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        size = request.data.get(
+            "size"
+        )
+        SizeCommandRepository.update_fast(
             id=id,
             size=size,
             updated_at=current_timestamp()
         )
-        return Response({
-            "success": True,
-        }, status=status.HTTP_200_OK)
+        return Response(
+            {
+                "success": True,
+            },
+            status=status.HTTP_200_OK
+        )
