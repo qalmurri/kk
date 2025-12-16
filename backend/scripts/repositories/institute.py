@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from scripts.models import Institute
 
 class InstituteQueryRepository:
@@ -17,5 +18,16 @@ class InstituteCommandRepository:
         )
 
     @staticmethod
-    def update(id: int, **kwargs):
-        return Institute.objects.filter(id=id).update(**kwargs)
+    def update(id: int, **kwargs) -> Institute:
+        obj = get_object_or_404(
+            Institute,
+            id=id
+        )
+        for key, value, in kwargs.items():
+            setattr(
+                obj,
+                key,
+                value
+            )
+        obj.save()
+        return obj

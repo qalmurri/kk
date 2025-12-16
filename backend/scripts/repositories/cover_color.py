@@ -1,12 +1,6 @@
 from scripts.models import CoverColor
     
-class CoverColorRepository:
-    @staticmethod
-    def create(color: str) -> CoverColor:
-        return CoverColor.objects.create(
-            color=color
-        )
-
+class CoverColorQueryRepository:
     @staticmethod
     def list_all():
         return CoverColor.objects.all()
@@ -14,7 +8,14 @@ class CoverColorRepository:
     @staticmethod
     def get_by_id(id: int):
         return CoverColor.objects.get(id=id)
+   
+class CoverColorCommandRepository:
+    @staticmethod
+    def create(color: str) -> CoverColor:
+        return CoverColor.objects.create(
+            color=color
+        )
 
     @staticmethod
     def update(id: int, **kwargs):
-        return CoverColor.objects.filter(id=id).update(**kwargs)
+        return CoverColor.objects.filter(id=id).update(**kwargs) 
