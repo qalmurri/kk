@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from scripts.repositories.cover_color import CoverColorRepository
+from scripts.repositories.cover_color import CoverColorCommandRepository, CoverColorQueryRepository
 from scripts.serializers.color import CoverColorSerializer
 from scripts.utils import current_timestamp
 
@@ -11,7 +11,7 @@ class CoverColorAllView(APIView):
     permission_classes = []
 
     def get(self, request):
-        queryset = CoverColorRepository.list_all()
+        queryset = CoverColorQueryRepository.list_all()
         serializer = CoverColorSerializer(queryset, many=True)
         return Response(
             {
@@ -34,7 +34,7 @@ class CoverColorCreatedView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        CoverColorRepository.create(color=color)
+        CoverColorCommandRepository.create(color=color)
         return Response(
             {
                 "success": True,
@@ -48,13 +48,13 @@ class CoverColorUpdateView(APIView):
     permission_classes = []
     
     def patch(self, request, id):
-        obj = CoverColorRepository.get_by_id(id)
+        obj = CoverColorQueryRepository.get_by_id(id)
         if not obj:
             return Response({
                 "success": False,
             }, status=status.HTTP_404_NOT_FOUND)
         color = request.data.get("color")
-        CoverColorRepository.update(
+        CoverColorCommandRepository.update_safe(
             id=id,
             color=color,
             updated_at=current_timestamp()

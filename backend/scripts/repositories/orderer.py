@@ -8,7 +8,9 @@ class OrdererQueryRepository:
     
     @staticmethod
     def get_by_id(id: int):
-        return Orderer.objects.get(id=id)
+        return Orderer.objects.get(
+            id=id
+        )
    
 class OrdererCommandRepository:    
     @staticmethod
@@ -19,7 +21,15 @@ class OrdererCommandRepository:
         )
 
     @staticmethod
-    def update(id: int, **kwargs) -> Orderer:
+    def update_fast(id: int, **kwargs) -> int:
+        return Orderer.objects.filter(
+            id=id
+        ).update(
+            **kwargs
+        )
+
+    @staticmethod
+    def update_safe(id: int, **kwargs) -> Orderer:
         obj = get_object_or_404(
             Orderer,
             id=id

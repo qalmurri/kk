@@ -55,7 +55,7 @@ class SizeUpdateView(APIView):
                 "success": False,
             }, status=status.HTTP_404_NOT_FOUND)
         size = request.data.get("size")
-        SizeCommandRepository.update(
+        SizeCommandRepository.update_safe(
             id=id,
             size=size,
             updated_at=current_timestamp()

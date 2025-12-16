@@ -1,4 +1,5 @@
 from scripts.models import CoverColor
+from django.shortcuts import get_object_or_404
     
 class CoverColorQueryRepository:
     @staticmethod
@@ -7,7 +8,9 @@ class CoverColorQueryRepository:
     
     @staticmethod
     def get_by_id(id: int):
-        return CoverColor.objects.get(id=id)
+        return CoverColor.objects.get(
+            id=id
+        )
    
 class CoverColorCommandRepository:
     @staticmethod
@@ -17,5 +20,24 @@ class CoverColorCommandRepository:
         )
 
     @staticmethod
-    def update(id: int, **kwargs):
-        return CoverColor.objects.filter(id=id).update(**kwargs) 
+    def update_fast(id: int, **kwargs) -> int:
+        return CoverColor.objects.filter(
+            id=id
+        ).update(
+            **kwargs
+        )
+
+    @staticmethod
+    def update_safe(id: int, **kwargs) -> CoverColor:
+        obj = get_object_or_404(
+            CoverColor,
+            id=id
+        )
+        for key, value in kwargs.items():
+            setattr(
+                obj,
+                key,
+                value
+            )
+        obj.save()
+        return obj

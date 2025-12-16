@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from scripts.repositories.purpose import PurposeRepository
+from scripts.repositories.purpose import PurposeCommandRepository, PurposeQueryRepository
 from scripts.serializers.purpose import PurposeSerializer, PurposeAllSerializer
 from scripts.utils import current_timestamp
 
@@ -11,7 +11,7 @@ class PurposeByCodeView(APIView):
     permission_classes = []
 
     def get(self, request, code):
-        obj = PurposeRepository.get_by_code(code)
+        obj = PurposeQueryRepository.get_by_code(code)
         if not obj:
             return Response({
                 "success": False,
@@ -28,7 +28,7 @@ class PurposeAllView(APIView):
     permission_classes = []
 
     def get(self, request):
-        queryset = PurposeRepository.list_all()
+        queryset = PurposeQueryRepository.list_all()
         serializer = PurposeAllSerializer(queryset, many=True)
 
         return Response({
@@ -48,7 +48,7 @@ class PurposeCreateView(APIView):
                 "success": False,
             }, status=status.HTTP_400_BAD_REQUEST)
         
-        PurposeRepository.create(
+        PurposeCommandRepository.create(
             code=code,
             purpose=purpose
         )
@@ -62,13 +62,13 @@ class PurposeUpdateView(APIView):
     permission_classes = []
     
     def patch(self, request, id):
-        obj = PurposeRepository.get_by_id(id)
+        obj = PurposeQueryRepository.get_by_id(id)
         if not obj:
             return Response({
                 "success": False,
             }, status=status.HTTP_404_NOT_FOUND)
         purpose = request.data.get("purpose")
-        PurposeRepository.update(
+        PurposeCommandRepository.update_safe(
             id=id,
             purpose=purpose,
             updated_at=current_timestamp()

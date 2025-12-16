@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from scripts.repositories.orderer import OrdererRepository
+from scripts.repositories.orderer import OrdererCommandRepository, OrdererQueryRepository
 from scripts.serializers.orderer import OrdererAllSerializer
 from scripts.utils import current_timestamp
 
@@ -11,7 +11,7 @@ class OrdererAllView(APIView):
     permission_classes = []
     
     def get(self, request):
-        queryset = OrdererRepository.list_all()
+        queryset = OrdererQueryRepository.list_all()
         serializer = OrdererAllSerializer(queryset, many=True)
         return Response(
             {
@@ -31,7 +31,7 @@ class OrdererCreatedView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        OrdererRepository.create(orderer=orderer, no=no)
+        OrdererCommandRepository.create(orderer=orderer, no=no)
         return Response(
             {
                 "success": True,
@@ -45,7 +45,7 @@ class OrdererUpdateView(APIView):
     permission_classes = []
     
     def patch(self, request, id):
-        obj = OrdererRepository.get_by_id(id)
+        obj = OrdererQueryRepository.get_by_id(id)
         if not obj:
             return Response({
                 "success": False,
@@ -53,7 +53,7 @@ class OrdererUpdateView(APIView):
         name = request.data.get("name")
         no = request.data.get("no")
         institute = request.data.get("institute")
-        OrdererRepository.update(
+        OrdererCommandRepository.update_safe(
             id=id,
             name=name,
             no=no,

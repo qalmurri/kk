@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from scripts.repositories.institute import InstituteRepository
+from scripts.repositories.institute import InstituteCommandRepository, InstituteQueryRepository
 from scripts.serializers.institute import InstituteSerializer
 from scripts.utils import current_timestamp
 
@@ -11,7 +11,7 @@ class InstituteAllView(APIView):
     permission_classes = []
 
     def get(self, request):
-        queryset = InstituteRepository.list_all()
+        queryset = InstituteQueryRepository.list_all()
         serializer = InstituteSerializer(queryset, many=True)
         return Response(
             {
@@ -34,7 +34,7 @@ class InstituteCreatedView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        InstituteRepository.create(institute=institute)
+        InstituteCommandRepository.create(institute=institute)
         return Response(
             {
                 "success": True,
@@ -48,13 +48,13 @@ class InstituteUpdateView(APIView):
     permission_classes = []
     
     def patch(self, request, id):
-        obj = InstituteRepository.get_by_id(id)
+        obj = InstituteQueryRepository.get_by_id(id)
         if not obj:
             return Response({
                 "success": False,
             }, status=status.HTTP_404_NOT_FOUND)
         institute = request.data.get("institute")
-        InstituteRepository.update(
+        InstituteCommandRepository.update_safe(
             id=id,
             institute=institute,
             updated_at=current_timestamp()

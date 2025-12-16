@@ -8,11 +8,16 @@ class PurposeQueryRepository:
     
     @staticmethod
     def get_by_id(id: int) -> Purpose:
-        return get_object_or_404(Purpose, id=id)
+        return get_object_or_404(
+            Purpose,
+            id=id
+        )
     
     @staticmethod
     def get_by_code(code: int):
-        return Purpose.objects.filter(code=code)
+        return Purpose.objects.filter(
+            code=code
+        )
 
 class PurposeCommandRepository:
     @staticmethod
@@ -21,9 +26,17 @@ class PurposeCommandRepository:
             code=code,
             purpose=purpose
         )
-    
+
     @staticmethod
-    def update(id: int, **kwargs) -> Purpose:
+    def update_fast(id: int, **kwargs) -> int:
+        return Purpose.objects.filter(
+            id=id
+        ).update(
+            **kwargs
+        )
+
+    @staticmethod
+    def update_safe(id: int, **kwargs) -> Purpose:
         obj = get_object_or_404(
             Purpose,
             id=id
