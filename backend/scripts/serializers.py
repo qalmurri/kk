@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.shortcuts import get_object_or_404
 from scripts.models import (
     Size, Scripts, ScriptsOrderer, Orderer,
     Purpose, ISBN, Institute, Description,
@@ -10,7 +9,10 @@ class PolicyBasedSerializer(serializers.ModelSerializer):
     PROTECTED_FIELDS = set()
 
     def __init__(self, *args, **kwargs):
-        fields = kwargs.pop("fields", None)
+        fields = kwargs.pop(
+            "fields",
+            None
+        )
         super().__init__(*args, **kwargs)
 
         if fields is not None:
@@ -31,44 +33,84 @@ class PolicyBasedSerializer(serializers.ModelSerializer):
 class SizeSerializer(PolicyBasedSerializer):
     class Meta:
         model = Size
-        fields = ["id", "size", "created_at", "updated_at"]
+        fields = [
+            "id",
+            "size",
+            "created_at",
+            "updated_at"
+        ]
 
 class InstituteSerializer(PolicyBasedSerializer):
     class Meta:
         model = Institute
-        fields = ["id", "institute", "created_at", "updated_at"]
+        fields = [
+            "id",
+            "institute",
+            "created_at",
+            "updated_at"
+        ]
 
 class CodeSerializer(PolicyBasedSerializer):
     class Meta:
         model = ScriptsStatusCode
-        fields = ["id", "code"]
+        fields = [
+            "id",
+            "code"
+        ]
 
 class PurposeSerializer(PolicyBasedSerializer):
     code = CodeSerializer()
 
     class Meta:
         model = Purpose
-        fields = ["id", "code", "label", "created_at", "updated_at"]
+        fields = [
+            "id",
+            "code",
+            "label",
+            "created_at",
+            "updated_at"
+        ]
 
 class BoolSerializer(PolicyBasedSerializer):
     class Meta:
         model = Bool
-        fields = ["id", "boolean", "label", "created_at", "updated_at"]
+        fields = [
+            "id",
+            "boolean",
+            "label",
+            "created_at",
+            "updated_at"
+        ]
 
 class DescriptionSerializer(PolicyBasedSerializer):
     class Meta:
         model = Description
-        fields = ["id", "description", "label", "created_at", "updated_at"]
+        fields = [
+            "id",
+            "description",
+            "label",
+            "created_at",
+            "updated_at"
+        ]
 
 class ISBNSerializer(PolicyBasedSerializer):
     class Meta:
         model = ISBN
-        fields = ["id", "isbn", "code", "created_at", "updated_at"]
+        fields = [
+            "id",
+            "isbn",
+            "code",
+            "created_at",
+            "updated_at"
+        ]
 
 class CoverColorSerializer(PolicyBasedSerializer):
     class Meta:
         model = CoverColor
-        fields = ["id", "color"]
+        fields = [
+            "id",
+            "color"
+        ]
 
 # ORDERER
 
@@ -77,16 +119,28 @@ class OrdererSerializer(PolicyBasedSerializer):
 
     class Meta:
         model = Orderer
-        fields = ["id", "name", "no", "institute", "created_at", "updated_at"]
+        fields = [
+            "id",
+            "name",
+            "no",
+            "institute",
+            "created_at",
+            "updated_at"
+        ]
 
 class ScriptOrdererSerializer(PolicyBasedSerializer):
     orderer = OrdererSerializer()
 
     class Meta:
         model = ScriptsOrderer
-        fields = ["id", "orderer", "created_at", "updated_at"]
+        fields = [
+            "id",
+            "orderer",
+            "created_at",
+            "updated_at"
+        ]
 
-class ScriptOrdererCreateSerializer(PolicyBasedSerializer): ####DONEEEE!
+class ScriptOrdererCreateSerializer(PolicyBasedSerializer):
     scripts = serializers.PrimaryKeyRelatedField(queryset=Scripts.objects.all())
     orderer = serializers.PrimaryKeyRelatedField(queryset=Orderer.objects.all())
 
@@ -97,14 +151,23 @@ class ScriptOrdererCreateSerializer(PolicyBasedSerializer): ####DONEEEE!
             "scripts",
             "orderer",
         ]
-        read_only_fields = ["id", "created_at", "updated_at"]
+        read_only_fields = [
+            "id",
+            "created_at",
+            "updated_at"
+        ]
 
 # SCRIPTS
 
 class ScriptSerializer(PolicyBasedSerializer):
     class Meta:
         model = Scripts
-        fields = ["id", "title", "entry_date", "created_at"]
+        fields = [
+            "id",
+            "title",
+            "entry_date",
+            "created_at"
+        ]
 
 class ScriptsSerializer(PolicyBasedSerializer):
     orderers = ScriptOrdererSerializer(
@@ -155,12 +218,25 @@ class ScriptsSerializer(PolicyBasedSerializer):
 class PurposeAllSerializer(PolicyBasedSerializer):
     class Meta:
         model = Purpose
-        fields = ["id", "code", "purpose", "updated_at", "created_at"]
+        fields = [
+            "id",
+            "code",
+            "purpose",
+            "updated_at",
+            "created_at"
+        ]
 
 class OrdererAllSerializer(PolicyBasedSerializer):
     class Meta:
         model = Orderer
-        fields = ["id", "orderer", "no", "institute", "updated_at", "created_at"]
+        fields = [
+            "id",
+            "orderer",
+            "no",
+            "institute",
+            "updated_at",
+            "created_at"
+        ]
 
 
 
