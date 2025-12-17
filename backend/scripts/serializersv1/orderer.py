@@ -1,13 +1,13 @@
-from rest_framework import serializers
+from .policy_base import PolicyBasedSerializer
 from scripts.models import Orderer
 from .institute import InstituteSerializer
 
-class OrdererAllSerializer(serializers.ModelSerializer):
+class OrdererAllSerializer(PolicyBasedSerializer):
     class Meta:
         model = Orderer
         fields = ["id", "orderer", "no", "institute", "updated_at", "created_at"]
 
-class OrdererSerializer(serializers.ModelSerializer):
+class OrdererSerializer(PolicyBasedSerializer):
     institute = InstituteSerializer()
 
     class Meta:

@@ -1,7 +1,7 @@
-from rest_framework import serializers
 from scripts.models import Description
+from .policy_base import PolicyBasedSerializer
 
-class DescriptionSerializer(serializers.ModelSerializer):
+class DescriptionSerializer(PolicyBasedSerializer):
     class Meta:
         model = Description
         fields = ["id", "description", "label", "created_at", "updated_at"]

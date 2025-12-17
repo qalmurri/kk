@@ -1,3 +1,4 @@
+from .policy_base import PolicyBasedSerializer
 from rest_framework import serializers
 from scripts.models import Scripts, ScriptsOrderer, Orderer
 from .orderer import OrdererSerializer
@@ -8,7 +9,7 @@ from .isbn import ISBNSerializer
 from .bool import BoolSerializer
 from .description import DescriptionSerializer
 
-class ScriptSerializer(serializers.ModelSerializer):
+class ScriptSerializer(PolicyBasedSerializer):
     class Meta:
         model = Scripts
         fields = ["id", "title", "entry_date", "created_at"]

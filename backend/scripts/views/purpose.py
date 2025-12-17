@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from scripts.repositories.purpose import PurposeCommandRepository, PurposeQueryRepository
-from scripts.serializers.purpose import PurposeSerializer, PurposeAllSerializer
+from scripts.serializers import PurposeSerializer, PurposeAllSerializer
 from scripts.utils import current_timestamp
 
 class PurposeByCodeView(APIView):

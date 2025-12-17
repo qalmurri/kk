@@ -1,7 +1,7 @@
-from rest_framework import serializers
+from .policy_base import PolicyBasedSerializer
 from scripts.models import CoverColor
 
-class CoverColorSerializer(serializers.ModelSerializer):
+class CoverColorSerializer(PolicyBasedSerializer):
     class Meta:
         model = CoverColor
         fields = ["id", "color"]

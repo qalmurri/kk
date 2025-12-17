@@ -1,13 +1,13 @@
-from rest_framework import serializers
+from .policy_base import PolicyBasedSerializer
 from scripts.models import Purpose
 from scripts.serializers.code import CodeSerializer
 
-class PurposeAllSerializer(serializers.ModelSerializer):
+class PurposeAllSerializer(PolicyBasedSerializer):
     class Meta:
         model = Purpose
         fields = ["id", "code", "purpose", "updated_at", "created_at"]
 
-class PurposeSerializer(serializers.ModelSerializer):
+class PurposeSerializer(PolicyBasedSerializer):
     code = CodeSerializer()
 
     class Meta:

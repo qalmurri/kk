@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from scripts.models import Scripts
-from scripts.serializers.scripts import ScriptSerializer, ScriptsSerializer
+from scripts.serializers import ScriptSerializer, ScriptsSerializer
 from rest_framework.permissions import IsAuthenticated
 
 class ScriptsView(APIView):

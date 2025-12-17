@@ -1,7 +1,7 @@
-from rest_framework import serializers
 from scripts.models import Size
+from .policy_base import PolicyBasedSerializer
 
-class SizeSerializer(serializers.ModelSerializer):
+class SizeSerializer(PolicyBasedSerializer):
     class Meta:
         model = Size
         fields = ["id", "size", "created_at", "updated_at"]
