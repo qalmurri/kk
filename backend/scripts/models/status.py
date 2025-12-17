@@ -3,7 +3,7 @@ from scripts.models.code import ScriptsStatusCode
 from scripts.models.scripts import Scripts
 from scripts.models.timestamped import TimeStampedModel
 
-class Purpose(TimeStampedModel): #MigrateDone
+class Status(TimeStampedModel): #MigrateDone
     scripts = models.ForeignKey(
         Scripts,
         on_delete=models.CASCADE,

@@ -15,13 +15,15 @@
                     "no": 12345678,
                     "institute": {
                         "id": 1,
-                        "institute": "Fakultas Teknik",
-                        "created_at": 1765883760,
+                        "name": "Fakultas Teknik",
+                        "created_at": 1765953243,
                         "updated_at": null
                     },
-                    "created_at": 1765883760,
+                    "created_at": 1765953243,
                     "updated_at": null
-                }
+                },
+                "created_at": 1765953244,
+                "updated_at": null
             },
             {
                 "id": 2,
@@ -31,66 +33,86 @@
                     "no": 32122244,
                     "institute": {
                         "id": 3,
-                        "institute": "Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA)",
-                        "created_at": 1765883760,
+                        "name": "Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA)",
+                        "created_at": 1765953243,
                         "updated_at": null
                     },
-                    "created_at": 1765883760,
+                    "created_at": 1765953243,
                     "updated_at": null
-                }
+                },
+                "created_at": 1765953244,
+                "updated_at": null
             }
         ],
-        "purpose": [
+        "status": [
             {
                 "id": 1,
                 "code": {
                     "id": 1,
-                    "code": "Belum"
+                    "name": "Belum",
+                    "label": 1
                 },
                 "label": 1,
-                "created_at": 1765883760,
+                "created_at": 1765953244,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "code": {
                     "id": 2,
-                    "code": "Proses"
+                    "name": "Proses",
+                    "label": 1
                 },
                 "label": 1,
-                "created_at": 1765883761,
+                "created_at": 1765953244,
                 "updated_at": null
             }
         ],
-        "bool": [
+        "flag": [
             {
                 "id": 1,
-                "boolean": false,
+                "is_active": false,
                 "label": 1,
-                "created_at": 1765883761,
+                "created_at": 1765953244,
                 "updated_at": null
             },
             {
                 "id": 2,
-                "boolean": true,
+                "is_active": true,
                 "label": 3,
-                "created_at": 1765883761,
+                "created_at": 1765953244,
                 "updated_at": null
             }
         ],
-        "description": [
+        "descriptions": [
             {
                 "id": 1,
-                "description": "hoalaaaaa ngantuk",
+                "text": "hoalaaaaa ngantuk",
                 "label": 1,
-                "created_at": 1765883761,
+                "created_at": 1765953244,
                 "updated_at": null
             },
             {
                 "id": 2,
-                "description": "ngantuk poooooolllllllll",
+                "text": "ngantuk poooooolllllllll",
                 "label": 2,
-                "created_at": 1765883761,
+                "created_at": 1765953244,
+                "updated_at": null
+            }
+        ],
+        "notes": [
+            {
+                "id": 1,
+                "content": "hoalaaaaa ngantuk",
+                "label": 1,
+                "created_at": 1765953244,
+                "updated_at": null
+            },
+            {
+                "id": 2,
+                "content": "ngantuk poooooolllllllll",
+                "label": 2,
+                "created_at": 1765953244,
                 "updated_at": null
             }
         ],
@@ -98,31 +120,39 @@
             {
                 "id": 1,
                 "isbn": "32123123",
-                "code": 1,
-                "created_at": 1765883761,
+                "code": {
+                    "id": 5,
+                    "name": "ISBN",
+                    "label": 2
+                },
+                "created_at": 1765953244,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "isbn": "3212312323",
-                "code": 2,
-                "created_at": 1765883761,
+                "code": {
+                    "id": 6,
+                    "name": "EISBN",
+                    "label": 2
+                },
+                "created_at": 1765953244,
                 "updated_at": null
             }
         ],
         "institute": {
             "id": 1,
-            "institute": "Fakultas Teknik",
-            "created_at": 1765883760,
+            "name": "Fakultas Teknik",
+            "created_at": 1765953243,
             "updated_at": null
         },
         "size": {
             "id": 1,
-            "size": "160x250 (buku teks)",
-            "created_at": 1765883760,
+            "name": "160x250 (buku teks)",
+            "created_at": 1765953244,
             "updated_at": null
         },
-        "created_at": 1765883760,
+        "created_at": 1765953244,
         "updated_at": null
     },
     {
@@ -132,23 +162,24 @@
         "entry_date": null,
         "finish_date": null,
         "orderers": [],
-        "purpose": [],
-        "bool": [],
-        "description": [],
+        "status": [],
+        "flag": [],
+        "descriptions": [],
+        "notes": [],
         "identification": [],
         "institute": {
             "id": 1,
-            "institute": "Fakultas Teknik",
-            "created_at": 1765883760,
+            "name": "Fakultas Teknik",
+            "created_at": 1765953243,
             "updated_at": null
         },
         "size": {
             "id": 2,
-            "size": "A5",
-            "created_at": 1765883760,
+            "name": "A5",
+            "created_at": 1765953244,
             "updated_at": null
         },
-        "created_at": 1765883760,
+        "created_at": 1765953244,
         "updated_at": null
     }
 ]

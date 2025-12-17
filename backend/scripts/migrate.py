@@ -1,7 +1,11 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from .models import Purpose, Institute, Orderer, Scripts, Size, CoverColor, ScriptsOrderer, ScriptsStatusCode, ISBN, Bool, Description
+from .models import (
+    Status, Institute, Orderer, Scripts,
+    Size, CoverColor, ScriptsOrderer,
+    ScriptsStatusCode, ISBN, Flag, Description, Note
+)
 
 @receiver(post_migrate)
 def create_default_table(sender, **kwargs):
@@ -22,14 +26,18 @@ def create_default_table(sender, **kwargs):
             )
 
     code = [
-        "Belum",
-        "Proses",
-        "Pengajuan",
-        "Sudah",
+        {"name": "Belum", "label": 1},
+        {"name": "Proses", "label": 1},
+        {"name": "Pengajuan", "label": 1},
+        {"name": "Sudah", "label": 1},
+        {"name": "ISBN", "label": 2},
+        {"name": "EISBN", "label": 2}
+
     ]
     for item in code:
         ScriptsStatusCode.objects.get_or_create(
-            code=item
+            name=item["name"],
+            label=item["label"],
         )
 
     institute = [
@@ -50,7 +58,7 @@ def create_default_table(sender, **kwargs):
     ]
     for item in institute:
         Institute.objects.get_or_create(
-            institute=item
+            name=item
         )
 
     name = [
@@ -85,7 +93,7 @@ def create_default_table(sender, **kwargs):
     ]
     for item in size:
         Size.objects.get_or_create(
-            size=item
+            name=item
         )
 
 
@@ -106,7 +114,7 @@ def create_default_table(sender, **kwargs):
         {"scripts": 1, "code": 2, "label": 1}
     ]
     for item in purpose:
-        Purpose.objects.get_or_create(
+        Status.objects.get_or_create(
             scripts_id=item["scripts"],
             code_id=item["code"],
             label=item["label"]
@@ -134,35 +142,46 @@ def create_default_table(sender, **kwargs):
         )
 
     isbn2 = [
-        {"scripts": 1, "isbn": "32123123", "code": 1},
-        {"scripts": 1, "isbn": "3212312323", "code": 2}
+        {"scripts": 1, "isbn": "32123123", "code": 5},
+        {"scripts": 1, "isbn": "3212312323", "code": 6}
     ]
     for item in isbn2:
         ISBN.objects.get_or_create(
             scripts_id=item["scripts"],
             isbn=item["isbn"],
-            code=item["code"]
+            code_id=item["code"]
         )
 
     description = [
-        {"scripts": 1, "description": "hoalaaaaa ngantuk", "label": 1},
-        {"scripts": 1, "description": "ngantuk poooooolllllllll", "label": 2}
+        {"scripts": 1, "text": "hoalaaaaa ngantuk", "label": 1},
+        {"scripts": 1, "text": "ngantuk poooooolllllllll", "label": 2}
     ]
     for item in description:
         Description.objects.get_or_create(
             scripts_id=item["scripts"],
-            description=item["description"],
+            text=item["text"],
+            label=item["label"]
+        )
+
+    description2 = [
+        {"scripts": 1, "content": "hoalaaaaa ngantuk", "label": 1},
+        {"scripts": 1, "content": "ngantuk poooooolllllllll", "label": 2}
+    ]
+    for item in description2:
+        Note.objects.get_or_create(
+            scripts_id=item["scripts"],
+            content=item["content"],
             label=item["label"]
         )
 
     bool = [
-        {"scripts": 1, "label": 1, "boolean": False},
-        {"scripts": 1, "label": 3, "boolean": True}
+        {"scripts": 1, "label": 1, "is_active": False},
+        {"scripts": 1, "label": 3, "is_active": True}
     ]
     for item in bool:
-        Bool.objects.get_or_create(
+        Flag.objects.get_or_create(
             scripts_id=item["scripts"],
             label=item["label"],
-            boolean=item["boolean"]
+            is_active=item["is_active"]
         )
         

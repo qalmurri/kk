@@ -1,44 +1,44 @@
 from django.shortcuts import get_object_or_404
-from scripts.models import Purpose
+from scripts.models import Status
 
 class PurposeQueryRepository:
     @staticmethod
     def list_all():
-        return Purpose.objects.all()
+        return Status.objects.all()
     
     @staticmethod
-    def get_by_id(id: int) -> Purpose:
+    def get_by_id(id: int) -> Status:
         return get_object_or_404(
-            Purpose,
+            Status,
             id=id
         )
     
     @staticmethod
     def get_by_code(code: int):
-        return Purpose.objects.filter(
+        return Status.objects.filter(
             code=code
         )
 
 class PurposeCommandRepository:
     @staticmethod
-    def create(code: int, purpose: str) -> Purpose:
-        return Purpose.objects.create(
+    def create(code: int, purpose: str) -> Status:
+        return Status.objects.create(
             code=code,
             purpose=purpose
         )
 
     @staticmethod
     def update_fast(id: int, **kwargs) -> int:
-        return Purpose.objects.filter(
+        return Status.objects.filter(
             id=id
         ).update(
             **kwargs
         )
 
     @staticmethod
-    def update_safe(id: int, **kwargs) -> Purpose:
+    def update_safe(id: int, **kwargs) -> Status:
         obj = get_object_or_404(
-            Purpose,
+            Status,
             id=id
         )
         for key, value in kwargs.items():

@@ -1,7 +1,7 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
 from scripts.models.scripts import Scripts
-from scripts.models.purpose import Purpose
+from scripts.models.status import Status
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -13,7 +13,7 @@ class CoverStatus(TimeStampedModel): #PurposeDone
         related_name="scripts_CoverStatus"
     )
     purpose = models.ForeignKey(
-        Purpose,
+        Status,
         on_delete=models.CASCADE,
         related_name="purpose_CoverStatus"
     )

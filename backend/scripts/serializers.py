@@ -1,11 +1,59 @@
 from rest_framework import serializers
 from scripts.models import (
     Size, Scripts, ScriptsOrderer, Orderer,
-    Purpose, ISBN, Institute, Description,
-    ScriptsStatusCode, Bool, CoverColor
+    Status, ISBN, Institute, Description,
+    ScriptsStatusCode, Flag, CoverColor, Note
 )
 
-class PolicyBasedSerializer(serializers.ModelSerializer):
+COMPACT_FIELD_MAP = {
+    "created_at": "a",
+    "updated_at": "b",
+
+    "entry_date": "d",
+    "finish_date": "f",
+
+    "name": "n",
+    
+    "title": "t",
+    "is_active": "v",
+
+    "label": "l",
+    "code": "c",
+    "text": "t",
+    "content": "t",
+
+    "orderer": "o",
+    "institute": "i",
+    "no": "z"
+}
+
+class BaseCompactSerializer(serializers.ModelSerializer):
+    pass
+#    def get_fields(self):
+#        fields = super().get_fields()
+#        compacted = {}
+#
+#        for field_name, field in fields.items():
+#            if field_name == "id":
+#                compacted[field_name] = field
+#                continue
+#
+#            short_name = COMPACT_FIELD_MAP.get(field_name)
+#            if short_name:
+#                field.source = field_name
+#                compacted[short_name] = field
+#            else:
+#                compacted[field_name] = field
+#        return compacted
+    
+#    def to_representation(self, instance):
+#        data = super().to_representation(instance)
+#        return {
+#            k: v for k, v in data.items()
+#            if v not in (None, [], {})
+#        }
+
+class PolicyBasedSerializer(BaseCompactSerializer):
     PROTECTED_FIELDS = set()
 
     def __init__(self, *args, **kwargs):
@@ -35,7 +83,7 @@ class SizeSerializer(PolicyBasedSerializer):
         model = Size
         fields = [
             "id",
-            "size",
+            "name",
             "created_at",
             "updated_at"
         ]
@@ -45,7 +93,7 @@ class InstituteSerializer(PolicyBasedSerializer):
         model = Institute
         fields = [
             "id",
-            "institute",
+            "name",
             "created_at",
             "updated_at"
         ]
@@ -55,14 +103,15 @@ class CodeSerializer(PolicyBasedSerializer):
         model = ScriptsStatusCode
         fields = [
             "id",
-            "code"
+            "name",
+            "label"
         ]
 
-class PurposeSerializer(PolicyBasedSerializer):
+class StatusSerializer(PolicyBasedSerializer):
     code = CodeSerializer()
 
     class Meta:
-        model = Purpose
+        model = Status
         fields = [
             "id",
             "code",
@@ -71,12 +120,12 @@ class PurposeSerializer(PolicyBasedSerializer):
             "updated_at"
         ]
 
-class BoolSerializer(PolicyBasedSerializer):
+class FlagSerializer(PolicyBasedSerializer):
     class Meta:
-        model = Bool
+        model = Flag
         fields = [
             "id",
-            "boolean",
+            "is_active",
             "label",
             "created_at",
             "updated_at"
@@ -87,13 +136,26 @@ class DescriptionSerializer(PolicyBasedSerializer):
         model = Description
         fields = [
             "id",
-            "description",
+            "text",
+            "label",
+            "created_at",
+            "updated_at"
+        ]
+
+class NoteSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = Note
+        fields = [
+            "id",
+            "content",
             "label",
             "created_at",
             "updated_at"
         ]
 
 class ISBNSerializer(PolicyBasedSerializer):
+    code = CodeSerializer()
+    
     class Meta:
         model = ISBN
         fields = [
@@ -174,16 +236,20 @@ class ScriptsSerializer(PolicyBasedSerializer):
         source="scripts_ScriptsOrderer",
         many=True
     )
-    purpose = PurposeSerializer(
+    status = StatusSerializer(
         source="scripts_Purpose",
         many=True
     )
-    bool = BoolSerializer(
+    flag = FlagSerializer(
         source="scripts_Bool",
         many=True
     )
-    description = DescriptionSerializer(
+    descriptions = DescriptionSerializer(
         source="scripts_Description",
+        many=True
+    )
+    notes = NoteSerializer(
+        source="scripts_Note",
         many=True
     )
     identification = ISBNSerializer(
@@ -202,9 +268,10 @@ class ScriptsSerializer(PolicyBasedSerializer):
             "entry_date",
             "finish_date",
             "orderers",
-            "purpose",
-            "bool",
-            "description",
+            "status",
+            "flag",
+            "descriptions",
+            "notes",
             "identification",
             "institute",
             "size",
@@ -217,11 +284,11 @@ class ScriptsSerializer(PolicyBasedSerializer):
 
 class PurposeAllSerializer(PolicyBasedSerializer):
     class Meta:
-        model = Purpose
+        model = Status
         fields = [
             "id",
             "code",
-            "purpose",
+            "label",
             "updated_at",
             "created_at"
         ]
