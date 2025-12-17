@@ -2,8 +2,11 @@ from rest_framework import serializers
 from scripts.models import (
     Size, Scripts, ScriptsOrderer, Orderer,
     Status, ISBN, Institute, Description,
-    ScriptsStatusCode, Flag, CoverColor, Note
+    ScriptsStatusCode, Flag, Note, ScriptsProcess, By
 )
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 COMPACT_FIELD_MAP = {
     "created_at": "a",
@@ -13,11 +16,15 @@ COMPACT_FIELD_MAP = {
     "finish_date": "f",
 
     "name": "n",
+    "isbn": "m",
+
+    "user": "j",
     
     "title": "t",
     "is_active": "v",
 
     "label": "l",
+    "size": "q",
     "code": "c",
     "text": "t",
     "content": "t",
@@ -45,7 +52,7 @@ class BaseCompactSerializer(serializers.ModelSerializer):
 #            else:
 #                compacted[field_name] = field
 #        return compacted
-    
+#   
 #    def to_representation(self, instance):
 #        data = super().to_representation(instance)
 #        return {
@@ -166,12 +173,12 @@ class ISBNSerializer(PolicyBasedSerializer):
             "updated_at"
         ]
 
-class CoverColorSerializer(PolicyBasedSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CoverColor
+        model = User
         fields = [
             "id",
-            "color"
+            "username"
         ]
 
 # ORDERER
@@ -186,6 +193,33 @@ class OrdererSerializer(PolicyBasedSerializer):
             "name",
             "no",
             "institute",
+            "created_at",
+            "updated_at"
+        ]
+
+class BySerializer(PolicyBasedSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = By
+        fields = [
+            "id",
+            "user",
+            "created_at",
+            "updated_at"
+        ]
+
+class ScriptsProcessSerializer(PolicyBasedSerializer):
+    by = BySerializer(
+        source="scriptsprocess_By",
+        many=True
+    )
+    class Meta:
+        model = ScriptsProcess
+        fields = [
+            "id",
+            "by",
+            "label",
             "created_at",
             "updated_at"
         ]
@@ -237,11 +271,11 @@ class ScriptsSerializer(PolicyBasedSerializer):
         many=True
     )
     status = StatusSerializer(
-        source="scripts_Purpose",
+        source="scripts_Status",
         many=True
     )
     flag = FlagSerializer(
-        source="scripts_Bool",
+        source="scripts_Flag",
         many=True
     )
     descriptions = DescriptionSerializer(
@@ -254,6 +288,10 @@ class ScriptsSerializer(PolicyBasedSerializer):
     )
     identification = ISBNSerializer(
         source="scripts_ISBN",
+        many=True
+    )
+    process = ScriptsProcessSerializer(
+        source="scripts_ScriptsProcess",
         many=True
     )
     institute = InstituteSerializer()
@@ -273,6 +311,7 @@ class ScriptsSerializer(PolicyBasedSerializer):
             "descriptions",
             "notes",
             "identification",
+            "process",
             "institute",
             "size",
             "created_at",
@@ -282,7 +321,7 @@ class ScriptsSerializer(PolicyBasedSerializer):
 
 # PIVOT
 
-class PurposeAllSerializer(PolicyBasedSerializer):
+class StatusAllSerializer(PolicyBasedSerializer):
     class Meta:
         model = Status
         fields = [

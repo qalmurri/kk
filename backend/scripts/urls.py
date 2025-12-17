@@ -4,7 +4,6 @@ from .views.purpose import PurposeCreateView, PurposeByCodeView, PurposeUpdateVi
 from .views.size import SizeCreatedView, SizeAllView, SizeUpdateView
 from .views.orderer import OrdererAllView, OrdererCreatedView, OrdererUpdateView
 from .views.institute import InstituteAllView, InstituteCreatedView, InstituteUpdateView
-from .views.cover_color import CoverColorAllView, CoverColorCreatedView, CoverColorUpdateView
 from .views.logout import LogoutView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views.script_orderer import ScriptOrdererCreateView
@@ -31,10 +30,6 @@ urlpatterns = [
     path("institute/", InstituteCreatedView.as_view()), #done
     path("institute/all/", InstituteAllView.as_view()), #done
     path("institute/<int:id>/update/", InstituteUpdateView.as_view()), #done
-
-    path("color/", CoverColorCreatedView.as_view()), #done
-    path("color/all/", CoverColorAllView.as_view()), #done
-    path("color/<int:id>/update/", CoverColorUpdateView.as_view()), #done
 
     path("script-orderer/create/", ScriptOrdererCreateView.as_view(), name="script-orderer-create"),
 ]

@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from scripts.repositories.purpose import PurposeCommandRepository, PurposeQueryRepository
-from scripts.serializers import StatusSerializer, PurposeAllSerializer
+from scripts.repositories.purpose import StatusCommandRepository, StatusQueryRepository
+from scripts.serializers import StatusSerializer, StatusAllSerializer
 from scripts.utils import current_timestamp
 
 class PurposeByCodeView(APIView):
@@ -11,7 +11,7 @@ class PurposeByCodeView(APIView):
     permission_classes = []
 
     def get(self, request, code):
-        obj = PurposeQueryRepository.get_by_code(
+        obj = StatusQueryRepository.get_by_code(
             code
         )
         if not obj:
@@ -39,8 +39,8 @@ class PurposeAllView(APIView):
     permission_classes = []
 
     def get(self, request):
-        queryset = PurposeQueryRepository.list_all()
-        serializer = PurposeAllSerializer(
+        queryset = StatusQueryRepository.list_all()
+        serializer = StatusAllSerializer(
             queryset,
             many=True
         )
@@ -70,7 +70,7 @@ class PurposeCreateView(APIView):
                     "success": False,
                 }, status=status.HTTP_400_BAD_REQUEST)
         
-        PurposeCommandRepository.create(
+        StatusCommandRepository.create(
             code=code,
             purpose=purpose
         )
@@ -84,7 +84,7 @@ class PurposeUpdateView(APIView):
     permission_classes = []
     
     def patch(self, request, id):
-        obj = PurposeQueryRepository.get_by_id(
+        obj = StatusQueryRepository.get_by_id(
             id
         )
         if not obj:
@@ -96,7 +96,7 @@ class PurposeUpdateView(APIView):
         purpose = request.data.get(
             "purpose"
         )
-        PurposeCommandRepository.update_safe(
+        StatusCommandRepository.update_safe(
             id=id,
             purpose=purpose,
             updated_at=current_timestamp()

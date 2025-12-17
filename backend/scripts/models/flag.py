@@ -6,7 +6,7 @@ class Flag(TimeStampedModel):
     scripts = models.ForeignKey(
         Scripts,
         on_delete=models.CASCADE,
-        related_name="scripts_Bool"
+        related_name="scripts_Flag"
     )
     is_active = models.BooleanField(default=False)
     label = models.IntegerField()

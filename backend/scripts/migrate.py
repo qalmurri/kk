@@ -3,8 +3,8 @@ from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from .models import (
     Status, Institute, Orderer, Scripts,
-    Size, CoverColor, ScriptsOrderer,
-    ScriptsStatusCode, ISBN, Flag, Description, Note
+    Size, ScriptsOrderer, ScriptsProcess,
+    ScriptsStatusCode, ISBN, Flag, Description, Note, By
 )
 
 @receiver(post_migrate)
@@ -120,17 +120,6 @@ def create_default_table(sender, **kwargs):
             label=item["label"]
         )
 
-    color = [
-        "Polos",
-        "2 Warna",
-        "3 Warna",
-        "4 Warna"
-    ]
-    for item in color:
-        CoverColor.objects.get_or_create(
-            color=item
-        )
-
     scriptsorderer = [
         {"scripts": 1, "orderer": 1},
         {"scripts": 1, "orderer": 3}
@@ -183,5 +172,26 @@ def create_default_table(sender, **kwargs):
             scripts_id=item["scripts"],
             label=item["label"],
             is_active=item["is_active"]
+        )
+        
+    bool = [
+        {"scripts": 1, "label": 1},
+        {"scripts": 1, "label": 2}
+    ]
+    for item in bool:
+        ScriptsProcess.objects.get_or_create(
+            scripts_id=item["scripts"],
+            label=item["label"]
+        )
+        
+    balll = [
+        {"scriptsprocess": 1, "user": 1},
+        {"scriptsprocess": 1, "user": 2},
+        {"scriptsprocess": 1, "user": 3},
+    ]
+    for item in balll:
+        By.objects.get_or_create(
+            scriptsprocess_id=item["scriptsprocess"],
+            user_id=item["user"]
         )
         

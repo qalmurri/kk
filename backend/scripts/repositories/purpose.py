@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from scripts.models import Status
 
-class PurposeQueryRepository:
+class StatusQueryRepository:
     @staticmethod
     def list_all():
         return Status.objects.all()
@@ -19,7 +19,7 @@ class PurposeQueryRepository:
             code=code
         )
 
-class PurposeCommandRepository:
+class StatusCommandRepository:
     @staticmethod
     def create(code: int, purpose: str) -> Status:
         return Status.objects.create(

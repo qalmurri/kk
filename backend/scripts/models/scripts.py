@@ -32,15 +32,3 @@ class Scripts(TimeStampedModel): #MigrateDone
         blank=True
     )
 
-class No(TimeStampedModel):
-    no = models.CharField(
-        max_length=255
-    )
-    scripts = models.ForeignKey(
-        Scripts,
-        on_delete=models.CASCADE,
-        related_name="scripts_Order",
-        null=True,
-        blank=True
-    )
-
