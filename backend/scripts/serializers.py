@@ -2,7 +2,8 @@ from rest_framework import serializers
 from scripts.models import (
     Size, Scripts, ScriptsOrderer, Orderer,
     Status, ISBN, Institute, Description,
-    ScriptsStatusCode, Flag, Note, ScriptsProcess, By
+    ScriptsStatusCode, Flag, Note, ScriptsProcess, By,
+    Content, Text
 )
 from django.contrib.auth import get_user_model
 
@@ -12,12 +13,15 @@ COMPACT_FIELD_MAP = {
     "created_at": "a",
     "updated_at": "r",
 
+    "text": "z",
+    "content": "x",
+
+
     "title": "o",
     "entry_date": "d",
     "finish_date": "e",
 
     "code": "b",
-    "content": "c",
     "is_active": "f",
     "institute": "g",
     "isbn": "h",
@@ -28,14 +32,12 @@ COMPACT_FIELD_MAP = {
     "size": "m",
     "type": "n",
     
-    "text": "p",
     "user": "q",
 
 }
 
 class BaseCompactSerializer(serializers.ModelSerializer):
     pass
-    
 #    def get_fields(self):
 #        fields = super().get_fields()
 #        compacted = {}
@@ -85,6 +87,26 @@ class PolicyBasedSerializer(BaseCompactSerializer):
 
 # BASIC SERIALIZERS
 
+class ContentSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = Content
+        fields = [
+            "id",
+            "content",
+            "created_at",
+            "updated_at"
+        ]
+
+class TextSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = Text
+        fields = [
+            "id",
+            "text",
+            "created_at",
+            "updated_at"
+        ]
+
 class SizeSerializer(PolicyBasedSerializer):
     class Meta:
         model = Size
@@ -110,8 +132,7 @@ class CodeSerializer(PolicyBasedSerializer):
         model = ScriptsStatusCode
         fields = [
             "id",
-            "name",
-            "label"
+            "name"
         ]
 
 class StatusSerializer(PolicyBasedSerializer):
@@ -139,22 +160,32 @@ class FlagSerializer(PolicyBasedSerializer):
         ]
 
 class DescriptionSerializer(PolicyBasedSerializer):
+    items = TextSerializer(
+        source="description_Text",
+        many=True
+    )
+
     class Meta:
         model = Description
         fields = [
             "id",
-            "text",
+            "items",
             "label",
             "created_at",
             "updated_at"
         ]
 
 class NoteSerializer(PolicyBasedSerializer):
+    items = ContentSerializer(
+        source="note_Content",
+        many=True
+    )
+
     class Meta:
         model = Note
         fields = [
             "id",
-            "content",
+            "items",
             "label",
             "created_at",
             "updated_at"

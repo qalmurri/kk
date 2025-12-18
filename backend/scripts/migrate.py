@@ -4,7 +4,8 @@ from django.contrib.auth import get_user_model
 from .models import (
     Status, Institute, Orderer, Scripts,
     Size, ScriptsOrderer, ScriptsProcess,
-    ScriptsStatusCode, ISBN, Flag, Description, Note, By
+    ScriptsStatusCode, ISBN, Flag, Description, Note, By,
+    Text, Content
 )
 
 @receiver(post_migrate)
@@ -26,18 +27,15 @@ def create_default_table(sender, **kwargs):
             )
 
     code = [
-        {"name": "Belum", "label": 1},
-        {"name": "Proses", "label": 1},
-        {"name": "Pengajuan", "label": 1},
-        {"name": "Sudah", "label": 1},
-        {"name": "ISBN", "label": 2},
-        {"name": "EISBN", "label": 2}
+        "Belum",
+        "Proses",
+        "Pengajuan",
+        "Sudah"
 
     ]
     for item in code:
         ScriptsStatusCode.objects.get_or_create(
-            name=item["name"],
-            label=item["label"],
+            name=item
         )
 
     institute = [
@@ -96,7 +94,6 @@ def create_default_table(sender, **kwargs):
             name=item
         )
 
-
     scripts = [
         {"title": "Values of Life", "institute": 1, "size": 1},
         {"title": "The Power of Core Values", "institute": 1, "size": 2}
@@ -107,7 +104,6 @@ def create_default_table(sender, **kwargs):
             institute_id=item["institute"],
             size_id=item["size"]
         )
-
 
     purpose = [
         {"scripts": 1, "code": 1,"label": 1},
@@ -141,28 +137,6 @@ def create_default_table(sender, **kwargs):
             type=item["type"]
         )
 
-    description = [
-        {"scripts": 1, "text": "hoalaaaaa ngantuk", "label": 1},
-        {"scripts": 1, "text": "ngantuk poooooolllllllll", "label": 2}
-    ]
-    for item in description:
-        Description.objects.get_or_create(
-            scripts_id=item["scripts"],
-            text=item["text"],
-            label=item["label"]
-        )
-
-    description2 = [
-        {"scripts": 1, "content": "hoalaaaaa ngantuk", "label": 1},
-        {"scripts": 1, "content": "ngantuk poooooolllllllll", "label": 2}
-    ]
-    for item in description2:
-        Note.objects.get_or_create(
-            scripts_id=item["scripts"],
-            content=item["content"],
-            label=item["label"]
-        )
-
     bool = [
         {"scripts": 1, "label": 1, "is_active": False},
         {"scripts": 1, "label": 3, "is_active": True}
@@ -194,4 +168,47 @@ def create_default_table(sender, **kwargs):
             scriptsprocess_id=item["scriptsprocess"],
             user_id=item["user"]
         )
-        
+
+    description = [
+        {"scripts": 1, "label": 1},
+        {"scripts": 1, "label": 2}
+    ]
+    for item in description:
+        Description.objects.get_or_create(
+            scripts_id=item["scripts"],
+            label=item["label"]
+        )
+
+    description2 = [
+        {"scripts": 1, "label": 1},
+        {"scripts": 1, "label": 2}
+    ]
+    for item in description2:
+        Note.objects.get_or_create(
+            scripts_id=item["scripts"],
+            label=item["label"]
+        )
+
+    content = [
+        {"note": 1, "content": "testinggggggg"},
+        {"note": 1, "content": "aku anak remaja"},
+        {"note": 1, "content": "aku anak ibuk"},
+        {"note": 1, "content": "aku anak bapak"}
+    ]
+    for item in content:
+        Content.objects.get_or_create(
+            note_id=item["note"],
+            content=item["content"],
+        )
+
+    content22 = [
+        {"description": 1, "text": "testinggggggg"},
+        {"description": 1, "text": "aku anak remaja"},
+        {"description": 1, "text": "aku anak ibuk"},
+        {"description": 1, "text": "aku anak bapak"}
+    ]
+    for item in content22:
+        Text.objects.get_or_create(
+            description_id=item["description"],
+            text=item["text"],
+        )

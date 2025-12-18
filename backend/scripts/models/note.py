@@ -8,7 +8,14 @@ class Note(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="scripts_Note"
     )
+    label = models.IntegerField()
+
+class Content(TimeStampedModel):
+    note = models.ForeignKey(
+        Note,
+        on_delete=models.CASCADE,
+        related_name="note_Content"
+    )
     content = models.CharField(
         max_length=255
     )
-    label = models.IntegerField()

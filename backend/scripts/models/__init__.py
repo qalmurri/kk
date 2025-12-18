@@ -10,6 +10,6 @@ from .size import Size
 from .timestamped import TimeStampedModel
 from .isbn import ISBN
 from .flag import Flag
-from .description import Description
-from .note import Note
+from .description import Description, Text
+from .note import Note, Content
 from .no import No
