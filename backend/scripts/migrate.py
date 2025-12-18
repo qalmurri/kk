@@ -2,10 +2,22 @@ from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from .models import (
-    Status, Institute, Orderer, Scripts,
-    Size, ScriptsOrderer, ScriptsProcess,
-    ScriptsStatusCode, ISBN, Flag, Description, Note, By,
-    Text, Content
+    Status,
+    Institute,
+    Orderer,
+    Scripts,
+    Size,
+    ScriptsOrderer,
+    ScriptsProcess,
+    ScriptsStatusCode,
+    ISBN,
+    Flag,
+    Description,
+    Note,
+    By,
+    Text,
+    Content,
+    Label
 )
 
 @receiver(post_migrate)
@@ -26,12 +38,27 @@ def create_default_table(sender, **kwargs):
                 password=u["password"]
             )
 
+    valuuu = [
+        "value1",
+        "value2",
+        "value3",
+        "value4",
+        "value5",
+        "value6",
+        "value7",
+        "value8",
+        "value9"
+    ]
+    for item in valuuu:
+        Label.objects.get_or_create(
+            name=item
+        )
+
     code = [
         "Belum",
         "Proses",
         "Pengajuan",
         "Sudah"
-
     ]
     for item in code:
         ScriptsStatusCode.objects.get_or_create(
@@ -113,7 +140,7 @@ def create_default_table(sender, **kwargs):
         Status.objects.get_or_create(
             scripts_id=item["scripts"],
             code_id=item["code"],
-            label=item["label"]
+            label_id=item["label"]
         )
 
     scriptsorderer = [
@@ -144,7 +171,7 @@ def create_default_table(sender, **kwargs):
     for item in bool:
         Flag.objects.get_or_create(
             scripts_id=item["scripts"],
-            label=item["label"],
+            label_id=item["label"],
             is_active=item["is_active"]
         )
         
@@ -155,7 +182,7 @@ def create_default_table(sender, **kwargs):
     for item in bool:
         ScriptsProcess.objects.get_or_create(
             scripts_id=item["scripts"],
-            label=item["label"]
+            label_id=item["label"]
         )
         
     balll = [
@@ -176,7 +203,7 @@ def create_default_table(sender, **kwargs):
     for item in description:
         Description.objects.get_or_create(
             scripts_id=item["scripts"],
-            label=item["label"]
+            label_id=item["label"]
         )
 
     description2 = [
@@ -186,7 +213,7 @@ def create_default_table(sender, **kwargs):
     for item in description2:
         Note.objects.get_or_create(
             scripts_id=item["scripts"],
-            label=item["label"]
+            label_id=item["label"]
         )
 
     content = [

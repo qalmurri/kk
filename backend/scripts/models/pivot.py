@@ -3,6 +3,7 @@ from scripts.models.timestamped import TimeStampedModel
 from scripts.models.scripts import Scripts
 from scripts.models.orderer import Orderer
 from scripts.models.no import No
+from scripts.models.label import Label
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -37,7 +38,11 @@ class ScriptsProcess(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="scripts_ScriptsProcess"
     )
-    label = models.IntegerField()
+    label = models.ForeignKey(
+        Label,
+        on_delete=models.CASCADE,
+        related_name="label_ScriptsProcess"
+    )
 
 class By(TimeStampedModel): 
     scriptsprocess = models.ForeignKey(

@@ -13,3 +13,4 @@ from .flag import Flag
 from .description import Description, Text
 from .note import Note, Content
 from .no import No
+from .label import Label

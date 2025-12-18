@@ -244,13 +244,13 @@
                     "institute": {
                         "id": 1,
                         "name": "Fakultas Teknik",
-                        "created_at": 1766036390,
+                        "created_at": 1766039042,
                         "updated_at": null
                     },
-                    "created_at": 1766036390,
+                    "created_at": 1766039042,
                     "updated_at": null
                 },
-                "created_at": 1766036390,
+                "created_at": 1766039043,
                 "updated_at": null
             },
             {
@@ -262,13 +262,13 @@
                     "institute": {
                         "id": 3,
                         "name": "Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA)",
-                        "created_at": 1766036390,
+                        "created_at": 1766039042,
                         "updated_at": null
                     },
-                    "created_at": 1766036390,
+                    "created_at": 1766039042,
                     "updated_at": null
                 },
-                "created_at": 1766036390,
+                "created_at": 1766039043,
                 "updated_at": null
             }
         ],
@@ -279,8 +279,11 @@
                     "id": 1,
                     "name": "Belum"
                 },
-                "label": 1,
-                "created_at": 1766036390,
+                "label": {
+                    "id": 1,
+                    "name": "value1"
+                },
+                "created_at": 1766039043,
                 "updated_at": null
             },
             {
@@ -289,8 +292,11 @@
                     "id": 2,
                     "name": "Proses"
                 },
-                "label": 1,
-                "created_at": 1766036390,
+                "label": {
+                    "id": 1,
+                    "name": "value1"
+                },
+                "created_at": 1766039043,
                 "updated_at": null
             }
         ],
@@ -298,15 +304,21 @@
             {
                 "id": 1,
                 "is_active": false,
-                "label": 1,
-                "created_at": 1766036390,
+                "label": {
+                    "id": 1,
+                    "name": "value1"
+                },
+                "created_at": 1766039043,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "is_active": true,
-                "label": 3,
-                "created_at": 1766036390,
+                "label": {
+                    "id": 3,
+                    "name": "value3"
+                },
+                "created_at": 1766039043,
                 "updated_at": null
             }
         ],
@@ -317,37 +329,43 @@
                     {
                         "id": 1,
                         "text": "testinggggggg",
-                        "created_at": 1766036391,
+                        "created_at": 1766039043,
                         "updated_at": null
                     },
                     {
                         "id": 2,
                         "text": "aku anak remaja",
-                        "created_at": 1766036391,
+                        "created_at": 1766039043,
                         "updated_at": null
                     },
                     {
                         "id": 3,
                         "text": "aku anak ibuk",
-                        "created_at": 1766036391,
+                        "created_at": 1766039043,
                         "updated_at": null
                     },
                     {
                         "id": 4,
                         "text": "aku anak bapak",
-                        "created_at": 1766036391,
+                        "created_at": 1766039043,
                         "updated_at": null
                     }
                 ],
-                "label": 1,
-                "created_at": 1766036390,
+                "label": {
+                    "id": 1,
+                    "name": "value1"
+                },
+                "created_at": 1766039043,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "items": [],
-                "label": 2,
-                "created_at": 1766036390,
+                "label": {
+                    "id": 2,
+                    "name": "value2"
+                },
+                "created_at": 1766039043,
                 "updated_at": null
             }
         ],
@@ -358,37 +376,43 @@
                     {
                         "id": 1,
                         "content": "testinggggggg",
-                        "created_at": 1766036391,
+                        "created_at": 1766039043,
                         "updated_at": null
                     },
                     {
                         "id": 2,
                         "content": "aku anak remaja",
-                        "created_at": 1766036391,
+                        "created_at": 1766039043,
                         "updated_at": null
                     },
                     {
                         "id": 3,
                         "content": "aku anak ibuk",
-                        "created_at": 1766036391,
+                        "created_at": 1766039043,
                         "updated_at": null
                     },
                     {
                         "id": 4,
                         "content": "aku anak bapak",
-                        "created_at": 1766036391,
+                        "created_at": 1766039043,
                         "updated_at": null
                     }
                 ],
-                "label": 1,
-                "created_at": 1766036391,
+                "label": {
+                    "id": 1,
+                    "name": "value1"
+                },
+                "created_at": 1766039043,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "items": [],
-                "label": 2,
-                "created_at": 1766036391,
+                "label": {
+                    "id": 2,
+                    "name": "value2"
+                },
+                "created_at": 1766039043,
                 "updated_at": null
             }
         ],
@@ -397,14 +421,14 @@
                 "id": 1,
                 "isbn": "32123123",
                 "type": 1,
-                "created_at": 1766036390,
+                "created_at": 1766039043,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "isbn": "3212312323",
                 "type": 2,
-                "created_at": 1766036390,
+                "created_at": 1766039043,
                 "updated_at": null
             }
         ],
@@ -418,7 +442,7 @@
                             "id": 1,
                             "username": "qodri"
                         },
-                        "created_at": 1766036390,
+                        "created_at": 1766039043,
                         "updated_at": null
                     },
                     {
@@ -427,7 +451,7 @@
                             "id": 2,
                             "username": "sarah"
                         },
-                        "created_at": 1766036390,
+                        "created_at": 1766039043,
                         "updated_at": null
                     },
                     {
@@ -436,35 +460,41 @@
                             "id": 3,
                             "username": "menik"
                         },
-                        "created_at": 1766036390,
+                        "created_at": 1766039043,
                         "updated_at": null
                     }
                 ],
-                "label": 1,
-                "created_at": 1766036390,
+                "label": {
+                    "id": 1,
+                    "name": "value1"
+                },
+                "created_at": 1766039043,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "by": [],
-                "label": 2,
-                "created_at": 1766036390,
+                "label": {
+                    "id": 2,
+                    "name": "value2"
+                },
+                "created_at": 1766039043,
                 "updated_at": null
             }
         ],
         "institute": {
             "id": 1,
             "name": "Fakultas Teknik",
-            "created_at": 1766036390,
+            "created_at": 1766039042,
             "updated_at": null
         },
         "size": {
             "id": 1,
             "name": "160x250 (buku teks)",
-            "created_at": 1766036390,
+            "created_at": 1766039043,
             "updated_at": null
         },
-        "created_at": 1766036390,
+        "created_at": 1766039043,
         "updated_at": null
     },
     {
@@ -484,16 +514,16 @@
         "institute": {
             "id": 1,
             "name": "Fakultas Teknik",
-            "created_at": 1766036390,
+            "created_at": 1766039042,
             "updated_at": null
         },
         "size": {
             "id": 2,
             "name": "A5",
-            "created_at": 1766036390,
+            "created_at": 1766039043,
             "updated_at": null
         },
-        "created_at": 1766036390,
+        "created_at": 1766039043,
         "updated_at": null
     }
 ]

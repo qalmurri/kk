@@ -1,26 +1,34 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from scripts.models import (
-    Size, Scripts, ScriptsOrderer, Orderer,
-    Status, ISBN, Institute, Description,
-    ScriptsStatusCode, Flag, Note, ScriptsProcess, By,
-    Content, Text
+    Size,
+    Scripts,
+    ScriptsOrderer,
+    Orderer,
+    Status,
+    ISBN,
+    Institute,
+    Description,
+    ScriptsStatusCode,
+    Flag,
+    Note,
+    ScriptsProcess,
+    By,
+    Content,
+    Text,
+    Label
 )
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 COMPACT_FIELD_MAP = {
     "created_at": "a",
     "updated_at": "r",
-
     "text": "z",
     "content": "x",
-
-
     "title": "o",
     "entry_date": "d",
     "finish_date": "e",
-
     "code": "b",
     "is_active": "f",
     "institute": "g",
@@ -31,7 +39,6 @@ COMPACT_FIELD_MAP = {
     "orderer": "l",
     "size": "m",
     "type": "n",
-    
     "user": "q",
 
 }
@@ -73,17 +80,25 @@ class PolicyBasedSerializer(BaseCompactSerializer):
         super().__init__(*args, **kwargs)
 
         if fields is not None:
-            allowed = set(fields) - self.PROTECTED_FIELDS
-            existing = set(self.fields)
+            allowed = set(
+                fields
+            ) - self.PROTECTED_FIELDS
+            existing = set(
+                self.fields
+            )
 
             invalid = allowed - existing
             if invalid:
                 raise serializers.ValidationError(
-                    f"Invalid fields requested: {invalid}"
+                    f"Invalid fields requested: {
+                        invalid
+                    }"
                 )
 
             for field in existing - allowed:
-                self.fields.pop(field)
+                self.fields.pop(
+                    field
+                )
 
 # BASIC SERIALIZERS
 
@@ -127,6 +142,14 @@ class InstituteSerializer(PolicyBasedSerializer):
             "updated_at"
         ]
 
+class LabelSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = Label
+        fields = [
+            "id",
+            "name"
+        ]
+
 class CodeSerializer(PolicyBasedSerializer):
     class Meta:
         model = ScriptsStatusCode
@@ -137,6 +160,7 @@ class CodeSerializer(PolicyBasedSerializer):
 
 class StatusSerializer(PolicyBasedSerializer):
     code = CodeSerializer()
+    label = LabelSerializer()
 
     class Meta:
         model = Status
@@ -149,6 +173,8 @@ class StatusSerializer(PolicyBasedSerializer):
         ]
 
 class FlagSerializer(PolicyBasedSerializer):
+    label = LabelSerializer()
+
     class Meta:
         model = Flag
         fields = [
@@ -164,6 +190,7 @@ class DescriptionSerializer(PolicyBasedSerializer):
         source="description_Text",
         many=True
     )
+    label = LabelSerializer()
 
     class Meta:
         model = Description
@@ -180,6 +207,7 @@ class NoteSerializer(PolicyBasedSerializer):
         source="note_Content",
         many=True
     )
+    label = LabelSerializer()
 
     class Meta:
         model = Note
@@ -243,6 +271,7 @@ class ScriptsProcessSerializer(PolicyBasedSerializer):
         source="scriptsprocess_By",
         many=True
     )
+    label = LabelSerializer()
     class Meta:
         model = ScriptsProcess
         fields = [
@@ -352,6 +381,7 @@ class ScriptsSerializer(PolicyBasedSerializer):
 # PIVOT
 
 class StatusAllSerializer(PolicyBasedSerializer):
+    label = LabelSerializer()
     class Meta:
         model = Status
         fields = [
@@ -373,6 +403,3 @@ class OrdererAllSerializer(PolicyBasedSerializer):
             "updated_at",
             "created_at"
         ]
-
-
-
