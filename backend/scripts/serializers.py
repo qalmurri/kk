@@ -24,21 +24,23 @@ from scripts.models import (
 User = get_user_model()
 
 COMPACT_FIELD_MAP = {
+    #timestampt
     "created_at": "a",
     "updated_at": "b",
-    "text": "c",
-    "content": "d",
+    "is_active": "i",
     "title": "e",
+    "alias": "a_",
     "entry_date": "f",
     "finish_date": "g",
+    "orderer": "o",
+    "text": "c",
+    "content": "d",
     "code": "h",
-    "is_active": "i",
     "institute": "j",
     "isbn": "k",
     "label": "l",
     "no": "m",
     "name": "n",
-    "orderer": "o",
     "size": "p",
     "type": "q",
     "user": "r",
@@ -48,8 +50,6 @@ COMPACT_FIELD_MAP = {
     "width": "v",
     "x_axis": "w",
     "y_axis": "x",
-    
-
 }
 
 class BaseCompactSerializer(serializers.ModelSerializer):
