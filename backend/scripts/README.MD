@@ -1,9 +1,12 @@
+# description/notes jadikan seperti status
+
 ```json
 [
     {
         "id": 1,
         "is_active": true,
         "title": "Values of Life",
+        "alias": null,
         "entry_date": null,
         "finish_date": null,
         "orderers": [
@@ -16,13 +19,13 @@
                     "institute": {
                         "id": 1,
                         "name": "Fakultas Teknik",
-                        "created_at": 1765976552,
+                        "created_at": 1766027689,
                         "updated_at": null
                     },
-                    "created_at": 1765976552,
+                    "created_at": 1766027689,
                     "updated_at": null
                 },
-                "created_at": 1765976553,
+                "created_at": 1766027689,
                 "updated_at": null
             },
             {
@@ -34,13 +37,13 @@
                     "institute": {
                         "id": 3,
                         "name": "Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA)",
-                        "created_at": 1765976552,
+                        "created_at": 1766027689,
                         "updated_at": null
                     },
-                    "created_at": 1765976552,
+                    "created_at": 1766027689,
                     "updated_at": null
                 },
-                "created_at": 1765976553,
+                "created_at": 1766027689,
                 "updated_at": null
             }
         ],
@@ -53,7 +56,7 @@
                     "label": 1
                 },
                 "label": 1,
-                "created_at": 1765976553,
+                "created_at": 1766027689,
                 "updated_at": null
             },
             {
@@ -64,7 +67,7 @@
                     "label": 1
                 },
                 "label": 1,
-                "created_at": 1765976553,
+                "created_at": 1766027689,
                 "updated_at": null
             }
         ],
@@ -73,14 +76,14 @@
                 "id": 1,
                 "is_active": false,
                 "label": 1,
-                "created_at": 1765976553,
+                "created_at": 1766027690,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "is_active": true,
                 "label": 3,
-                "created_at": 1765976553,
+                "created_at": 1766027690,
                 "updated_at": null
             }
         ],
@@ -89,14 +92,14 @@
                 "id": 1,
                 "text": "hoalaaaaa ngantuk",
                 "label": 1,
-                "created_at": 1765976553,
+                "created_at": 1766027689,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "text": "ngantuk poooooolllllllll",
                 "label": 2,
-                "created_at": 1765976553,
+                "created_at": 1766027689,
                 "updated_at": null
             }
         ],
@@ -105,14 +108,14 @@
                 "id": 1,
                 "content": "hoalaaaaa ngantuk",
                 "label": 1,
-                "created_at": 1765976553,
+                "created_at": 1766027690,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "content": "ngantuk poooooolllllllll",
                 "label": 2,
-                "created_at": 1765976553,
+                "created_at": 1766027690,
                 "updated_at": null
             }
         ],
@@ -120,23 +123,15 @@
             {
                 "id": 1,
                 "isbn": "32123123",
-                "code": {
-                    "id": 5,
-                    "name": "ISBN",
-                    "label": 2
-                },
-                "created_at": 1765976553,
+                "type": 1,
+                "created_at": 1766027689,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "isbn": "3212312323",
-                "code": {
-                    "id": 6,
-                    "name": "EISBN",
-                    "label": 2
-                },
-                "created_at": 1765976553,
+                "type": 2,
+                "created_at": 1766027689,
                 "updated_at": null
             }
         ],
@@ -150,7 +145,7 @@
                             "id": 1,
                             "username": "qodri"
                         },
-                        "created_at": 1765976567,
+                        "created_at": 1766027690,
                         "updated_at": null
                     },
                     {
@@ -159,7 +154,7 @@
                             "id": 2,
                             "username": "sarah"
                         },
-                        "created_at": 1765976567,
+                        "created_at": 1766027690,
                         "updated_at": null
                     },
                     {
@@ -168,41 +163,42 @@
                             "id": 3,
                             "username": "menik"
                         },
-                        "created_at": 1765976567,
+                        "created_at": 1766027690,
                         "updated_at": null
                     }
                 ],
                 "label": 1,
-                "created_at": 1765976553,
+                "created_at": 1766027690,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "by": [],
                 "label": 2,
-                "created_at": 1765976553,
+                "created_at": 1766027690,
                 "updated_at": null
             }
         ],
         "institute": {
             "id": 1,
             "name": "Fakultas Teknik",
-            "created_at": 1765976552,
+            "created_at": 1766027689,
             "updated_at": null
         },
         "size": {
             "id": 1,
             "name": "160x250 (buku teks)",
-            "created_at": 1765976553,
+            "created_at": 1766027689,
             "updated_at": null
         },
-        "created_at": 1765976553,
+        "created_at": 1766027689,
         "updated_at": null
     },
     {
         "id": 2,
         "is_active": true,
         "title": "The Power of Core Values",
+        "alias": null,
         "entry_date": null,
         "finish_date": null,
         "orderers": [],
@@ -215,16 +211,16 @@
         "institute": {
             "id": 1,
             "name": "Fakultas Teknik",
-            "created_at": 1765976552,
+            "created_at": 1766027689,
             "updated_at": null
         },
         "size": {
             "id": 2,
             "name": "A5",
-            "created_at": 1765976553,
+            "created_at": 1766027689,
             "updated_at": null
         },
-        "created_at": 1765976553,
+        "created_at": 1766027689,
         "updated_at": null
     }
 ]

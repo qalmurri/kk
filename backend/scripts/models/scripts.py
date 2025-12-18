@@ -8,6 +8,11 @@ class Scripts(TimeStampedModel): #MigrateDone
     title = models.CharField(
         max_length=255
     )
+    alias = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
     entry_date = models.DateField(
         null=True,
         blank=True

@@ -10,32 +10,32 @@ User = get_user_model()
 
 COMPACT_FIELD_MAP = {
     "created_at": "a",
-    "updated_at": "b",
+    "updated_at": "r",
 
+    "title": "o",
     "entry_date": "d",
-    "finish_date": "f",
+    "finish_date": "e",
 
-    "name": "n",
-    "isbn": "m",
-
-    "user": "j",
+    "code": "b",
+    "content": "c",
+    "is_active": "f",
+    "institute": "g",
+    "isbn": "h",
+    "label": "i",
+    "no": "j",
+    "name": "k",
+    "orderer": "l",
+    "size": "m",
+    "type": "n",
     
-    "title": "t",
-    "is_active": "v",
+    "text": "p",
+    "user": "q",
 
-    "label": "l",
-    "size": "q",
-    "code": "c",
-    "text": "t",
-    "content": "t",
-
-    "orderer": "o",
-    "institute": "i",
-    "no": "z"
 }
 
 class BaseCompactSerializer(serializers.ModelSerializer):
     pass
+    
 #    def get_fields(self):
 #        fields = super().get_fields()
 #        compacted = {}
@@ -161,14 +161,12 @@ class NoteSerializer(PolicyBasedSerializer):
         ]
 
 class ISBNSerializer(PolicyBasedSerializer):
-    code = CodeSerializer()
-    
     class Meta:
         model = ISBN
         fields = [
             "id",
             "isbn",
-            "code",
+            "type",
             "created_at",
             "updated_at"
         ]
@@ -303,6 +301,7 @@ class ScriptsSerializer(PolicyBasedSerializer):
             "id",
             "is_active",
             "title",
+            "alias",
             "entry_date",
             "finish_date",
             "orderers",

@@ -131,14 +131,14 @@ def create_default_table(sender, **kwargs):
         )
 
     isbn2 = [
-        {"scripts": 1, "isbn": "32123123", "code": 5},
-        {"scripts": 1, "isbn": "3212312323", "code": 6}
+        {"scripts": 1, "isbn": "32123123", "type": 1},
+        {"scripts": 1, "isbn": "3212312323", "type": 2}
     ]
     for item in isbn2:
         ISBN.objects.get_or_create(
             scripts_id=item["scripts"],
             isbn=item["isbn"],
-            code_id=item["code"]
+            type=item["type"]
         )
 
     description = [
