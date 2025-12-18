@@ -17,30 +17,38 @@ from scripts.models import (
     Content,
     Text,
     Label,
-    Type
+    Type,
+    Cover
 )
 
 User = get_user_model()
 
 COMPACT_FIELD_MAP = {
     "created_at": "a",
-    "updated_at": "r",
-    "text": "z",
-    "content": "x",
-    "title": "o",
-    "entry_date": "d",
-    "finish_date": "e",
-    "code": "b",
-    "is_active": "f",
-    "institute": "g",
-    "isbn": "h",
-    "label": "i",
-    "no": "j",
-    "name": "k",
-    "orderer": "l",
-    "size": "m",
-    "type": "n",
-    "user": "q",
+    "updated_at": "b",
+    "text": "c",
+    "content": "d",
+    "title": "e",
+    "entry_date": "f",
+    "finish_date": "g",
+    "code": "h",
+    "is_active": "i",
+    "institute": "j",
+    "isbn": "k",
+    "label": "l",
+    "no": "m",
+    "name": "n",
+    "orderer": "o",
+    "size": "p",
+    "type": "q",
+    "user": "r",
+    "height": "s",
+    "thumbnail": "t",
+    "length": "u",
+    "width": "v",
+    "x_axis": "w",
+    "y_axis": "x",
+    
 
 }
 
@@ -91,9 +99,7 @@ class PolicyBasedSerializer(BaseCompactSerializer):
             invalid = allowed - existing
             if invalid:
                 raise serializers.ValidationError(
-                    f"Invalid fields requested: {
-                        invalid
-                    }"
+                    f"Invalid fields requested: {invalid}"
                 )
 
             for field in existing - allowed:
@@ -165,6 +171,19 @@ class TypeSerializer(PolicyBasedSerializer):
         fields = [
             "id",
             "name"
+        ]
+
+class CoverSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = Cover
+        fields = [
+            "id",
+            "thumbnail",
+            "length",
+            "height",
+            "width",
+            "x_axis",
+            "y_axis",
         ]
 
 class StatusSerializer(PolicyBasedSerializer):
@@ -363,6 +382,10 @@ class ScriptsSerializer(PolicyBasedSerializer):
         source="scripts_ScriptsProcess",
         many=True
     )
+    cover = CoverSerializer(
+        source="scripts_Cover",
+        many=True
+    )
     institute = InstituteSerializer()
     size = SizeSerializer()
 
@@ -382,6 +405,7 @@ class ScriptsSerializer(PolicyBasedSerializer):
             "notes",
             "identification",
             "process",
+            "cover",
             "institute",
             "size",
             "created_at",

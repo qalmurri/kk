@@ -18,7 +18,8 @@ from .models import (
     Text,
     Content,
     Label,
-    Type
+    Type,
+    Cover
 )
 
 @receiver(post_migrate)
@@ -243,4 +244,18 @@ def create_default_table(sender, **kwargs):
         Text.objects.get_or_create(
             description_id=item["description"],
             text=item["text"],
+        )
+
+    cov = [
+        {"scripts": 1, "thumbnail": 1, "length": 1, "height": 1, "width": 1, "x_axis": 1, "y_axis": 1},
+    ]
+    for item in cov:
+        Cover.objects.get_or_create(
+            scripts_id=item["scripts"],
+            thumbnail=item["thumbnail"],
+            length=item["length"],
+            height=item["height"],
+            width=item["width"],
+            x_axis=item["x_axis"],
+            y_axis=item["y_axis"],
         )
