@@ -17,7 +17,8 @@ from .models import (
     By,
     Text,
     Content,
-    Label
+    Label,
+    Type
 )
 
 @receiver(post_migrate)
@@ -62,6 +63,15 @@ def create_default_table(sender, **kwargs):
     ]
     for item in code:
         ScriptsStatusCode.objects.get_or_create(
+            name=item
+        )
+
+    code321 = [
+        "ISBN",
+        "E-ISBN",
+    ]
+    for item in code321:
+        Type.objects.get_or_create(
             name=item
         )
 
@@ -161,7 +171,7 @@ def create_default_table(sender, **kwargs):
         ISBN.objects.get_or_create(
             scripts_id=item["scripts"],
             isbn=item["isbn"],
-            type=item["type"]
+            type_id=item["type"]
         )
 
     bool = [

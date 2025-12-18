@@ -9,7 +9,9 @@ class Flag(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="scripts_Flag"
     )
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(
+        default=False
+    )
     label = models.ForeignKey(
         Label,
         on_delete=models.CASCADE,

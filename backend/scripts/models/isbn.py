@@ -1,8 +1,9 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
-from scripts.models import Scripts
+from scripts.models.scripts import Scripts
+from scripts.models.type import Type
 
-class ISBN(TimeStampedModel): #MigrateDone
+class ISBN(TimeStampedModel):
     scripts = models.ForeignKey(
         Scripts,
         on_delete=models.CASCADE,
@@ -11,4 +12,8 @@ class ISBN(TimeStampedModel): #MigrateDone
     isbn = models.CharField(
         max_length=122
     )
-    type = models.IntegerField()
+    type = models.ForeignKey(
+        Type,
+        on_delete=models.CASCADE,
+        related_name="type_ISBN"
+    )

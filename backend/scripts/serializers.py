@@ -16,7 +16,8 @@ from scripts.models import (
     By,
     Content,
     Text,
-    Label
+    Label,
+    Type
 )
 
 User = get_user_model()
@@ -158,6 +159,14 @@ class CodeSerializer(PolicyBasedSerializer):
             "name"
         ]
 
+class TypeSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = Type
+        fields = [
+            "id",
+            "name"
+        ]
+
 class StatusSerializer(PolicyBasedSerializer):
     code = CodeSerializer()
     label = LabelSerializer()
@@ -220,6 +229,8 @@ class NoteSerializer(PolicyBasedSerializer):
         ]
 
 class ISBNSerializer(PolicyBasedSerializer):
+    type = TypeSerializer()
+
     class Meta:
         model = ISBN
         fields = [

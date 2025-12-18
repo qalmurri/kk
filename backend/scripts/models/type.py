@@ -1,7 +1,6 @@
 from django.db import models
 
-class ScriptsStatusCode(models.Model):
+class Type(models.Model):
     name = models.CharField(
         max_length=10
     )
-

@@ -28,7 +28,6 @@ class Scripts(TimeStampedModel): #MigrateDone
         null=True,
         blank=True
     )
-
     size = models.ForeignKey(
         Size,
         on_delete=models.CASCADE,
