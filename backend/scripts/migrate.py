@@ -40,15 +40,9 @@ def create_default_table(sender, **kwargs):
             )
 
     valuuu = [
-        "value1",
-        "value2",
-        "value3",
-        "value4",
-        "value5",
-        "value6",
-        "value7",
-        "value8",
-        "value9"
+        "Layouter",
+        "Desainer",
+        "ISBN"
     ]
     for item in valuuu:
         Label.objects.get_or_create(
@@ -144,7 +138,8 @@ def create_default_table(sender, **kwargs):
 
     purpose = [
         {"scripts": 1, "code": 1,"label": 1},
-        {"scripts": 1, "code": 2, "label": 1}
+        {"scripts": 1, "code": 2, "label": 2},
+        {"scripts": 1, "code": 4, "label": 3}
     ]
     for item in purpose:
         Status.objects.get_or_create(

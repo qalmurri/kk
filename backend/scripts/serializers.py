@@ -175,8 +175,8 @@ class StatusSerializer(PolicyBasedSerializer):
         model = Status
         fields = [
             "id",
-            "code",
             "label",
+            "code",
             "created_at",
             "updated_at"
         ]
