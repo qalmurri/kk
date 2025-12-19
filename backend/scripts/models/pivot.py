@@ -1,11 +1,18 @@
 from django.db import models
-from scripts.models.timestamped import TimeStampedModel
-from scripts.models.scripts import Scripts
-from scripts.models.orderer import Orderer
-from scripts.models.no import No
-from scripts.models.label import Label
-from scripts.models.section import Section
 from django.contrib.auth import get_user_model
+from scripts.models.timestamped import TimeStampedModel
+from scripts.models.scripts import (
+    Scripts,
+    No
+)
+from scripts.models.common import (
+    Orderer,
+    Section,
+    DescriptionPart,
+    ScriptsStatusCode,
+    Label,
+    NotePart
+)
 
 User = get_user_model()
 
@@ -56,3 +63,45 @@ class By(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="user_By"
     )
+
+class Description(TimeStampedModel):
+    scripts = models.ForeignKey(
+        Scripts,
+        on_delete=models.CASCADE,
+        related_name="scripts_Description"
+    )
+    descriptionpart = models.ForeignKey(
+        DescriptionPart,
+        on_delete=models.CASCADE,
+        related_name="descriptionpart_Description"
+    )
+
+class Status(TimeStampedModel): #MigrateDone
+    scripts = models.ForeignKey(
+        Scripts,
+        on_delete=models.CASCADE,
+        related_name="scripts_Status"
+    )
+    label = models.ForeignKey(
+        Label,
+        on_delete=models.CASCADE,
+        related_name="label_Status"
+    )
+    code = models.ForeignKey(
+        ScriptsStatusCode,
+        on_delete=models.CASCADE,
+        related_name="code_Status"
+    )
+
+class Note(TimeStampedModel):
+    scripts = models.ForeignKey(
+        Scripts,
+        on_delete=models.CASCADE,
+        related_name="scripts_Note"
+    )
+    notepart = models.ForeignKey(
+        NotePart,
+        on_delete=models.CASCADE,
+        related_name="notepart_Note"
+    )
+

@@ -1,10 +1,14 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
-from scripts.models.institute import Institute
-from scripts.models.size import Size
+from scripts.models.common import (
+    Institute,
+    Size
+)
 
-class Scripts(TimeStampedModel): #MigrateDone
-    is_active = models.BooleanField(default=True)
+class Scripts(TimeStampedModel):
+    is_active = models.BooleanField(
+        default=True
+    )
     title = models.CharField(
         max_length=255
     )
@@ -36,3 +40,14 @@ class Scripts(TimeStampedModel): #MigrateDone
         blank=True
     )
 
+class No(TimeStampedModel):
+    scripts = models.ForeignKey(
+        Scripts,
+        on_delete=models.CASCADE,
+        related_name="scripts_No",
+        null=True,
+        blank=True
+    )
+    no = models.CharField(
+        max_length=255
+    )
