@@ -303,13 +303,13 @@
                     "institute": {
                         "id": 1,
                         "name": "Fakultas Teknik",
-                        "created_at": 1766068160,
+                        "created_at": 1766133986,
                         "updated_at": null
                     },
-                    "created_at": 1766068160,
+                    "created_at": 1766133987,
                     "updated_at": null
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133990,
                 "updated_at": null
             },
             {
@@ -321,13 +321,13 @@
                     "institute": {
                         "id": 3,
                         "name": "Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA)",
-                        "created_at": 1766068160,
+                        "created_at": 1766133986,
                         "updated_at": null
                     },
-                    "created_at": 1766068160,
+                    "created_at": 1766133987,
                     "updated_at": null
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133990,
                 "updated_at": null
             }
         ],
@@ -342,7 +342,7 @@
                     "id": 1,
                     "name": "Belum"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133989,
                 "updated_at": null
             },
             {
@@ -355,7 +355,7 @@
                     "id": 2,
                     "name": "Proses"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133989,
                 "updated_at": null
             },
             {
@@ -368,7 +368,7 @@
                     "id": 4,
                     "name": "Sudah"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133989,
                 "updated_at": null
             }
         ],
@@ -376,21 +376,21 @@
             {
                 "id": 1,
                 "is_active": false,
-                "label": {
+                "part": {
                     "id": 1,
-                    "name": "Layouter"
+                    "name": "File"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133990,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "is_active": true,
-                "label": {
+                "part": {
                     "id": 3,
-                    "name": "ISBN"
+                    "name": "CV"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133990,
                 "updated_at": null
             }
         ],
@@ -400,44 +400,44 @@
                 "items": [
                     {
                         "id": 1,
-                        "text": "testinggggggg",
-                        "created_at": 1766068160,
+                        "text": "cover warna biru",
+                        "created_at": 1766133991,
                         "updated_at": null
                     },
                     {
                         "id": 2,
-                        "text": "aku anak remaja",
-                        "created_at": 1766068160,
+                        "text": "minta alternatif cover",
+                        "created_at": 1766133991,
                         "updated_at": null
                     },
                     {
                         "id": 3,
-                        "text": "aku anak ibuk",
-                        "created_at": 1766068160,
+                        "text": "biru sama merah",
+                        "created_at": 1766133991,
                         "updated_at": null
                     },
                     {
                         "id": 4,
-                        "text": "aku anak bapak",
-                        "created_at": 1766068160,
+                        "text": "warna fakultas",
+                        "created_at": 1766133991,
                         "updated_at": null
                     }
                 ],
-                "label": {
+                "descriptionpart": {
                     "id": 1,
                     "name": "Layouter"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133991,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "items": [],
-                "label": {
+                "descriptionpart": {
                     "id": 2,
                     "name": "Desainer"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133991,
                 "updated_at": null
             }
         ],
@@ -447,44 +447,44 @@
                 "items": [
                     {
                         "id": 1,
-                        "content": "testinggggggg",
-                        "created_at": 1766068160,
+                        "content": "Cover ini proval",
+                        "created_at": 1766133991,
                         "updated_at": null
                     },
                     {
                         "id": 2,
-                        "content": "aku anak remaja",
-                        "created_at": 1766068160,
+                        "content": "Cover revisi terus",
+                        "created_at": 1766133991,
                         "updated_at": null
                     },
                     {
                         "id": 3,
-                        "content": "aku anak ibuk",
-                        "created_at": 1766068160,
+                        "content": "cover e angeeel",
+                        "created_at": 1766133991,
                         "updated_at": null
                     },
                     {
                         "id": 4,
-                        "content": "aku anak bapak",
-                        "created_at": 1766068160,
+                        "content": "Penulis e njauk revisi terus hmm",
+                        "created_at": 1766133991,
                         "updated_at": null
                     }
                 ],
-                "label": {
+                "notepart": {
                     "id": 1,
-                    "name": "Layouter"
+                    "name": "Cover"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133991,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "items": [],
-                "label": {
+                "notepart": {
                     "id": 2,
-                    "name": "Desainer"
+                    "name": "Isbn"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133991,
                 "updated_at": null
             }
         ],
@@ -496,7 +496,7 @@
                     "id": 1,
                     "name": "ISBN"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133990,
                 "updated_at": null
             },
             {
@@ -506,7 +506,7 @@
                     "id": 2,
                     "name": "E-ISBN"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133990,
                 "updated_at": null
             }
         ],
@@ -520,7 +520,7 @@
                             "id": 1,
                             "username": "qodri"
                         },
-                        "created_at": 1766068160,
+                        "created_at": 1766133990,
                         "updated_at": null
                     },
                     {
@@ -529,7 +529,7 @@
                             "id": 2,
                             "username": "sarah"
                         },
-                        "created_at": 1766068160,
+                        "created_at": 1766133991,
                         "updated_at": null
                     },
                     {
@@ -538,35 +538,35 @@
                             "id": 3,
                             "username": "menik"
                         },
-                        "created_at": 1766068160,
+                        "created_at": 1766133991,
                         "updated_at": null
                     }
                 ],
-                "label": {
+                "section": {
                     "id": 1,
                     "name": "Layouter"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133990,
                 "updated_at": null
             },
             {
                 "id": 2,
                 "by": [],
-                "label": {
+                "section": {
                     "id": 2,
                     "name": "Desainer"
                 },
-                "created_at": 1766068160,
+                "created_at": 1766133990,
                 "updated_at": null
             }
         ],
         "cover": [
             {
                 "id": 1,
-                "thumbnail": "1",
-                "length": 1,
-                "height": 1,
-                "width": 1,
+                "thumbnail": "media/thumbnail/image001.jpeg",
+                "length": 10,
+                "height": 250,
+                "width": 160,
                 "x_axis": 1,
                 "y_axis": 1
             }
@@ -574,16 +574,16 @@
         "institute": {
             "id": 1,
             "name": "Fakultas Teknik",
-            "created_at": 1766068160,
+            "created_at": 1766133986,
             "updated_at": null
         },
         "size": {
             "id": 1,
             "name": "160x250 (buku teks)",
-            "created_at": 1766068160,
+            "created_at": 1766133988,
             "updated_at": null
         },
-        "created_at": 1766068160,
+        "created_at": 1766133989,
         "updated_at": null
     },
     {
@@ -604,16 +604,16 @@
         "institute": {
             "id": 1,
             "name": "Fakultas Teknik",
-            "created_at": 1766068160,
+            "created_at": 1766133986,
             "updated_at": null
         },
         "size": {
             "id": 2,
             "name": "A5",
-            "created_at": 1766068160,
+            "created_at": 1766133988,
             "updated_at": null
         },
-        "created_at": 1766068160,
+        "created_at": 1766133989,
         "updated_at": null
     }
 ]
