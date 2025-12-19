@@ -73,17 +73,3 @@ class Content(TimeStampedModel):
         max_length=255
     )
 
-class Flag(TimeStampedModel):
-    scripts = models.ForeignKey(
-        Scripts,
-        on_delete=models.CASCADE,
-        related_name="scripts_Flag"
-    )
-    is_active = models.BooleanField(
-        default=False
-    )
-    part = models.ForeignKey(
-        Part,
-        on_delete=models.CASCADE,
-        related_name="part_Flag"
-    )

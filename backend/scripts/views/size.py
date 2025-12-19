@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from scripts.repositories.size import SizeCommandRepository, SizeQueryRepository
-from scripts.serializers import SizeSerializer
+from scripts.serializers.common import SizeSerializer
 from scripts.utils import current_timestamp
 
 class SizeAllView(APIView):

@@ -27,8 +27,7 @@ from .content import (
     Text,
     Flag,
     ISBN,
-    Content,
-    Flag
+    Content
 )
 from .scripts import (
     Scripts,
