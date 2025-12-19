@@ -36,25 +36,6 @@ class ScriptOrdererSerializer(PolicyBasedSerializer):
             "updated_at"
         ]
 
-class ScriptOrdererCreateSerializer(PolicyBasedSerializer):
-    scripts = serializers.PrimaryKeyRelatedField(queryset=Scripts.objects.all())
-    orderer = serializers.PrimaryKeyRelatedField(queryset=Orderer.objects.all())
-
-    class Meta:
-        model = ScriptsOrderer
-        fields = [
-            "id",
-            "scripts",
-            "orderer",
-        ]
-        read_only_fields = [
-            "id",
-            "created_at",
-            "updated_at"
-        ]
-
-
-
 class BySerializer(PolicyBasedSerializer):
     user = UserSerializer()
 

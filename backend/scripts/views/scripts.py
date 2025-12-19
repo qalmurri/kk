@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from scripts.models import Scripts
-from scripts.serializers.scripts import ScriptSerializer, ScriptsSerializer
+from scripts.serializers.scripts import ScriptsSerializer
 from rest_framework.permissions import IsAuthenticated
 
 class ScriptsView(APIView):
@@ -17,21 +17,3 @@ class ScriptsView(APIView):
 
         serializer = ScriptsSerializer(queryset, many=True)
         return Response(serializer.data)
-
-    def post(self, request):
-        serializer = ScriptSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(
-                {
-                    "success": True,
-                    "data": serializer.data
-                }
-            )
-        return Response(
-            {
-                "success": False,
-                "message": serializer.errors
-            },
-            status=status.HTTP_400_BAD_REQUEST
-        )

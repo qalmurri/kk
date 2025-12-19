@@ -5,7 +5,7 @@ from scripts.repositories.purpose import StatusCommandRepository, StatusQueryRep
 from scripts.serializers.pivot import StatusSerializer, StatusAllSerializer
 from scripts.utils import current_timestamp
 
-class PurposeByCodeView(APIView):
+class StatusByCodeView(APIView):
     throttle_classes = []
     authentication_classes = []
     permission_classes = []
@@ -33,7 +33,7 @@ class PurposeByCodeView(APIView):
             status=status.HTTP_200_OK
         )
 
-class PurposeAllView(APIView):
+class StatusAllView(APIView):
     throttle_classes = []
     authentication_classes = []
     permission_classes = []
@@ -52,7 +52,7 @@ class PurposeAllView(APIView):
             status=status.HTTP_200_OK
         )
 
-class PurposeCreateView(APIView):
+class StatusCreateView(APIView):
     throttle_classes = []
     authentication_classes = []
     permission_classes = []
@@ -78,7 +78,7 @@ class PurposeCreateView(APIView):
             "success": True,
         }, status=status.HTTP_201_CREATED)
     
-class PurposeUpdateView(APIView):
+class StatusUpdateView(APIView):
     throttle_classes = []
     authentication_classes = []
     permission_classes = []

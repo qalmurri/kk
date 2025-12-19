@@ -17,16 +17,6 @@ from .pivot import (
     ScriptsProcessSerializer
 )
 
-class ScriptSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = Scripts
-        fields = [
-            "id",
-            "title",
-            "entry_date",
-            "created_at"
-        ]
-
 class ScriptsSerializer(PolicyBasedSerializer):
     orderers = ScriptOrdererSerializer(
         source="scripts_ScriptsOrderer",
