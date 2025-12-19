@@ -25,6 +25,7 @@ from scripts.models import (
 User = get_user_model()
 
 COMPACT_FIELD_MAP = {
+    #timestampt
     "created_at": "a",
     "updated_at": "r",
     "text": "z",
@@ -93,9 +94,7 @@ class PolicyBasedSerializer(BaseCompactSerializer):
             invalid = allowed - existing
             if invalid:
                 raise serializers.ValidationError(
-                    f"Invalid fields requested: {
-                        invalid
-                    }"
+                    f"Invalid fields requested: {invalid}"
                 )
 
             for field in existing - allowed:
