@@ -1,7 +1,9 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
 from scripts.models.scripts import Scripts
-from scripts.models.label import Label
+
+class DescriptionPart(models.Model):
+    name = models.CharField(max_length=255)
 
 class Description(TimeStampedModel):
     scripts = models.ForeignKey(
@@ -9,10 +11,10 @@ class Description(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="scripts_Description"
     )
-    label = models.ForeignKey(
-        Label,
+    descriptionpart = models.ForeignKey(
+        DescriptionPart,
         on_delete=models.CASCADE,
-        related_name="label_Description"
+        related_name="descriptionpart_Description"
     )
 
 class Text(TimeStampedModel):

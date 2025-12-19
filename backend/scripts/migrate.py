@@ -20,7 +20,10 @@ from .models import (
     Label,
     Type,
     Part,
-    Cover
+    Cover,
+    DescriptionPart,
+    NotePart,
+    Section
 )
 
 @receiver(post_migrate)
@@ -41,10 +44,42 @@ def create_default_table(sender, **kwargs):
                 password=u["password"]
             )
 
+    valuuu5 = [
+        "Layouter",
+        "Desainer",
+        "Produksi"
+    ]
+    for item in valuuu5:
+        Section.objects.get_or_create(
+            name=item
+        )
+
+    valuuu1 = [
+        "Layouter",
+        "Desainer",
+        "ISBN",
+        "Produksi"
+    ]
+    for item in valuuu1:
+        DescriptionPart.objects.get_or_create(
+            name=item
+        )
+
+    valuuu2 = [
+        "Cover",
+        "Isbn",
+        "Produksi"
+    ]
+    for item in valuuu2:
+        NotePart.objects.get_or_create(
+            name=item
+        )
+
     valuuu = [
         "Layouter",
         "Desainer",
-        "ISBN"
+        "ISBN",
+        "Produksi",
     ]
     for item in valuuu:
         Label.objects.get_or_create(
@@ -52,12 +87,16 @@ def create_default_table(sender, **kwargs):
         )
 
     valuuuuu = [
+        #kelengkapan dokumen
         "File",
         "Photo",
         "CV",
         "Sinopsis",
         "Editor",
         "Kata Pengantar",
+        "Daftar Isi",
+        "Daftar Pustaka"
+        #???
     ]
     for item in valuuuuu:
         Part.objects.get_or_create(
@@ -196,13 +235,13 @@ def create_default_table(sender, **kwargs):
         )
         
     bool = [
-        {"scripts": 1, "label": 1},
-        {"scripts": 1, "label": 2}
+        {"scripts": 1, "section": 1},
+        {"scripts": 1, "section": 2}
     ]
     for item in bool:
         ScriptsProcess.objects.get_or_create(
             scripts_id=item["scripts"],
-            label_id=item["label"]
+            section_id=item["section"]
         )
         
     balll = [
@@ -217,30 +256,30 @@ def create_default_table(sender, **kwargs):
         )
 
     description = [
-        {"scripts": 1, "label": 1},
-        {"scripts": 1, "label": 2}
+        {"scripts": 1, "descriptionpart": 1},
+        {"scripts": 1, "descriptionpart": 2}
     ]
     for item in description:
         Description.objects.get_or_create(
             scripts_id=item["scripts"],
-            label_id=item["label"]
+            descriptionpart_id=item["descriptionpart"]
         )
 
     description2 = [
-        {"scripts": 1, "label": 1},
-        {"scripts": 1, "label": 2}
+        {"scripts": 1, "notepart": 1},
+        {"scripts": 1, "notepart": 2}
     ]
     for item in description2:
         Note.objects.get_or_create(
             scripts_id=item["scripts"],
-            label_id=item["label"]
+            notepart_id=item["notepart"]
         )
 
     content = [
-        {"note": 1, "content": "testinggggggg"},
-        {"note": 1, "content": "aku anak remaja"},
-        {"note": 1, "content": "aku anak ibuk"},
-        {"note": 1, "content": "aku anak bapak"}
+        {"note": 1, "content": "Cover ini proval"},
+        {"note": 1, "content": "Cover revisi terus"},
+        {"note": 1, "content": "cover e angeeel"},
+        {"note": 1, "content": "Penulis e njauk revisi terus hmm"}
     ]
     for item in content:
         Content.objects.get_or_create(
@@ -249,10 +288,10 @@ def create_default_table(sender, **kwargs):
         )
 
     content22 = [
-        {"description": 1, "text": "testinggggggg"},
-        {"description": 1, "text": "aku anak remaja"},
-        {"description": 1, "text": "aku anak ibuk"},
-        {"description": 1, "text": "aku anak bapak"}
+        {"description": 1, "text": "cover warna biru"},
+        {"description": 1, "text": "minta alternatif cover"},
+        {"description": 1, "text": "biru sama merah"},
+        {"description": 1, "text": "warna fakultas"}
     ]
     for item in content22:
         Text.objects.get_or_create(
@@ -261,7 +300,7 @@ def create_default_table(sender, **kwargs):
         )
 
     cov = [
-        {"scripts": 1, "thumbnail": 1, "length": 1, "height": 1, "width": 1, "x_axis": 1, "y_axis": 1},
+        {"scripts": 1, "thumbnail": "media/thumbnail/image001.jpeg", "length": 10, "height": 250, "width": 160, "x_axis": 1, "y_axis": 1},
     ]
     for item in cov:
         Cover.objects.get_or_create(

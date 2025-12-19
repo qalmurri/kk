@@ -19,7 +19,10 @@ from scripts.models import (
     Label,
     Type,
     Part,
-    Cover
+    Cover,
+    DescriptionPart,
+    NotePart,
+    Section
 )
 
 User = get_user_model()
@@ -45,6 +48,15 @@ COMPACT_FIELD_MAP = {
     "type": "n",
     "user": "q",
     "part": "1",
+    "thumbnail": "2",
+    "length": "3",
+    "height": "4",
+    "width": "5",
+    "x_axis": "6",
+    "y_axis": "7",
+    "notepart": "8",
+    "descriptionpart": "9",
+    "section": "10"
 }
 
 class BaseCompactSerializer(serializers.ModelSerializer):
@@ -103,6 +115,30 @@ class PolicyBasedSerializer(BaseCompactSerializer):
                 )
 
 # BASIC SERIALIZERS
+
+class SectionSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = Section
+        fields = [
+            "id",
+            "name"
+        ]
+
+class DescriptionPartSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = DescriptionPart
+        fields = [
+            "id",
+            "name"
+        ]
+
+class NotePartSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = NotePart
+        fields = [
+            "id",
+            "name"
+        ]
 
 class ContentSerializer(PolicyBasedSerializer):
     class Meta:
@@ -221,14 +257,14 @@ class DescriptionSerializer(PolicyBasedSerializer):
         source="description_Text",
         many=True
     )
-    label = LabelSerializer()
+    descriptionpart = DescriptionPartSerializer()
 
     class Meta:
         model = Description
         fields = [
             "id",
             "items",
-            "label",
+            "descriptionpart",
             "created_at",
             "updated_at"
         ]
@@ -238,14 +274,14 @@ class NoteSerializer(PolicyBasedSerializer):
         source="note_Content",
         many=True
     )
-    label = LabelSerializer()
+    notepart = NotePartSerializer()
 
     class Meta:
         model = Note
         fields = [
             "id",
             "items",
-            "label",
+            "notepart",
             "created_at",
             "updated_at"
         ]
@@ -304,13 +340,13 @@ class ScriptsProcessSerializer(PolicyBasedSerializer):
         source="scriptsprocess_By",
         many=True
     )
-    label = LabelSerializer()
+    section = SectionSerializer()
     class Meta:
         model = ScriptsProcess
         fields = [
             "id",
             "by",
-            "label",
+            "section",
             "created_at",
             "updated_at"
         ]
