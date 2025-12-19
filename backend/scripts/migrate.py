@@ -18,7 +18,9 @@ from .models import (
     Text,
     Content,
     Label,
-    Type
+    Type,
+    Part,
+    Cover
 )
 
 @receiver(post_migrate)
@@ -46,6 +48,19 @@ def create_default_table(sender, **kwargs):
     ]
     for item in valuuu:
         Label.objects.get_or_create(
+            name=item
+        )
+
+    valuuuuu = [
+        "File",
+        "Photo",
+        "CV",
+        "Sinopsis",
+        "Editor",
+        "Kata Pengantar",
+    ]
+    for item in valuuuuu:
+        Part.objects.get_or_create(
             name=item
         )
 
@@ -170,13 +185,13 @@ def create_default_table(sender, **kwargs):
         )
 
     bool = [
-        {"scripts": 1, "label": 1, "is_active": False},
-        {"scripts": 1, "label": 3, "is_active": True}
+        {"scripts": 1, "part": 1, "is_active": False},
+        {"scripts": 1, "part": 3, "is_active": True}
     ]
     for item in bool:
         Flag.objects.get_or_create(
             scripts_id=item["scripts"],
-            label_id=item["label"],
+            part_id=item["part"],
             is_active=item["is_active"]
         )
         
@@ -243,4 +258,18 @@ def create_default_table(sender, **kwargs):
         Text.objects.get_or_create(
             description_id=item["description"],
             text=item["text"],
+        )
+
+    cov = [
+        {"scripts": 1, "thumbnail": 1, "length": 1, "height": 1, "width": 1, "x_axis": 1, "y_axis": 1},
+    ]
+    for item in cov:
+        Cover.objects.get_or_create(
+            scripts_id=item["scripts"],
+            thumbnail=item["thumbnail"],
+            length=item["length"],
+            height=item["height"],
+            width=item["width"],
+            x_axis=item["x_axis"],
+            y_axis=item["y_axis"],
         )

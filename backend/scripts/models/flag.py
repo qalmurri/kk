@@ -1,7 +1,7 @@
 from django.db import models
 from scripts.models.scripts import Scripts
 from scripts.models.timestamped import TimeStampedModel
-from scripts.models.label import Label
+from scripts.models.part import Part
 
 class Flag(TimeStampedModel):
     scripts = models.ForeignKey(
@@ -12,8 +12,8 @@ class Flag(TimeStampedModel):
     is_active = models.BooleanField(
         default=False
     )
-    label = models.ForeignKey(
-        Label,
+    part = models.ForeignKey(
+        Part,
         on_delete=models.CASCADE,
-        related_name="label_Flag"
+        related_name="part_Flag"
     )

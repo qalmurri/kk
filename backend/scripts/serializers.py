@@ -17,7 +17,9 @@ from scripts.models import (
     Content,
     Text,
     Label,
-    Type
+    Type,
+    Part,
+    Cover
 )
 
 User = get_user_model()
@@ -41,7 +43,7 @@ COMPACT_FIELD_MAP = {
     "size": "m",
     "type": "n",
     "user": "q",
-
+    "part": "1",
 }
 
 class BaseCompactSerializer(serializers.ModelSerializer):
@@ -123,6 +125,14 @@ class TextSerializer(PolicyBasedSerializer):
             "updated_at"
         ]
 
+class PartSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = Part
+        fields = [
+            "id",
+            "name"
+        ]
+
 class SizeSerializer(PolicyBasedSerializer):
     class Meta:
         model = Size
@@ -167,6 +177,19 @@ class TypeSerializer(PolicyBasedSerializer):
             "name"
         ]
 
+class CoverSerializer(PolicyBasedSerializer):
+    class Meta:
+        model = Cover
+        fields = [
+            "id",
+            "thumbnail",
+            "length",
+            "height",
+            "width",
+            "x_axis",
+            "y_axis",
+        ]
+
 class StatusSerializer(PolicyBasedSerializer):
     code = CodeSerializer()
     label = LabelSerializer()
@@ -182,14 +205,14 @@ class StatusSerializer(PolicyBasedSerializer):
         ]
 
 class FlagSerializer(PolicyBasedSerializer):
-    label = LabelSerializer()
+    part = PartSerializer()
 
     class Meta:
         model = Flag
         fields = [
             "id",
             "is_active",
-            "label",
+            "part",
             "created_at",
             "updated_at"
         ]
@@ -363,6 +386,10 @@ class ScriptsSerializer(PolicyBasedSerializer):
         source="scripts_ScriptsProcess",
         many=True
     )
+    cover = CoverSerializer(
+        source="scripts_Cover",
+        many=True
+    )
     institute = InstituteSerializer()
     size = SizeSerializer()
 
@@ -382,6 +409,7 @@ class ScriptsSerializer(PolicyBasedSerializer):
             "notes",
             "identification",
             "process",
+            "cover",
             "institute",
             "size",
             "created_at",

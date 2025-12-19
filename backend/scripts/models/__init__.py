@@ -15,3 +15,5 @@ from .note import Note, Content
 from .no import No
 from .label import Label
 from .type import Type
+from .part import Part
+from .cover import Cover
