@@ -30,9 +30,9 @@
   <summary>Daftar Isi</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#about-the-project">Tentang Projek</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#built-with">Dibuat Dengan</a></li>
       </ul>
     </li>
     <li>
@@ -55,7 +55,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Saya membuat ini untuk sebuah perusahaan Penerbitan. Saya menggabungkan beberapa bagian seperti, kesekretariatan, desain, layouter, produksi, dan lainnya. Saya merancang Server untuk backend menggunakan Django framework yang di khususkan untuk API, lalu Pyside6 untuk Aplikasi desktop yang berguna untuk menampilkan data dari server.
+Saya membuat ini untuk sebuah perusahaan Penerbitan. Saya menggabungkan beberapa bagian seperti, kesekretariatan, desain, layouter, produksi, dan lainnya. Saya merancang Server untuk backend menggunakan `Django` yang di khususkan untuk API, lalu `Pyside6` untuk Aplikasi desktop yang berguna untuk menampilkan data dari server.
 
 Mengapa :
 * Karena masih banyak yang menggunakan manual, maka dari itu saya berinovasi untuk membantu mereka
@@ -68,7 +68,7 @@ Use the `BLANK_README.md` to get started.
 
 
 
-### Built With
+### Dibuat Dengan
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
