@@ -30,9 +30,9 @@
   <summary>Daftar Isi</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Tentang Projek</a>
+      <a href="#tentang-projek">Tentang Projek</a>
       <ul>
-        <li><a href="#built-with">Dibuat Dengan</a></li>
+        <li><a href="#dibuat-dengan">Dibuat Dengan</a></li>
       </ul>
     </li>
     <li>
