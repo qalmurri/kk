@@ -8,7 +8,11 @@ from .views.logout import LogoutView
 from .views.scripts import ScriptsViewSet
 
 router = DefaultRouter()
-router.register("scripts", ScriptsViewSet, basename="scripts")
+router.register(
+    r"scripts",
+    ScriptsViewSet,
+    basename="scripts"
+)
 
 urlpatterns = [
     path(

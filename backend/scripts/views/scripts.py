@@ -1,6 +1,9 @@
 from rest_framework.decorators import action
 from .base import BaseViewSet
-from scripts.serializers.scripts import ScriptsSerializer
+from scripts.serializers.scripts import (
+    ScriptsReadSerializer,
+    ScriptsWriteSerializer
+    )
 from scripts.repositories.scripts import (
     ScriptsQueryRepository,
     ScriptsCommandRepository
@@ -11,60 +14,68 @@ class ScriptsViewSet(BaseViewSet):
     authentication_classes = []
     permission_classes = []
 
-    # GET /scripts/
+    # GET /scripts/ = /scripts/?title=...&active=...
     def list(self, request):
-        queryset = ScriptsQueryRepository.list_all()
-        serializer = ScriptsSerializer(queryset, many=True)
+        queryset = ScriptsQueryRepository.query(request.query_params)
+        serializer = ScriptsReadSerializer(queryset, many=True)
         return self.success(serializer.data)
     
-    # GET /scripts/{id}/
-    def retrieve(self, request, pk=None):
-        obj = ScriptsQueryRepository.get_by_id(pk)
-        serializer = ScriptsSerializer(obj)
-        return self.success(serializer.data)
-
     # POST /scripts/
     def create(self, request):
-        data = request.data
-        if not data.get("title"):
-            return self.error("title is required")
-        script = ScriptsCommandRepository.create(
-            title=data["title"],
-            alias=data.get("alias"),
-            institute_id=data.get("institute"),
-            size_id=data.get("size"),
+        serializer = ScriptsWriteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        ScriptsCommandRepository.create(
+            **serializer.validated_data
         )
+
         return self.success(
-            {"id": script.id},
             status_code=201
         )
 
+    # GET /scripts/{id}/
+    def retrieve(self, request, pk=None):
+        obj = ScriptsQueryRepository.get_by_id(pk)
+        serializer = ScriptsReadSerializer(obj)
+        return self.success(serializer.data)
+
+    # PUT /scripts/{id}/
+    def update(self, request, pk=None):
+        pass
+
     # PATCH /scripts/{id}/
     def partial_update(self, request, pk=None):
-        ScriptsQueryRepository.get_by_id(pk)
-        ScriptsCommandRepository.update_fast(
-            id=pk,
-            **request.data
+        obj = ScriptsQueryRepository.get_by_id(pk)
+    
+        serializer = ScriptsWriteSerializer(
+            instance=obj,
+            data=request.data,
+            partial=True
         )
+        serializer.is_valid(raise_exception=True)
+    
+        ScriptsCommandRepository.update(
+            obj,
+            **serializer.validated_data
+        )
+
         return self.success()
 
-    # POST /scripts/{id}/archive/
-    @action(detail=True, methods=["post"])
-    def archive(self, request, pk=None):
-        ScriptsQueryRepository.get_by_id(pk)
-        ScriptsCommandRepository.archive(pk)
-        return self.success({"archived": True})
-    
+    # DELETE /scripts/{id}/
+    def destroy(self, request, pk=None):
+        obj = ScriptsQueryRepository.get_by_id(pk)
+        ScriptsCommandRepository.archive(obj)
+        return self.success()
+
     # POST /scripts/{id}/restore/
     @action(detail=True, methods=["post"])
     def restore(self, request, pk=None):
-        ScriptsQueryRepository.get_by_id(pk)
-        ScriptsCommandRepository.restore(pk)
-        return self.success({"restored": True})
+        obj = ScriptsQueryRepository.get_by_id(pk)
+        ScriptsCommandRepository.restore(obj)
+        return self.success()
     
-    # GET /scripts/search/?title=...&active=...
-    @action(detail=False, methods=["get"])
-    def search(self, request):
-        queryset = ScriptsQueryRepository.query(request.query_params)
-        serializer = ScriptsSerializer(queryset , many=True)
-        return self.success(serializer.data)
+    # DELETE /scripts/{id}/hard/
+    @action(detail=True, methods=["delete"], url_path="hard")
+    def hard_delete(self, request, pk=None):
+        obj = ScriptsQueryRepository.get_by_id(pk)
+        ScriptsCommandRepository.hard_delete(obj)
+        return self.success()

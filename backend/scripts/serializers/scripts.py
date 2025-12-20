@@ -17,51 +17,64 @@ from .pivot import (
     ScriptsProcessSerializer
 )
 
-class ScriptsSerializer(PolicyBasedSerializer):
+class ScriptsReadSerializer(PolicyBasedSerializer):
+    institute = InstituteSerializer()
+    size = SizeSerializer()
+
     orderers = ScriptOrdererSerializer(
         source="scripts_ScriptsOrderer",
-        many=True
+        many=True,
+        read_only=True
     )
     status = StatusSerializer(
         source="scripts_Status",
-        many=True
+        many=True,
+        read_only=True
     )
     flag = FlagSerializer(
         source="scripts_Flag",
-        many=True
+        many=True,
+        read_only=True
     )
     descriptions = DescriptionSerializer(
         source="scripts_Description",
-        many=True
+        many=True,
+        read_only=True
     )
     notes = NoteSerializer(
         source="scripts_Note",
-        many=True
+        many=True,
+        read_only=True
     )
     identification = ISBNSerializer(
         source="scripts_ISBN",
-        many=True
+        many=True,
+        read_only=True
     )
     process = ScriptsProcessSerializer(
         source="scripts_ScriptsProcess",
-        many=True
+        many=True,
+        read_only=True
     )
     cover = CoverSerializer(
         source="scripts_Cover",
-        many=True
+        many=True,
+        read_only=True
     )
-    institute = InstituteSerializer()
-    size = SizeSerializer()
 
     class Meta:
         model = Scripts
         fields = [
             "id",
-            "is_active",
             "title",
             "alias",
+            "is_active",
             "entry_date",
             "finish_date",
+            
+            "institute",
+            "size",
+
             "orderers",
             "status",
             "flag",
@@ -70,8 +83,29 @@ class ScriptsSerializer(PolicyBasedSerializer):
             "identification",
             "process",
             "cover",
-            "institute",
-            "size",
             "created_at",
             "updated_at"
+        ]
+
+class ScriptsWriteSerializer(PolicyBasedSerializer):
+#    institute = serializers.PrimaryKeyRelatedField(
+#        queryset=Institute.objects.all(),
+#        required=False
+#    )
+#    size = serializers.PrimaryKeyRelatedField(
+#        queryset=Size.objects.all(),
+#        required=False
+#    )
+
+    class Meta:
+        model = Scripts
+        fields = [
+            "title", 
+            "alias", 
+            "is_active", 
+            "entry_date", 
+            "finish_date",
+
+            "institute", 
+            "size"
         ]
