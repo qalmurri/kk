@@ -51,14 +51,12 @@
   </ol>
 </details>
 
-
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
+## Tentang Aplikasi Penerbitan
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+Saya membuat ini untuk sebuah perusahaan yang mempublikasikan. Saya menggabungkan beberapa departemen, termasuk kesekretariatan, desain, tata letak, produksi, dan lainnya.
+Saya merancang server untuk backend menggunakan Django framework yang di khususkan untuk API, lalu Pyside6 untuk Aplikasi desktop yang berguna untuk menampilkan data dari server.
 
 Here's why:
 * Your time should be focused on creating something amazing. A project that solves a problem and helps others
