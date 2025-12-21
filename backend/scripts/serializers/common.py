@@ -12,104 +12,149 @@ from scripts.models import (
     Section
 )
 
-class CodeSerializer(PolicyBasedSerializer):
+# base
+class BaseReadSerializer(PolicyBasedSerializer):
     class Meta:
-        model = ScriptsStatusCode
-        fields = [
+        abstract = True
+        fields = (
             "id",
-            "name"
-        ]
-
-class DescriptionPartSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = DescriptionPart
-        fields = [
-            "id",
-            "name"
-        ]
-
-class InstituteSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = Institute
-        fields = [
-            "id",
-            "name",
             "created_at",
-            "updated_at"
-        ]
-
-class LabelSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = Label
-        fields = [
-            "id",
-            "name"
-        ]
-
-class NotePartSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = NotePart
-        fields = [
-            "id",
-            "name"
-        ]
-
-class PartSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = Part
-        fields = [
-            "id",
-            "name"
-        ]
-
-class SectionSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = Section
-        fields = [
-            "id",
-            "name"
-        ]
-
-class SizeSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = Size
-        fields = [
-            "id",
-            "name",
-            "created_at",
-            "updated_at"
-        ]
-
-class TypeSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = Type
-        fields = [
-            "id",
-            "name"
-        ]
-
-class OrdererSerializer(PolicyBasedSerializer):
-    institute = InstituteSerializer()
-
-    class Meta:
-        model = Orderer
-        fields = [
-            "id",
-            "name",
-            "no",
-            "institute",
-            "created_at",
-            "updated_at"
-        ]
-
-class OrdererAllSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = Orderer
-        fields = [
-            "id",
-            "orderer",
-            "no",
-            "institute",
             "updated_at",
-            "created_at"
-        ]
+        )
+
+class BaseWriteSerializer(PolicyBasedSerializer):
+    class Meta:
+        abstract = True
+        fields = (
+            "name",
+        )
+
+# size
+class SizeReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = Size
+        fields = BaseReadSerializer.Meta.fields + (
+            "name",
+        )
+
+class SizeWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Size
+
+# institute
+class InstituteReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = Institute
+        fields = BaseReadSerializer.Meta.fields + (
+            "name",
+        )
+
+class InstituteWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Institute
+
+# code
+class CodeReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = ScriptsStatusCode
+        fields = BaseReadSerializer.Meta.fields + (
+            "name",
+        )
+
+class CodeWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = ScriptsStatusCode
+
+# descriptionpart
+class DescriptionPartReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = DescriptionPart
+        fields = BaseReadSerializer.Meta.fields + (
+            "name",
+        )
+
+class DescriptionPartWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = DescriptionPart
+
+# labelread
+class LabelReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = Label
+        fields = BaseReadSerializer.Meta.fields + (
+            "name",
+        )
+
+class LabelWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Label
+
+# notepart
+class NotePartReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = NotePart
+        fields = BaseReadSerializer.Meta.fields + (
+            "name",
+        )
+
+class NotePartWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = NotePart
+
+# part
+class PartReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = Part
+        fields = BaseReadSerializer.Meta.fields + (
+            "name",
+        )
+
+class PartWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Part
+
+# section
+class SectionReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = Section
+        fields = BaseReadSerializer.Meta.fields + (
+            "name",
+        )
+
+class SectionWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Section
+
+# type
+class TypeReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = Type
+        fields = BaseReadSerializer.Meta.fields + (
+            "name",
+        )
+
+class TypeWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Type
+
+# orderer
+class OrdererReadSerializer(BaseReadSerializer):
+    institute = InstituteReadSerializer(
+        read_only=True
+    )
+
+    class Meta(BaseReadSerializer.Meta):
+        model = Orderer
+        fields = BaseReadSerializer.Meta.fields + (
+            "name",
+            "no",
+            "institute"
+        )
+
+class OrdererWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Orderer
+        fields = BaseWriteSerializer.Meta.fields + (
+            "no",
+            "institute",
+        )

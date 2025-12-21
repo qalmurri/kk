@@ -12,20 +12,20 @@ from scripts.models import (
     Orderer
 )
 from .common import (
-    OrdererSerializer,
-    SectionSerializer,
-    DescriptionPartSerializer,
-    LabelSerializer,
-    CodeSerializer,
-    NotePartSerializer
+    OrdererReadSerializer,
+    SectionReadSerializer,
+    DescriptionPartReadSerializer,
+    LabelReadSerializer,
+    CodeReadSerializer,
+    NotePartReadSerializer
 )
 from .content import (
-    TextSerializer,
-    ContentSerializer
+    TextReadSerializer,
+    ContentReadSerializer
 )
 
 class ScriptOrdererSerializer(PolicyBasedSerializer):
-    orderer = OrdererSerializer()
+    orderer = OrdererReadSerializer()
 
     class Meta:
         model = ScriptsOrderer
@@ -53,7 +53,7 @@ class ScriptsProcessSerializer(PolicyBasedSerializer):
         source="scriptsprocess_By",
         many=True
     )
-    section = SectionSerializer()
+    section = SectionReadSerializer()
     class Meta:
         model = ScriptsProcess
         fields = [
@@ -64,11 +64,11 @@ class ScriptsProcessSerializer(PolicyBasedSerializer):
             "updated_at"
         ]
 class DescriptionSerializer(PolicyBasedSerializer):
-    items = TextSerializer(
+    items = TextReadSerializer(
         source="description_Text",
         many=True
     )
-    descriptionpart = DescriptionPartSerializer()
+    descriptionpart = DescriptionPartReadSerializer()
 
     class Meta:
         model = Description
@@ -81,7 +81,7 @@ class DescriptionSerializer(PolicyBasedSerializer):
         ]
 
 class StatusAllSerializer(PolicyBasedSerializer):
-    label = LabelSerializer()
+    label = LabelReadSerializer()
     class Meta:
         model = Status
         fields = [
@@ -93,8 +93,8 @@ class StatusAllSerializer(PolicyBasedSerializer):
         ]
 
 class StatusSerializer(PolicyBasedSerializer):
-    code = CodeSerializer()
-    label = LabelSerializer()
+    code = CodeReadSerializer()
+    label = LabelReadSerializer()
 
     class Meta:
         model = Status
@@ -107,11 +107,11 @@ class StatusSerializer(PolicyBasedSerializer):
         ]
 
 class NoteSerializer(PolicyBasedSerializer):
-    items = ContentSerializer(
+    items = ContentReadSerializer(
         source="note_Content",
         many=True
     )
-    notepart = NotePartSerializer()
+    notepart = NotePartReadSerializer()
 
     class Meta:
         model = Note

@@ -10,7 +10,7 @@ from scripts.models.common import (
     Type
 )
 
-class Cover(TimeStampedModel):
+class CoverBook(TimeStampedModel):
     scripts = models.ForeignKey(
         Scripts,
         on_delete=models.CASCADE,

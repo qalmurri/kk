@@ -20,7 +20,7 @@ from .models import (
     Label,
     Type,
     Part,
-    Cover,
+    CoverBook,
     DescriptionPart,
     NotePart,
     Section
@@ -303,7 +303,7 @@ def create_default_table(sender, **kwargs):
         {"scripts": 1, "thumbnail": "media/thumbnail/image001.jpeg", "length": 10, "height": 250, "width": 160, "x_axis": 1, "y_axis": 1},
     ]
     for item in cov:
-        Cover.objects.get_or_create(
+        CoverBook.objects.get_or_create(
             scripts_id=item["scripts"],
             thumbnail=item["thumbnail"],
             length=item["length"],

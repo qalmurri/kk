@@ -1,13 +1,13 @@
 from .base import PolicyBasedSerializer
 from scripts.models import Scripts
 from .common import (
-    InstituteSerializer,
-    SizeSerializer
+    InstituteReadSerializer,
+    SizeReadSerializer
 )
 from .content import (
-    FlagSerializer,
-    ISBNSerializer,
-    CoverSerializer
+    FlagReadSerializer,
+    ISBNReadSerializer,
+    CoverBookReadSerializer
 )
 from .pivot import (
     ScriptOrdererSerializer,
@@ -17,9 +17,21 @@ from .pivot import (
     ScriptsProcessSerializer
 )
 
+SCRIPTS_BASE_FIELDS = (
+            "id",
+            "title",
+            "alias",
+            "is_active",
+            "entry_date",
+            "finish_date",
+            
+            "institute",
+            "size",
+)
+
 class ScriptsReadSerializer(PolicyBasedSerializer):
-    institute = InstituteSerializer()
-    size = SizeSerializer()
+    institute = InstituteReadSerializer()
+    size = SizeReadSerializer()
 
     orderers = ScriptOrdererSerializer(
         source="scripts_ScriptsOrderer",
@@ -31,7 +43,7 @@ class ScriptsReadSerializer(PolicyBasedSerializer):
         many=True,
         read_only=True
     )
-    flag = FlagSerializer(
+    flag = FlagReadSerializer(
         source="scripts_Flag",
         many=True,
         read_only=True
@@ -46,7 +58,7 @@ class ScriptsReadSerializer(PolicyBasedSerializer):
         many=True,
         read_only=True
     )
-    identification = ISBNSerializer(
+    identification = ISBNReadSerializer(
         source="scripts_ISBN",
         many=True,
         read_only=True
@@ -56,7 +68,7 @@ class ScriptsReadSerializer(PolicyBasedSerializer):
         many=True,
         read_only=True
     )
-    cover = CoverSerializer(
+    cover = CoverBookReadSerializer(
         source="scripts_Cover",
         many=True,
         read_only=True
@@ -64,17 +76,7 @@ class ScriptsReadSerializer(PolicyBasedSerializer):
 
     class Meta:
         model = Scripts
-        fields = [
-            "id",
-            "title",
-            "alias",
-            "is_active",
-            "entry_date",
-            "finish_date",
-            
-            "institute",
-            "size",
-
+        fields = SCRIPTS_BASE_FIELDS + (
             "orderers",
             "status",
             "flag",
@@ -85,27 +87,12 @@ class ScriptsReadSerializer(PolicyBasedSerializer):
             "cover",
             "created_at",
             "updated_at"
-        ]
+        )
 
 class ScriptsWriteSerializer(PolicyBasedSerializer):
-#    institute = serializers.PrimaryKeyRelatedField(
-#        queryset=Institute.objects.all(),
-#        required=False
-#    )
-#    size = serializers.PrimaryKeyRelatedField(
-#        queryset=Size.objects.all(),
-#        required=False
-#    )
-
     class Meta:
         model = Scripts
-        fields = [
-            "title", 
-            "alias", 
-            "is_active", 
-            "entry_date", 
-            "finish_date",
-
-            "institute", 
-            "size"
-        ]
+        fields = SCRIPTS_BASE_FIELDS
+        read_only_fields = (
+            "id",
+        )

@@ -23,7 +23,7 @@ from .pivot import (
     Note
 )
 from .content import (
-    Cover,
+    CoverBook,
     Text,
     Flag,
     ISBN,

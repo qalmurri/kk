@@ -4,68 +4,86 @@ from scripts.models import (
     Flag,
     Content,
     Text,
-    Cover
+    CoverBook
 )
 from .common import (
-    PartSerializer,
-    TypeSerializer
+    PartReadSerializer,
+    TypeReadSerializer
 )
 
-class CoverSerializer(PolicyBasedSerializer):
+# base
+class BaseReadSerializer(PolicyBasedSerializer):
     class Meta:
-        model = Cover
-        fields = [
+        abstract = True
+        fields = (
             "id",
-            "thumbnail",
-            "length",
-            "height",
-            "width",
-            "x_axis",
-            "y_axis",
-        ]
-
-class TextSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = Text
-        fields = [
-            "id",
-            "text",
             "created_at",
-            "updated_at"
-        ]
+            "updated_at",
+        )
 
-class FlagSerializer(PolicyBasedSerializer):
-    part = PartSerializer()
+# coverbook
+COVERBOOK_FIELDS = (
+    "thumbnail",
+    "length",
+    "height",
+    "width",
+    "x_axis",
+    "y_axis",
+)
 
+class CoverBookReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = CoverBook
+        fields = BaseReadSerializer.Meta.fields + COVERBOOK_FIELDS
+
+class CoverBookWriteSerializer(PolicyBasedSerializer):
     class Meta:
-        model = Flag
-        fields = [
+        model = CoverBook
+        fields = (
+            "scripts",
+        ) + COVERBOOK_FIELDS
+        read_only_fields = (
             "id",
+        )
+
+# text
+class TextReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = Text
+        fields = BaseReadSerializer.Meta.fields + (
+            "text",
+        )
+
+# content
+class ContentReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = Content
+        fields = BaseReadSerializer.Meta.fields + (
+            "content",
+        )
+
+# flag
+class FlagReadSerializer(BaseReadSerializer):
+    part = PartReadSerializer(
+        read_only=True
+    )
+
+    class Meta(BaseReadSerializer):
+        model = Flag
+        fields = BaseReadSerializer.Meta.fields + (
             "is_active",
             "part",
-            "created_at",
-            "updated_at"
-        ]
+        )
 
-class ISBNSerializer(PolicyBasedSerializer):
-    type = TypeSerializer()
+# isbn
+class ISBNReadSerializer(BaseReadSerializer):
+    type = TypeReadSerializer(
+        read_only=True
+    )
 
-    class Meta:
+    class Meta(BaseReadSerializer.Meta):
         model = ISBN
-        fields = [
-            "id",
+        fields = BaseReadSerializer.Meta.fields + (
             "isbn",
             "type",
-            "created_at",
-            "updated_at"
-        ]
-
-class ContentSerializer(PolicyBasedSerializer):
-    class Meta:
-        model = Content
-        fields = [
-            "id",
-            "content",
-            "created_at",
-            "updated_at"
-        ]
+        )

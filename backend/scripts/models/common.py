@@ -1,17 +1,23 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
 
+# one-to-one for scripts
+class Size(TimeStampedModel):
+    name = models.CharField(
+        max_length=255
+    )
+
+class Institute(TimeStampedModel):
+    name = models.CharField(
+        max_length=255
+    )
+
 class ScriptsStatusCode(TimeStampedModel):
     name = models.CharField(
         max_length=10
     )
 
 class DescriptionPart(TimeStampedModel):
-    name = models.CharField(
-        max_length=255
-    )
-
-class Institute(TimeStampedModel):
     name = models.CharField(
         max_length=255
     )
@@ -34,11 +40,6 @@ class Part(TimeStampedModel):
 class Section(TimeStampedModel):
     name = models.CharField(
         max_length=10
-    )
-
-class Size(TimeStampedModel):
-    name = models.CharField(
-        max_length=255
     )
 
 class Type(TimeStampedModel):
