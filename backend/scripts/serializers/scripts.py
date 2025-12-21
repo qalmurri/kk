@@ -10,30 +10,45 @@ from .content import (
     CoverBookReadSerializer
 )
 from .pivot import (
-    ScriptOrdererSerializer,
+    ScriptOrdererReadSerializer,
     StatusSerializer,
     DescriptionSerializer,
     NoteSerializer,
-    ScriptsProcessSerializer
+    ScriptsProcessReadSerializer
 )
 
-SCRIPTS_BASE_FIELDS = (
+class BaseReadSerializer(PolicyBasedSerializer):
+    class Meta:
+        abstract = True
+        fields = (
             "id",
+            "created_at",
+            "updated_at",
+        )
+
+class BaseWriteSerializer(PolicyBasedSerializer):
+    class Meta:
+        abstract = True
+
+SCRIPTS_BASE_FIELDS = (
             "title",
             "alias",
             "is_active",
             "entry_date",
             "finish_date",
-            
             "institute",
             "size",
 )
 
-class ScriptsReadSerializer(PolicyBasedSerializer):
-    institute = InstituteReadSerializer()
-    size = SizeReadSerializer()
+class ScriptsReadSerializer(BaseReadSerializer):
+    institute = InstituteReadSerializer(
+        read_only=True
+    )
+    size = SizeReadSerializer(
+        read_only=True
+    )
 
-    orderers = ScriptOrdererSerializer(
+    orderers = ScriptOrdererReadSerializer(
         source="scripts_ScriptsOrderer",
         many=True,
         read_only=True
@@ -63,7 +78,7 @@ class ScriptsReadSerializer(PolicyBasedSerializer):
         many=True,
         read_only=True
     )
-    process = ScriptsProcessSerializer(
+    process = ScriptsProcessReadSerializer(
         source="scripts_ScriptsProcess",
         many=True,
         read_only=True
@@ -74,9 +89,9 @@ class ScriptsReadSerializer(PolicyBasedSerializer):
         read_only=True
     )
 
-    class Meta:
+    class Meta(BaseReadSerializer.Meta):
         model = Scripts
-        fields = SCRIPTS_BASE_FIELDS + (
+        fields = BaseReadSerializer.Meta.fields + SCRIPTS_BASE_FIELDS + (
             "orderers",
             "status",
             "flag",
@@ -85,14 +100,9 @@ class ScriptsReadSerializer(PolicyBasedSerializer):
             "identification",
             "process",
             "cover",
-            "created_at",
-            "updated_at"
         )
 
-class ScriptsWriteSerializer(PolicyBasedSerializer):
-    class Meta:
+class ScriptsWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
         model = Scripts
         fields = SCRIPTS_BASE_FIELDS
-        read_only_fields = (
-            "id",
-        )

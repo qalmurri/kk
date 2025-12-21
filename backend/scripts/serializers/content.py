@@ -42,9 +42,6 @@ class CoverBookWriteSerializer(PolicyBasedSerializer):
         fields = (
             "scripts",
         ) + COVERBOOK_FIELDS
-        read_only_fields = (
-            "id",
-        )
 
 # text
 class TextReadSerializer(BaseReadSerializer):

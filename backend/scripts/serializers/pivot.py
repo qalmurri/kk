@@ -1,15 +1,12 @@
-from rest_framework import serializers
 from .base import PolicyBasedSerializer
 from .user import UserSerializer
 from scripts.models import (
-    Scripts,
     ScriptsOrderer,
     Status,
     Description,
     Note,
     ScriptsProcess,
     By,
-    Orderer
 )
 from .common import (
     OrdererReadSerializer,
@@ -24,101 +21,116 @@ from .content import (
     ContentReadSerializer
 )
 
-class ScriptOrdererSerializer(PolicyBasedSerializer):
-    orderer = OrdererReadSerializer()
-
+class BaseReadSerializer(PolicyBasedSerializer):
     class Meta:
+        abstract = True
+        fields = (
+            "id",
+            "created_at",
+            "updated_at",
+        )
+
+# scriptorderer
+class ScriptOrdererReadSerializer(BaseReadSerializer):
+    orderer = OrdererReadSerializer(
+        read_only = True
+    )
+
+    class Meta(BaseReadSerializer.Meta):
         model = ScriptsOrderer
-        fields = [
-            "id",
+        fields = BaseReadSerializer.Meta.fields + (
             "orderer",
-            "created_at",
-            "updated_at"
-        ]
+        )
 
-class BySerializer(PolicyBasedSerializer):
-    user = UserSerializer()
+# by
+class ByReadSerializer(BaseReadSerializer):
+    user = UserSerializer(
+        read_only=True
+    )
 
-    class Meta:
+    class Meta(BaseReadSerializer.Meta):
         model = By
-        fields = [
-            "id",
+        fields = BaseReadSerializer.Meta.fields + (
             "user",
-            "created_at",
-            "updated_at"
-        ]
+        )
 
-class ScriptsProcessSerializer(PolicyBasedSerializer):
-    by = BySerializer(
+# scriptsprocess
+class ScriptsProcessReadSerializer(BaseReadSerializer):
+    by = ByReadSerializer(
         source="scriptsprocess_By",
         many=True
     )
-    section = SectionReadSerializer()
-    class Meta:
+    section = SectionReadSerializer(
+        read_only = True
+    )
+
+    class Meta(BaseReadSerializer.Meta):
         model = ScriptsProcess
-        fields = [
-            "id",
+        fields = BaseReadSerializer.Meta.fields + (
             "by",
             "section",
-            "created_at",
-            "updated_at"
-        ]
-class DescriptionSerializer(PolicyBasedSerializer):
+        )
+
+# description
+class DescriptionSerializer(BaseReadSerializer):
     items = TextReadSerializer(
         source="description_Text",
-        many=True
+        many=True,
+        read_only = True
     )
-    descriptionpart = DescriptionPartReadSerializer()
+    descriptionpart = DescriptionPartReadSerializer(
+        read_only = True
+    )
 
-    class Meta:
+    class Meta(BaseReadSerializer.Meta):
         model = Description
-        fields = [
-            "id",
+        fields = BaseReadSerializer.Meta.fields + (
             "items",
             "descriptionpart",
-            "created_at",
-            "updated_at"
-        ]
+        )
 
-class StatusAllSerializer(PolicyBasedSerializer):
-    label = LabelReadSerializer()
-    class Meta:
+# statusall
+class StatusAllSerializer(BaseReadSerializer):
+    label = LabelReadSerializer(
+        read_only = True
+    )
+    class Meta(BaseReadSerializer.Meta):
         model = Status
-        fields = [
-            "id",
+        fields = BaseReadSerializer.Meta.fields + (
             "code",
             "label",
-            "updated_at",
-            "created_at"
-        ]
+        )
 
-class StatusSerializer(PolicyBasedSerializer):
-    code = CodeReadSerializer()
-    label = LabelReadSerializer()
+# status
+class StatusSerializer(BaseReadSerializer):
+    code = CodeReadSerializer(
+        read_only = True
+    )
+    label = LabelReadSerializer(
+        read_only = True
+    )
 
-    class Meta:
+    class Meta(BaseReadSerializer.Meta):
         model = Status
-        fields = [
-            "id",
+        fields = BaseReadSerializer.Meta.fields + (
             "label",
             "code",
-            "created_at",
-            "updated_at"
-        ]
+        )
 
-class NoteSerializer(PolicyBasedSerializer):
+# note
+class NoteSerializer(BaseReadSerializer):
     items = ContentReadSerializer(
         source="note_Content",
-        many=True
+        many=True,
+        read_only = True
     )
-    notepart = NotePartReadSerializer()
+    notepart = NotePartReadSerializer(
+        read_only = True
+    )
 
-    class Meta:
+    class Meta(BaseReadSerializer.Meta):
         model = Note
-        fields = [
-            "id",
+        fields = BaseReadSerializer.Meta.fields + (
             "items",
             "notepart",
-            "created_at",
-            "updated_at"
-        ]
+        )
