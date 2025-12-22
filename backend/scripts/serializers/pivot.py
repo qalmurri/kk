@@ -30,6 +30,10 @@ class BaseReadSerializer(PolicyBasedSerializer):
             "updated_at",
         )
 
+class BaseWriteSerializer(PolicyBasedSerializer):
+    class Meta:
+        abstract = True
+
 # scriptorderer
 class ScriptOrdererReadSerializer(BaseReadSerializer):
     orderer = OrdererReadSerializer(
@@ -42,6 +46,14 @@ class ScriptOrdererReadSerializer(BaseReadSerializer):
             "orderer",
         )
 
+class ScriptOrdererWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = ScriptsOrderer
+        fields = (
+            "scripts",
+            "orderer",
+        )
+
 # by
 class ByReadSerializer(BaseReadSerializer):
     user = UserSerializer(
@@ -51,6 +63,14 @@ class ByReadSerializer(BaseReadSerializer):
     class Meta(BaseReadSerializer.Meta):
         model = By
         fields = BaseReadSerializer.Meta.fields + (
+            "user",
+        )
+
+class ByWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = By
+        fields = (
+            "scriptsprocess",
             "user",
         )
 
@@ -71,8 +91,16 @@ class ScriptsProcessReadSerializer(BaseReadSerializer):
             "section",
         )
 
+class ScriptsProcessWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = ScriptsProcess
+        fields = (
+            "scripts",
+            "section",
+        )
+
 # description
-class DescriptionSerializer(BaseReadSerializer):
+class DescriptionReadSerializer(BaseReadSerializer):
     items = TextReadSerializer(
         source="description_Text",
         many=True,
@@ -89,20 +117,16 @@ class DescriptionSerializer(BaseReadSerializer):
             "descriptionpart",
         )
 
-# statusall
-class StatusAllSerializer(BaseReadSerializer):
-    label = LabelReadSerializer(
-        read_only = True
-    )
-    class Meta(BaseReadSerializer.Meta):
-        model = Status
-        fields = BaseReadSerializer.Meta.fields + (
-            "code",
-            "label",
+class DescriptionWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Description
+        fields = (
+            "scripts",
+            "descriptionpart",
         )
 
 # status
-class StatusSerializer(BaseReadSerializer):
+class StatusReadSerializer(BaseReadSerializer):
     code = CodeReadSerializer(
         read_only = True
     )
@@ -117,8 +141,17 @@ class StatusSerializer(BaseReadSerializer):
             "code",
         )
 
+class StatusWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Status
+        fields = (
+            "scripts",
+            "label",
+            "code",
+        )
+
 # note
-class NoteSerializer(BaseReadSerializer):
+class NoteReadSerializer(BaseReadSerializer):
     items = ContentReadSerializer(
         source="note_Content",
         many=True,
@@ -133,4 +166,12 @@ class NoteSerializer(BaseReadSerializer):
         fields = BaseReadSerializer.Meta.fields + (
             "items",
             "notepart",
+        )
+
+class NoteWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Note
+        fields = (
+            "scripts",
+            "notepart"
         )

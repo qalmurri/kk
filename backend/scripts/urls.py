@@ -6,12 +6,24 @@ from rest_framework_simplejwt.views import (
 )
 from .views.logout import LogoutView
 from .views.scripts import ScriptsViewSet
+from .views.common.size import SizeViewSet
+from .views.common.type import TypeViewSet
 
 router = DefaultRouter()
 router.register(
     r"scripts",
     ScriptsViewSet,
     basename="scripts"
+)
+router.register(
+    r"size",
+    SizeViewSet,
+    basename="size"
+)
+router.register(
+    r"type",
+    TypeViewSet,
+    basename="type"
 )
 
 urlpatterns = [

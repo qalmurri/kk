@@ -21,6 +21,10 @@ class BaseReadSerializer(PolicyBasedSerializer):
             "updated_at",
         )
 
+class BaseWriteSerializer(PolicyBasedSerializer):
+    class Meta:
+        abstract = True
+
 # coverbook
 COVERBOOK_FIELDS = (
     "thumbnail",
@@ -51,11 +55,27 @@ class TextReadSerializer(BaseReadSerializer):
             "text",
         )
 
+class TextWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Text
+        fields = (
+            "description",
+            "text,"
+        )
+
 # content
 class ContentReadSerializer(BaseReadSerializer):
     class Meta(BaseReadSerializer.Meta):
         model = Content
         fields = BaseReadSerializer.Meta.fields + (
+            "content",
+        )
+
+class ContentWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Content
+        fields = (
+            "note",
             "content",
         )
 
@@ -72,6 +92,15 @@ class FlagReadSerializer(BaseReadSerializer):
             "part",
         )
 
+class FlagWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = Flag
+        fields = (
+            "scripts",
+            "is_active",
+            "part",
+        )
+
 # isbn
 class ISBNReadSerializer(BaseReadSerializer):
     type = TypeReadSerializer(
@@ -81,6 +110,15 @@ class ISBNReadSerializer(BaseReadSerializer):
     class Meta(BaseReadSerializer.Meta):
         model = ISBN
         fields = BaseReadSerializer.Meta.fields + (
+            "isbn",
+            "type",
+        )
+
+class ISBNWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = ISBN
+        fields = (
+            "scripts",
             "isbn",
             "type",
         )

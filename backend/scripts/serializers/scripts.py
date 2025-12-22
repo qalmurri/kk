@@ -11,9 +11,9 @@ from .content import (
 )
 from .pivot import (
     ScriptOrdererReadSerializer,
-    StatusSerializer,
-    DescriptionSerializer,
-    NoteSerializer,
+    StatusReadSerializer,
+    DescriptionReadSerializer,
+    NoteReadSerializer,
     ScriptsProcessReadSerializer
 )
 
@@ -53,7 +53,7 @@ class ScriptsReadSerializer(BaseReadSerializer):
         many=True,
         read_only=True
     )
-    status = StatusSerializer(
+    status = StatusReadSerializer(
         source="scripts_Status",
         many=True,
         read_only=True
@@ -63,12 +63,12 @@ class ScriptsReadSerializer(BaseReadSerializer):
         many=True,
         read_only=True
     )
-    descriptions = DescriptionSerializer(
+    descriptions = DescriptionReadSerializer(
         source="scripts_Description",
         many=True,
         read_only=True
     )
-    notes = NoteSerializer(
+    notes = NoteReadSerializer(
         source="scripts_Note",
         many=True,
         read_only=True
