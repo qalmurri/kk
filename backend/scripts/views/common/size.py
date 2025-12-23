@@ -1,4 +1,3 @@
-from rest_framework.decorators import action
 from scripts.views.base import BaseCRUDViewSet
 from scripts.serializers.common import (
     SizeReadSerializer,

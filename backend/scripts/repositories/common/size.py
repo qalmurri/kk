@@ -1,4 +1,3 @@
-from django.db.models import Q
 from scripts.models import Size
 from scripts.repositories.base import (
     BaseQueryRepository,

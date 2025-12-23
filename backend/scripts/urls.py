@@ -8,6 +8,14 @@ from .views.logout import LogoutView
 from .views.scripts import ScriptsViewSet
 from .views.common.size import SizeViewSet
 from .views.common.type import TypeViewSet
+from .views.common.section import SectionViewSet
+from .views.common.part import PartViewSet
+from .views.common.orderer import OrdererViewSet
+from .views.common.notepart import NotePartViewSet
+from .views.common.label import LabelViewSet
+from .views.common.institute import InstituteViewSet
+from .views.common.descriptionpart import DescriptionPartViewSet
+from .views.common.code import CodeViewSet
 
 router = DefaultRouter()
 router.register(
@@ -24,6 +32,46 @@ router.register(
     r"type",
     TypeViewSet,
     basename="type"
+)
+router.register(
+    r"section",
+    SectionViewSet,
+    basename="section"
+)
+router.register(
+    r"part",
+    PartViewSet,
+    basename="part"
+)
+router.register(
+    r"orderer",
+    OrdererViewSet,
+    basename="orderer"
+)
+router.register(
+    r"notepart",
+    NotePartViewSet,
+    basename="notepart"
+)
+router.register(
+    r"label",
+    LabelViewSet,
+    basename="label"
+)
+router.register(
+    r"institute",
+    InstituteViewSet,
+    basename="institute"
+)
+router.register(
+    r"descriptionpart",
+    DescriptionPartViewSet,
+    basename="descriptionpart"
+)
+router.register(
+    r"code",
+    CodeViewSet,
+    basename="code"
 )
 
 urlpatterns = [

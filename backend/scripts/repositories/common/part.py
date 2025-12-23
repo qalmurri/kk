@@ -1,11 +1,11 @@
-from scripts.models import Type
+from scripts.models import Part
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
 )
 
-class TypeQueryRepository(BaseQueryRepository):
-    model = Type
+class PartQueryRepository(BaseQueryRepository):
+    model = Part
 
     @classmethod
     def query(cls):
@@ -13,15 +13,15 @@ class TypeQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
 
-class TypeCommandRepository(BaseCommandRepository):
-    model = Type
+class PartCommandRepository(BaseCommandRepository):
+    model = Part
 
     @classmethod
-    def create(cls, **data) -> Type:
+    def create(cls, **data) -> Part:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Type, **data) -> Type:
+    def update(cls, instance: Part, **data) -> Part:
         for field, value in data.items():
             setattr(
                 instance,

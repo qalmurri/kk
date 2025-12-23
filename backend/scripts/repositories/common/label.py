@@ -1,11 +1,11 @@
-from scripts.models import Type
+from scripts.models import Label
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
 )
 
-class TypeQueryRepository(BaseQueryRepository):
-    model = Type
+class LabelQueryRepository(BaseQueryRepository):
+    model = Label
 
     @classmethod
     def query(cls):
@@ -13,15 +13,15 @@ class TypeQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
 
-class TypeCommandRepository(BaseCommandRepository):
-    model = Type
+class LabelCommandRepository(BaseCommandRepository):
+    model = Label
 
     @classmethod
-    def create(cls, **data) -> Type:
+    def create(cls, **data) -> Label:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Type, **data) -> Type:
+    def update(cls, instance: Label, **data) -> Label:
         for field, value in data.items():
             setattr(
                 instance,

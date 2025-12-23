@@ -1,11 +1,11 @@
-from scripts.models import Type
+from scripts.models import Orderer
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
 )
 
-class TypeQueryRepository(BaseQueryRepository):
-    model = Type
+class OrdererQueryRepository(BaseQueryRepository):
+    model = Orderer
 
     @classmethod
     def query(cls):
@@ -13,15 +13,15 @@ class TypeQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
 
-class TypeCommandRepository(BaseCommandRepository):
-    model = Type
+class OrdererCommandRepository(BaseCommandRepository):
+    model = Orderer
 
     @classmethod
-    def create(cls, **data) -> Type:
+    def create(cls, **data) -> Orderer:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Type, **data) -> Type:
+    def update(cls, instance: Orderer, **data) -> Orderer:
         for field, value in data.items():
             setattr(
                 instance,
