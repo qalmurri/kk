@@ -86,3 +86,12 @@ class PolicyBasedSerializer(BaseCompactSerializer):
                 self.fields.pop(
                     field
                 )
+
+class BaseReadSerializer(PolicyBasedSerializer):
+    class Meta:
+        abstract = True
+        fields = (
+            "id",
+            "created_at",
+            "updated_at",
+        )

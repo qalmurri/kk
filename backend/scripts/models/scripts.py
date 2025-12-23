@@ -51,3 +51,15 @@ class No(TimeStampedModel):
     no = models.CharField(
         max_length=255
     )
+
+class NoScripts(TimeStampedModel):
+    no = models.ForeignKey(
+        No,
+        on_delete=models.CASCADE,
+        related_name="no_NoScripts"
+    )
+    scripts = models.ForeignKey(
+        Scripts,
+        on_delete=models.CASCADE,
+        related_name="scripts_NoScripts"
+    )
