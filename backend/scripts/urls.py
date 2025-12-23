@@ -89,6 +89,67 @@ router.register(
     basename="code"
 )
 
+router.register(
+    r"content",
+    ContentViewSet,
+    basename="content"
+)
+router.register(
+    r"coverbook",
+    CoverBookViewSet,
+    basename="coverbook"
+)
+router.register(
+    r"flag",
+    FlagViewSet,
+    basename="flag"
+)
+router.register(
+    r"status",
+    StatusViewSet,
+    basename="status"
+)
+router.register(
+    r"isbn",
+    ISBNViewSet,
+    basename="isbn"
+)
+router.register(
+    r"text",
+    TextViewSet,
+    basename="text"
+)
+router.register(
+    r"by",
+    ByViewSet,
+    basename="by"
+)
+router.register(
+    r"description",
+    DescriptionViewSet,
+    basename="description"
+)
+router.register(
+    r"noscripts",
+    NoScriptsViewSet,
+    basename="noscripts"
+)
+router.register(
+    r"note",
+    NoteViewSet,
+    basename="note"
+)
+router.register(
+    r"scriptsorderer",
+    ScriptsOrdererViewSet,
+    basename="scriptsorderer"
+)
+router.register(
+    r"scriptsprocess",
+    ScriptsProcessViewSet,
+    basename="scriptsprocess"
+)
+
 urlpatterns = [
     path(
         'login/',
