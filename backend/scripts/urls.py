@@ -17,6 +17,21 @@ from .views.common.institute import InstituteViewSet
 from .views.common.descriptionpart import DescriptionPartViewSet
 from .views.common.code import CodeViewSet
 
+from .views.content.content import ContentViewSet
+from .views.content.coverbook import CoverBookViewSet
+from .views.content.flag import FlagViewSet
+from .views.content.isbn import ISBNViewSet
+from .views.content.text import TextViewSet
+
+from .views.pivot.by import ByViewSet
+from .views.pivot.description import DescriptionViewSet
+from .views.pivot.noscripts import NoScriptsViewSet
+from .views.pivot.note import NoteViewSet
+from .views.pivot.scriptsorderer import ScriptsOrdererViewSet
+from .views.pivot.scriptsprocess import ScriptsProcessViewSet
+from .views.pivot.status import StatusViewSet
+
+
 router = DefaultRouter()
 router.register(
     r"scripts",
