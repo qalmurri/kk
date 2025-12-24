@@ -33,140 +33,35 @@ from .views.pivot.status import StatusViewSet
 
 
 router = DefaultRouter()
-router.register(
-    r"scripts",
-    ScriptsViewSet,
-    basename="scripts"
-)
-router.register(
-    r"size",
-    SizeViewSet,
-    basename="size"
-)
-router.register(
-    r"type",
-    TypeViewSet,
-    basename="type"
-)
-router.register(
-    r"section",
-    SectionViewSet,
-    basename="section"
-)
-router.register(
-    r"part",
-    PartViewSet,
-    basename="part"
-)
-router.register(
-    r"orderer",
-    OrdererViewSet,
-    basename="orderer"
-)
-router.register(
-    r"notepart",
-    NotePartViewSet,
-    basename="notepart"
-)
-router.register(
-    r"label",
-    LabelViewSet,
-    basename="label"
-)
-router.register(
-    r"institute",
-    InstituteViewSet,
-    basename="institute"
-)
-router.register(
-    r"descriptionpart",
-    DescriptionPartViewSet,
-    basename="descriptionpart"
-)
-router.register(
-    r"code",
-    CodeViewSet,
-    basename="code"
-)
-
-router.register(
-    r"content",
-    ContentViewSet,
-    basename="content"
-)
-router.register(
-    r"coverbook",
-    CoverBookViewSet,
-    basename="coverbook"
-)
-router.register(
-    r"flag",
-    FlagViewSet,
-    basename="flag"
-)
-router.register(
-    r"status",
-    StatusViewSet,
-    basename="status"
-)
-router.register(
-    r"isbn",
-    ISBNViewSet,
-    basename="isbn"
-)
-router.register(
-    r"text",
-    TextViewSet,
-    basename="text"
-)
-router.register(
-    r"by",
-    ByViewSet,
-    basename="by"
-)
-router.register(
-    r"description",
-    DescriptionViewSet,
-    basename="description"
-)
-router.register(
-    r"noscripts",
-    NoScriptsViewSet,
-    basename="noscripts"
-)
-router.register(
-    r"note",
-    NoteViewSet,
-    basename="note"
-)
-router.register(
-    r"scriptsorderer",
-    ScriptsOrdererViewSet,
-    basename="scriptsorderer"
-)
-router.register(
-    r"scriptsprocess",
-    ScriptsProcessViewSet,
-    basename="scriptsprocess"
+router.register(r"scripts", ScriptsViewSet, basename="scripts")
+router.register(r"size", SizeViewSet, basename="size")
+router.register(r"type", TypeViewSet, basename="type")
+router.register(r"section", SectionViewSet, basename="section")
+router.register(r"part", PartViewSet, basename="part")
+router.register(r"orderer", OrdererViewSet, basename="orderer")
+router.register(r"notepart", NotePartViewSet, basename="notepart")
+router.register(r"label", LabelViewSet, basename="label")
+router.register(r"institute", InstituteViewSet, basename="institute")
+router.register(r"descriptionpart", DescriptionPartViewSet, basename="descriptionpart")
+router.register(r"code", CodeViewSet, basename="code")
+router.register(r"content", ContentViewSet, basename="content")
+router.register(r"coverbook", CoverBookViewSet, basename="coverbook")
+router.register(r"flag", FlagViewSet, basename="flag")
+router.register(r"status", StatusViewSet, basename="status")
+router.register(r"isbn", ISBNViewSet, basename="isbn")
+router.register(r"text", TextViewSet, basename="text")
+router.register(r"by", ByViewSet, basename="by")
+router.register(r"description", DescriptionViewSet, basename="description")
+router.register(r"noscripts", NoScriptsViewSet, basename="noscripts")
+router.register(r"note", NoteViewSet, basename="note")
+router.register(r"scriptsorderer", ScriptsOrdererViewSet, basename="scriptsorderer")
+router.register(r"scriptsprocess", ScriptsProcessViewSet,basename="scriptsprocess"
 )
 
 urlpatterns = [
-    path(
-        'login/',
-        TokenObtainPairView.as_view(),
-        name='token_obtain_pair'
-    ),
-    path(
-        'token/refresh/',
-        TokenRefreshView.as_view(),
-        name='token_refresh'
-    ),
-    path(
-        'logout/',
-        LogoutView.as_view(),
-        name='auth_logout'
-    ),
-
+    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('logout/', LogoutView.as_view(), name='auth_logout'),
 ]
 
 urlpatterns += router.urls

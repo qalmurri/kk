@@ -1,12 +1,12 @@
 from django.db.models import Q
-from scripts.models import Scripts
+from scripts.models import Script
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
 )
 
 class ScriptsQueryRepository(BaseQueryRepository):
-    model = Scripts
+    model = Script
 
     @classmethod
     def get_queryset(cls):
@@ -46,14 +46,14 @@ class ScriptsQueryRepository(BaseQueryRepository):
         return qs
     
 class ScriptsCommandRepository(BaseCommandRepository):
-    model = Scripts
+    model = Script
 
     @classmethod
-    def create(cls, **data) -> Scripts:
+    def create(cls, **data) -> Script:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Scripts, **data) -> Scripts:
+    def update(cls, instance: Script, **data) -> Script:
         for field, value in data.items():
             setattr(
                 instance,
