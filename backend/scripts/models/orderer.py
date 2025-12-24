@@ -1,9 +1,12 @@
 from django.db import models
-from scripts.models.timestamped import TimeStampedModel
+from scripts.models.base import TimeStampedModel
 from scripts.models.script import Script
 from scripts.models.common import Institute
 
+#PERLU DI ROMBAK!
+
 class Orderer(TimeStampedModel):
+    '''pivot: relasi orderer & script'''
     name = models.CharField(
         max_length=255
     )

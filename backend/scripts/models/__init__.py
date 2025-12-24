@@ -1,6 +1,6 @@
 from .user import User
 from .activity import ActivityLog
-from .timestamped import TimeStampedModel
+from .base import TimeStampedModel
 from .activity import ActivityLog
 from .common import Institute, Size
 from .cover import CoverBook
@@ -11,5 +11,4 @@ from .note import SectionNote as NotePart, Note, TextNote as Content
 from .orderer import Orderer, ScriptsOrderer
 from .script import Script, No, NoScripts
 from .scriptsprocess import Section, ScriptsProcess, By
-from .status import Label, ScriptsStatusCode, Status
-from .timestamped import TimeStampedModel
+from .status import LabelStatus as Label, SectionStatus as ScriptsStatusCode, Status

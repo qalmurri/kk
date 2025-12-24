@@ -1,5 +1,5 @@
 from django.db import models
-from scripts.models.timestamped import TimeStampedModel
+from scripts.models.base import TimeStampedModel
 
 class Size(TimeStampedModel):
     name = models.CharField(
