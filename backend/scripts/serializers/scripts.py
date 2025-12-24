@@ -1,5 +1,5 @@
 from .base import PolicyBasedSerializer
-from scripts.models import Scripts
+from scripts.models import Script
 from .common import (
     InstituteReadSerializer,
     SizeReadSerializer
@@ -90,7 +90,7 @@ class ScriptsReadSerializer(BaseReadSerializer):
     )
 
     class Meta(BaseReadSerializer.Meta):
-        model = Scripts
+        model = Script
         fields = BaseReadSerializer.Meta.fields + SCRIPTS_BASE_FIELDS + (
             "orderers",
             "status",
@@ -104,5 +104,5 @@ class ScriptsReadSerializer(BaseReadSerializer):
 
 class ScriptsWriteSerializer(BaseWriteSerializer):
     class Meta(BaseWriteSerializer.Meta):
-        model = Scripts
+        model = Script
         fields = SCRIPTS_BASE_FIELDS

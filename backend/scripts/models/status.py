@@ -1,20 +1,24 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
-from scripts.models.scripts import Scripts
+from scripts.models.script import Script
 
 class Label(TimeStampedModel):
     name = models.CharField(
         max_length=10,
     )
+    class Meta:
+        pass
 
 class ScriptsStatusCode(TimeStampedModel):
     name = models.CharField(
         max_length=10
     )
+    class Meta:
+        pass
 
 class Status(TimeStampedModel):
     scripts = models.ForeignKey(
-        Scripts,
+        Script,
         on_delete=models.CASCADE,
         related_name="scripts_Status"
     )
@@ -28,4 +32,5 @@ class Status(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="code_Status"
     )
-
+    class Meta:
+        pass

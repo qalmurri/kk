@@ -1,10 +1,10 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
-from scripts.models.scripts import Scripts
+from scripts.models.script import Script
 
 class CoverBook(TimeStampedModel):
     scripts = models.ForeignKey(
-        Scripts,
+        Script,
         on_delete=models.CASCADE,
         related_name="scripts_Cover"
     )
@@ -20,3 +20,7 @@ class CoverBook(TimeStampedModel):
     y_axis = models.IntegerField(
         default=0
     )
+    class Meta:
+        db_table = "coverbook"
+        verbose_name = "CoverBook"
+        verbose_name_plural = "CoverBooks"

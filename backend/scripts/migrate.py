@@ -5,7 +5,7 @@ from .models import (
     Status,
     Institute,
     Orderer,
-    Scripts,
+    Script,
     Size,
     ScriptsOrderer,
     ScriptsProcess,
@@ -184,7 +184,7 @@ def create_default_table(sender, **kwargs):
         {"title": "The Power of Core Values", "institute": 1, "size": 2}
     ]
     for item in scripts:
-        Scripts.objects.get_or_create(
+        Script.objects.get_or_create(
             title=item["title"],
             institute_id=item["institute"],
             size_id=item["size"]
@@ -262,7 +262,7 @@ def create_default_table(sender, **kwargs):
     for item in description:
         Description.objects.get_or_create(
             scripts_id=item["scripts"],
-            descriptionpart_id=item["descriptionpart"]
+            sectiondescription_id=item["descriptionpart"]
         )
 
     description2 = [

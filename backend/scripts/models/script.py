@@ -5,7 +5,7 @@ from scripts.models.common import (
     Size
 )
 
-class Scripts(TimeStampedModel):
+class Script(TimeStampedModel):
     is_active = models.BooleanField(
         default=True
     )
@@ -39,10 +39,12 @@ class Scripts(TimeStampedModel):
         null=True,
         blank=True
     )
+    class Meta:
+        pass
 
 class No(TimeStampedModel):
-    scripts = models.ForeignKey(
-        Scripts,
+    script = models.ForeignKey(
+        Script,
         on_delete=models.CASCADE,
         related_name="scripts_No",
         null=True,
@@ -51,6 +53,8 @@ class No(TimeStampedModel):
     no = models.CharField(
         max_length=255
     )
+    class Meta:
+        pass
 
 class NoScripts(TimeStampedModel):
     no = models.ForeignKey(
@@ -58,8 +62,12 @@ class NoScripts(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="no_NoScripts"
     )
-    scripts = models.ForeignKey(
-        Scripts,
+    script = models.ForeignKey(
+        Script,
         on_delete=models.CASCADE,
         related_name="scripts_NoScripts"
     )
+    class Meta:
+        db_table = "noscripts"
+        verbose_name = "NoScripts"
+        verbose_name_plural = "NoScriptss"

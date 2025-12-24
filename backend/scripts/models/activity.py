@@ -25,3 +25,7 @@ class ActivityLog(models.Model):
         default=current_timestamp,
         editable=False
     )
+    class Meta:
+        db_table = "activitylog"
+        verbose_name = "ActivityLog"
+        verbose_name_plural = "ActivityLogs"

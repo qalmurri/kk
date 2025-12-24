@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from scripts.models.timestamped import TimeStampedModel
-from scripts.models.scripts import Scripts
+from scripts.models.script import Script
 
 User = get_user_model()
 
@@ -9,10 +9,12 @@ class Section(TimeStampedModel):
     name = models.CharField(
         max_length=10
     )
+    class Meta:
+        pass
 
 class ScriptsProcess(TimeStampedModel): 
     scripts = models.ForeignKey(
-        Scripts,
+        Script,
         on_delete=models.CASCADE,
         related_name="scripts_ScriptsProcess"
     )
@@ -21,6 +23,8 @@ class ScriptsProcess(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="section_ScriptsProcess"
     )
+    class Meta:
+        pass
 
 class By(TimeStampedModel): 
     scriptsprocess = models.ForeignKey(
@@ -33,4 +37,5 @@ class By(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="user_By"
     )
-
+    class Meta:
+        pass

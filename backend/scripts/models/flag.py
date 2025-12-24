@@ -1,15 +1,19 @@
 from django.db import models
 from scripts.models.timestamped import TimeStampedModel
-from scripts.models.scripts import Scripts
+from scripts.models.script import Script
 
 class Part(TimeStampedModel):
     name = models.CharField(
         max_length=10,
     )
+    class Meta:
+        db_table = "part"
+        verbose_name = "Part"
+        verbose_name_plural = "Parts"
 
 class Flag(TimeStampedModel):
     scripts = models.ForeignKey(
-        Scripts,
+        Script,
         on_delete=models.CASCADE,
         related_name="scripts_Flag"
     )
@@ -21,3 +25,7 @@ class Flag(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="part_Flag"
     )
+    class Meta:
+        db_table = "flag"
+        verbose_name = "Flag"
+        verbose_name_plural = "Flags"
