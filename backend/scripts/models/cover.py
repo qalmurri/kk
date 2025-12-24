@@ -2,8 +2,8 @@ from django.db import models
 from scripts.models.base import TimeStampedModel
 from scripts.models.script import Script
 
-class CoverBook(TimeStampedModel):
-    scripts = models.ForeignKey(
+class Cover(TimeStampedModel):
+    script = models.ForeignKey(
         Script,
         on_delete=models.CASCADE,
         related_name="scripts_Cover"
@@ -21,6 +21,6 @@ class CoverBook(TimeStampedModel):
         default=0
     )
     class Meta:
-        db_table = "coverbook"
-        verbose_name = "CoverBook"
-        verbose_name_plural = "CoverBooks"
+        db_table = "cover"
+        verbose_name = "Cover"
+        verbose_name_plural = "Covers"

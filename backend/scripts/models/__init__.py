@@ -3,7 +3,7 @@ from .activity import ActivityLog
 from .base import TimeStampedModel
 from .activity import ActivityLog
 from .common import Institute, Size
-from .cover import CoverBook
+from .cover import Cover
 from .description import SectionDescription as DescriptionPart, Description, TextDescription as Text
 from .flag import Part, Flag
 from .isbn import Type, Isbn as ISBN
