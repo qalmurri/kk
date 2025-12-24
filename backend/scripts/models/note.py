@@ -2,23 +2,25 @@ from django.db import models
 from scripts.models.timestamped import TimeStampedModel
 from scripts.models.script import Script
 
-class NotePart(TimeStampedModel):
+class SectionNote(TimeStampedModel):
+    '''common: pilihan section untuk model Note'''
     name = models.CharField(
         max_length=255
     )
     class Meta:
-        db_table = "notepart"
-        verbose_name = "NotePart"
-        verbose_name_plural = "NoteParts"
+        db_table = "sectionnote"
+        verbose_name = "SectionNote"
+        verbose_name_plural = "SectionNotes"
 
 class Note(TimeStampedModel):
-    scripts = models.ForeignKey(
+    '''pivot: relasi section & script'''
+    script = models.ForeignKey(
         Script,
         on_delete=models.CASCADE,
         related_name="scripts_Note"
     )
-    notepart = models.ForeignKey(
-        NotePart,
+    sectionnote = models.ForeignKey(
+        SectionNote,
         on_delete=models.CASCADE,
         related_name="notepart_Note"
     )
@@ -27,16 +29,17 @@ class Note(TimeStampedModel):
         verbose_name = "Note"
         verbose_name_plural = "Notes"
 
-class Content(TimeStampedModel):
+class TextNote(TimeStampedModel):
+    '''content: (many to one) untuk model Note, berisi tentang text'''
     note = models.ForeignKey(
         Note,
         on_delete=models.CASCADE,
         related_name="note_Content"
     )
-    content = models.CharField(
+    text = models.CharField(
         max_length=255
     )
     class Meta:
-        db_table = "content"
-        verbose_name = "Content"
-        verbose_name_plural = "Contents"
+        db_table = "textnote"
+        verbose_name = "TextNote"
+        verbose_name_plural = "TextNotes"

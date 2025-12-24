@@ -24,6 +24,7 @@ class Orderer(TimeStampedModel):
         verbose_name_plural = "Orderers"
 
 class ScriptsOrderer(TimeStampedModel): 
+    '''pivot: relasi orderer & script'''
     scripts = models.ForeignKey(
         Script,
         on_delete=models.CASCADE,
