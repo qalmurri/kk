@@ -2,8 +2,8 @@ from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from django.forms.models import model_to_dict
 
-from .models import *
-from .models import ActivityLog
+from ..models import *
+from ..models import ActivityLog
 
 _PREVIOUS_STATE = {}
 

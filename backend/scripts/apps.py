@@ -5,4 +5,5 @@ class ScriptsConfig(AppConfig):
 
     def ready(self):
         import scripts.migrate
-        import scripts.signals
+        import scripts.signals.log
+        #import scripts.signals.migrate
