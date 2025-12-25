@@ -1,47 +1,40 @@
-from .base import PolicyBasedSerializer, BaseReadSerializer
-from scripts.models import Type, ISBN
+from .base import BaseWriteSerializer, BaseReadSerializer
+from scripts.models import Type, Isbn
 
-class BaseWriteSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-
-class BaseWriteSerializer2(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-        fields = (
-            "name",
-        )
-
-# type
 class TypeReadSerializer(BaseReadSerializer):
+    '''type read serializer'''
     class Meta(BaseReadSerializer.Meta):
         model = Type
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
-class TypeWriteSerializer(BaseWriteSerializer2):
+class TypeWriteSerializer(BaseWriteSerializer):
+    '''type write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = Type
+        fields = BaseWriteSerializer.Meta.fields + (
+            "name",
+        )
 
-# isbn
-class ISBNReadSerializer(BaseReadSerializer):
+class IsbnReadSerializer(BaseReadSerializer):
+    '''isbn read serializer'''
     type = TypeReadSerializer(
         read_only=True
     )
-
     class Meta(BaseReadSerializer.Meta):
-        model = ISBN
+        model = Isbn
         fields = BaseReadSerializer.Meta.fields + (
             "isbn",
             "type",
         )
 
-class ISBNWriteSerializer(BaseWriteSerializer):
+class IsbnWriteSerializer(BaseWriteSerializer):
+    '''isbn write serializer'''
     class Meta(BaseWriteSerializer.Meta):
-        model = ISBN
-        fields = (
-            "scripts",
+        model = Isbn
+        fields = BaseReadSerializer.Meta.fields + (
+            "script",
             "isbn",
             "type",
         )

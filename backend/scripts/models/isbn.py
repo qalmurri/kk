@@ -13,7 +13,7 @@ class Type(TimeStampedModel):
         ordering = ["name"]
 
 class Isbn(TimeStampedModel):
-    scripts = models.ForeignKey(
+    script = models.ForeignKey(
         Script,
         on_delete=models.CASCADE,
         related_name="scripts_ISBN"

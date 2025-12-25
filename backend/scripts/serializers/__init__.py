@@ -32,8 +32,8 @@ from .flag import (
 from .isbn import (
     TypeReadSerializer,
     TypeWriteSerializer,
-    ISBNReadSerializer,
-    ISBNWriteSerializer,
+    IsbnReadSerializer,
+    IsbnWriteSerializer,
 
 )
 from .note import (

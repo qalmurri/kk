@@ -1,46 +1,39 @@
-from .base import PolicyBasedSerializer, BaseReadSerializer
+from .base import BaseWriteSerializer, BaseReadSerializer
 from scripts.models import Flag, Part
 
-class BaseWriteSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-
-class BaseWriteSerializer2(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-        fields = (
-            "name",
-        )
-
-# part
 class PartReadSerializer(BaseReadSerializer):
+    '''part read serializer'''
     class Meta(BaseReadSerializer.Meta):
         model = Part
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
-class PartWriteSerializer(BaseWriteSerializer2):
+class PartWriteSerializer(BaseWriteSerializer):
+    '''part write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = Part
+        fields = BaseWriteSerializer.Meta.fields + (
+            "name",
+        )
 
-# flag
 class FlagReadSerializer(BaseReadSerializer):
+    '''flag read serializer'''
     part = PartReadSerializer(
         read_only=True
     )
-
     class Meta(BaseReadSerializer):
         model = Flag
         fields = BaseReadSerializer.Meta.fields + (
-            "is_active",
             "part",
+            "is_active",
         )
 
 class FlagWriteSerializer(BaseWriteSerializer):
+    '''flag write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = Flag
-        fields = (
+        fields = BaseWriteSerializer.Meta.fields + (
             "scripts",
             "is_active",
             "part",
