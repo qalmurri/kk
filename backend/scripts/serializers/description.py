@@ -1,64 +1,61 @@
-from .base import BaseReadSerializer, PolicyBasedSerializer
-from scripts.models import Description, DescriptionPart, Text
+from .base import BaseReadSerializer, BaseWriteSerializer
+from scripts.models import Description, SectionDescription, TextDescription
 
-class BaseWriteSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-
-class BaseWriteSerializer2(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-        fields = (
-            "name",
-        )
-
-class TextReadSerializer(BaseReadSerializer):
+class TextDescriptionReadSerializer(BaseReadSerializer):
+    '''text description read serializer'''
     class Meta(BaseReadSerializer.Meta):
-        model = Text
+        model = TextDescription
         fields = BaseReadSerializer.Meta.fields + (
             "text",
         )
 
-class TextWriteSerializer(BaseWriteSerializer):
+class TextDescriptionWriteSerializer(BaseWriteSerializer):
+    '''text description write serializer'''
     class Meta(BaseWriteSerializer.Meta):
-        model = Text
-        fields = (
+        model = TextDescription
+        fields = BaseWriteSerializer.Meta.fields + (
+            "text",
             "description",
-            "text,"
         )
 
-class DescriptionPartReadSerializer(BaseReadSerializer):
+class SectionDescriptionReadSerializer(BaseReadSerializer):
+    '''section description read serializer'''
     class Meta(BaseReadSerializer.Meta):
-        model = DescriptionPart
+        model = SectionDescription
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
-class DescriptionPartWriteSerializer(BaseWriteSerializer2):
+class SectionDescriptionWriteSerializer(BaseWriteSerializer):
+    '''section description write serializer'''
     class Meta(BaseWriteSerializer.Meta):
-        model = DescriptionPart
+        model = SectionDescription
+        fields = BaseWriteSerializer.Meta.fields + (
+            "name",
+        )
 
 class DescriptionReadSerializer(BaseReadSerializer):
-    items = TextReadSerializer(
+    '''description read serializer'''
+    textdescription = TextDescriptionReadSerializer(
         source="description_Text",
         many=True,
         read_only = True
     )
-    descriptionpart = DescriptionPartReadSerializer(
+    sectiondescription = SectionDescriptionReadSerializer(
         read_only = True
     )
-
     class Meta(BaseReadSerializer.Meta):
         model = Description
         fields = BaseReadSerializer.Meta.fields + (
-            "items",
-            "descriptionpart",
+            "textdescription",
+            "sectiondescription",
         )
 
 class DescriptionWriteSerializer(BaseWriteSerializer):
+    '''description write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = Description
-        fields = (
-            "scripts",
-            "descriptionpart",
+        fields = BaseWriteSerializer.Meta.fields + (
+            "script",
+            "sectiondescription",
         )

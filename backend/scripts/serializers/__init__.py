@@ -16,10 +16,10 @@ from .cover import (
     CoverWriteSerializer
 )
 from .description import (
-    TextReadSerializer, 
-    TextWriteSerializer,
-    DescriptionPartReadSerializer,
-    DescriptionPartWriteSerializer,
+    TextDescriptionReadSerializer, 
+    TextDescriptionWriteSerializer,
+    SectionDescriptionReadSerializer,
+    SectionDescriptionWriteSerializer,
     DescriptionReadSerializer,
     DescriptionWriteSerializer
 )

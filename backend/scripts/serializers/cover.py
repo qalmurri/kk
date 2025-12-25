@@ -1,4 +1,4 @@
-from .base import BaseReadSerializer, PolicyBasedSerializer
+from .base import BaseReadSerializer, BaseWriteSerializer
 from scripts.models import Cover
 
 cover_fields = (
@@ -11,13 +11,15 @@ cover_fields = (
 )
 
 class CoverReadSerializer(BaseReadSerializer):
+    '''cover read serializer'''
     class Meta(BaseReadSerializer.Meta):
         model = Cover
         fields = BaseReadSerializer.Meta.fields + cover_fields
 
-class CoverWriteSerializer(PolicyBasedSerializer):
-    class Meta:
+class CoverWriteSerializer(BaseWriteSerializer):
+    '''cover read serializer'''
+    class Meta(BaseWriteSerializer.Meta):
         model = Cover
-        fields = (
+        fields = BaseWriteSerializer.Meta.fields + cover_fields + (
             "scripts",
-        ) + cover_fields
+        )

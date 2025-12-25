@@ -1,4 +1,4 @@
-from .base import PolicyBasedSerializer, BaseReadSerializer, BaseWriteSerializer
+from .base import BaseReadSerializer, BaseWriteSerializer
 from scripts.models import Size, Institute
 
 class SizeReadSerializer(BaseReadSerializer):
@@ -9,15 +9,14 @@ class SizeReadSerializer(BaseReadSerializer):
             "name",
         )
 
-class SizeWriteSerializer(PolicyBasedSerializer):
+class SizeWriteSerializer(BaseWriteSerializer):
     '''size write serializer'''
-    class Meta:
+    class Meta(BaseWriteSerializer.Meta):
         model = Size
-        fields = (
+        fields = BaseWriteSerializer.Meta.fields + (
             "name",
         )
 
-# institute
 class InstituteReadSerializer(BaseReadSerializer):
     '''institute read serializer'''
     class Meta(BaseReadSerializer.Meta):
