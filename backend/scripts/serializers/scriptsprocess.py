@@ -1,36 +1,31 @@
-from .base import BaseReadSerializer, PolicyBasedSerializer
-from scripts.models import Section, By, ScriptsProcess
+from .base import BaseReadSerializer, BaseWriteSerializer
+from scripts.models import Section, By, ScriptProcess
 from .user import UserSerializer
 
-class BaseWriteSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
 
-class BaseWriteSerializer2(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-        fields = (
-            "name",
-        )
-
-# section
+# SECTION READ & WRITE
 class SectionReadSerializer(BaseReadSerializer):
+    '''section read serializer'''
     class Meta(BaseReadSerializer.Meta):
         model = Section
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
-class SectionWriteSerializer(BaseWriteSerializer2):
-    class Meta(v.Meta):
+class SectionWriteSerializer(BaseWriteSerializer):
+    '''section write serializer'''
+    class Meta(BaseWriteSerializer.Meta):
         model = Section
+        fields = BaseWriteSerializer.Meta.fields + (
+            "name",
+        )
 
-# by
+# BY READ & WRITE
 class ByReadSerializer(BaseReadSerializer):
+    '''by read serializer'''
     user = UserSerializer(
         read_only=True
     )
-
     class Meta(BaseReadSerializer.Meta):
         model = By
         fields = BaseReadSerializer.Meta.fields + (
@@ -38,15 +33,17 @@ class ByReadSerializer(BaseReadSerializer):
         )
 
 class ByWriteSerializer(BaseWriteSerializer):
+    '''by write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = By
-        fields = (
-            "scriptsprocess",
+        fields = BaseWriteSerializer.Meta.fields + (
+            "scriptprocess",
             "user",
         )
 
-# scriptsprocess
-class ScriptsProcessReadSerializer(BaseReadSerializer):
+# SCRIPT PROCESS READ & WRITE
+class ScriptProcessReadSerializer(BaseReadSerializer):
+    '''script process read serializer'''
     by = ByReadSerializer(
         source="scriptsprocess_By",
         many=True
@@ -54,18 +51,18 @@ class ScriptsProcessReadSerializer(BaseReadSerializer):
     section = SectionReadSerializer(
         read_only = True
     )
-
     class Meta(BaseReadSerializer.Meta):
-        model = ScriptsProcess
+        model = ScriptProcess
         fields = BaseReadSerializer.Meta.fields + (
             "by",
             "section",
         )
 
-class ScriptsProcessWriteSerializer(BaseWriteSerializer):
+class ScriptProcessWriteSerializer(BaseWriteSerializer):
+    '''script process write serializer'''
     class Meta(BaseWriteSerializer.Meta):
-        model = ScriptsProcess
+        model = ScriptProcess
         fields = (
-            "scripts",
+            "script",
             "section",
         )

@@ -1,5 +1,5 @@
 from .user import User
-from .activity import ActivitySerializer
+from .activity import ActivityReadSerializer
 from .base import (
     BaseCompactSerializer,
     PolicyBasedSerializer,
@@ -59,8 +59,8 @@ from .scriptsprocess import (
     SectionWriteSerializer,
     ByReadSerializer,
     ByWriteSerializer,
-    ScriptsProcessReadSerializer,
-    ScriptsProcessWriteSerializer
+    ScriptProcessReadSerializer,
+    ScriptProcessWriteSerializer
 )
 from .status import (
     LabelReadSerializer,

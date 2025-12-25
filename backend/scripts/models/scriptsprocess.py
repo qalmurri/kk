@@ -12,8 +12,8 @@ class Section(TimeStampedModel):
     class Meta:
         pass
 
-class ScriptsProcess(TimeStampedModel): 
-    scripts = models.ForeignKey(
+class ScriptProcess(TimeStampedModel): 
+    script = models.ForeignKey(
         Script,
         on_delete=models.CASCADE,
         related_name="scripts_ScriptsProcess"
@@ -27,8 +27,8 @@ class ScriptsProcess(TimeStampedModel):
         pass
 
 class By(TimeStampedModel): 
-    scriptsprocess = models.ForeignKey(
-        ScriptsProcess,
+    scriptprocess = models.ForeignKey(
+        ScriptProcess,
         on_delete=models.CASCADE,
         related_name="scriptsprocess_By"
     )
