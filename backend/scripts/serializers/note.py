@@ -1,8 +1,9 @@
 from .base import BaseReadSerializer, BaseWriteSerializer
 from scripts.models import Note, SectionNote, TextNote
 
-# NOTEPART READ & WRITE
+# SECTIONNOTE READ & WRITE
 class SectionNoteReadSerializer(BaseReadSerializer):
+    '''section note read serializer'''
     class Meta(BaseReadSerializer.Meta):
         model = SectionNote
         fields = BaseReadSerializer.Meta.fields + (
@@ -10,6 +11,7 @@ class SectionNoteReadSerializer(BaseReadSerializer):
         )
 
 class SectionNoteWriteSerializer(BaseWriteSerializer):
+    '''section note write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = SectionNote
         fields = BaseWriteSerializer.Meta.fields + (
@@ -18,6 +20,7 @@ class SectionNoteWriteSerializer(BaseWriteSerializer):
 
 # CONTENT READ & WRITE
 class TextNoteReadSerializer(BaseReadSerializer):
+    '''text note read serializer'''
     class Meta(BaseReadSerializer.Meta):
         model = TextNote
         fields = BaseReadSerializer.Meta.fields + (
@@ -25,6 +28,7 @@ class TextNoteReadSerializer(BaseReadSerializer):
         )
 
 class TextNoteWriteSerializer(BaseWriteSerializer):
+    '''text note write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = TextNote
         fields = BaseWriteSerializer.Meta.fields + (
@@ -34,6 +38,7 @@ class TextNoteWriteSerializer(BaseWriteSerializer):
 
 # NOTE_ READ & WRITE
 class NoteReadSerializer(BaseReadSerializer):
+    '''note read serializer'''
     textnote = TextNoteReadSerializer(
         source="note_Content",
         many=True,
@@ -45,14 +50,15 @@ class NoteReadSerializer(BaseReadSerializer):
     class Meta(BaseReadSerializer.Meta):
         model = Note
         fields = BaseReadSerializer.Meta.fields + (
-            "items",
+            "textnote",
             "sectionnote",
         )
 
 class NoteWriteSerializer(BaseWriteSerializer):
+    '''note write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = Note
-        fields = (
+        fields = BaseWriteSerializer.Meta.fields + (
             "script",
             "sectionnote"
         )

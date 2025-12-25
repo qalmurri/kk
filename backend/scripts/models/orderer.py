@@ -28,7 +28,7 @@ class Orderer(TimeStampedModel):
 
 class ScriptsOrderer(TimeStampedModel): 
     '''pivot: relasi orderer & script'''
-    scripts = models.ForeignKey(
+    script = models.ForeignKey(
         Script,
         on_delete=models.CASCADE,
         related_name="scripts_ScriptsOrderer"

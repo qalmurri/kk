@@ -37,10 +37,10 @@ from .isbn import (
 
 )
 from .note import (
-    NotePartReadSerializer,
-    NotePartWriteSerializer,
-    ContentReadSerializer,
-    ContentWriteSerializer,
+    TextNoteReadSerializer,
+    TextNoteWriteSerializer,
+    SectionNoteReadSerializer,
+    SectionNoteWriteSerializer,
     NoteReadSerializer,
     NoteWriteSerializer
 )

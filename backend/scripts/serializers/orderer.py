@@ -1,24 +1,13 @@
-from .base import BaseReadSerializer, PolicyBasedSerializer
+from .base import BaseReadSerializer, BaseWriteSerializer
 from .common import InstituteReadSerializer
 from scripts.models import Orderer, ScriptsOrderer
 
-class BaseWriteSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-
-class BaseWriteSerializer2(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-        fields = (
-            "name",
-        )
-
-# orderer
+# ORDERER READ & WRITE
 class OrdererReadSerializer(BaseReadSerializer):
+    '''orderer read serializer'''
     institute = InstituteReadSerializer(
         read_only=True
     )
-
     class Meta(BaseReadSerializer.Meta):
         model = Orderer
         fields = BaseReadSerializer.Meta.fields + (
@@ -27,20 +16,22 @@ class OrdererReadSerializer(BaseReadSerializer):
             "institute"
         )
 
-class OrdererWriteSerializer(BaseWriteSerializer2):
-    class Meta(BaseWriteSerializer2.Meta):
+class OrdererWriteSerializer(BaseWriteSerializer):
+    '''orderer write serializer'''
+    class Meta(BaseWriteSerializer.Meta):
         model = Orderer
-        fields = BaseWriteSerializer2.Meta.fields + (
+        fields = BaseWriteSerializer.Meta.fields + (
+            "name",
             "no",
             "institute",
         )
 
-# scriptorderer
+# SCRIPTORDERER READ & WRITE
 class ScriptOrdererReadSerializer(BaseReadSerializer):
+    '''script orderer read serializer'''
     orderer = OrdererReadSerializer(
         read_only = True
     )
-
     class Meta(BaseReadSerializer.Meta):
         model = ScriptsOrderer
         fields = BaseReadSerializer.Meta.fields + (
@@ -48,9 +39,10 @@ class ScriptOrdererReadSerializer(BaseReadSerializer):
         )
 
 class ScriptOrdererWriteSerializer(BaseWriteSerializer):
+    '''script orderer write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = ScriptsOrderer
-        fields = (
-            "scripts",
+        fields = BaseWriteSerializer.Meta.fields + (
+            "script",
             "orderer",
         )
