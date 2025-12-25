@@ -2,7 +2,6 @@ from .base import BaseReadSerializer, BaseWriteSerializer
 from scripts.models import Section, By, ScriptProcess
 from .user import UserSerializer
 
-
 # SECTION READ & WRITE
 class SectionReadSerializer(BaseReadSerializer):
     '''section read serializer'''

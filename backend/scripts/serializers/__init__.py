@@ -63,10 +63,10 @@ from .scriptsprocess import (
     ScriptProcessWriteSerializer
 )
 from .status import (
-    LabelReadSerializer,
-    LabelWriteSerializer,
-    CodeReadSerializer,
-    CodeWriteSerializer,
+    LabelStatusReadSerializer,
+    LabelStatusWriteSerializer,
+    SectionStatusReadSerializer,
+    SectionStatusWriteSerializer,
     StatusReadSerializer,
     StatusWriteSerializer
 )

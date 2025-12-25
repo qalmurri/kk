@@ -10,4 +10,4 @@ from .note import SectionNote, Note, TextNote
 from .orderer import Orderer, ScriptsOrderer
 from .script import Script, No, NoScripts
 from .scriptsprocess import Section, ScriptProcess, By
-from .status import LabelStatus as Label, SectionStatus as ScriptsStatusCode, Status
+from .status import LabelStatus, SectionStatus, Status

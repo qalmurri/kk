@@ -1,66 +1,63 @@
-from .base import BaseReadSerializer, PolicyBasedSerializer
-from scripts.models import Label, ScriptsStatusCode, Status
+from .base import BaseReadSerializer, BaseWriteSerializer
+from scripts.models import LabelStatus, SectionStatus, Status
 
-class BaseWriteSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-
-class BaseWriteSerializer2(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-        fields = (
-            "name",
-        )
-
-
-# labelread
-class LabelReadSerializer(BaseReadSerializer):
+# LABEL READ & WRITE
+class LabelStatusReadSerializer(BaseReadSerializer):
+    '''label status read serializer'''
     class Meta(BaseReadSerializer.Meta):
-        model = Label
+        model = LabelStatus
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
-class LabelWriteSerializer(BaseWriteSerializer2):
-    class Meta(BaseWriteSerializer2.Meta):
-        model = Label
+class LabelStatusWriteSerializer(BaseWriteSerializer):
+    '''label status write serializer'''
+    class Meta(BaseWriteSerializer.Meta):
+        model = LabelStatus
+        fields = BaseWriteSerializer.Meta.fields + (
+            "name",
+        )
 
-
-
-# code
-class CodeReadSerializer(BaseReadSerializer):
+# CODE READ & WRITE
+class SectionStatusReadSerializer(BaseReadSerializer):
+    '''section status read serializer'''
     class Meta(BaseReadSerializer.Meta):
-        model = ScriptsStatusCode
+        model = SectionStatus
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
-class CodeWriteSerializer(BaseWriteSerializer2):
-    class Meta(BaseWriteSerializer2.Meta):
-        model = ScriptsStatusCode
+class SectionStatusWriteSerializer(BaseWriteSerializer):
+    '''section status write serializer'''
+    class Meta(BaseWriteSerializer.Meta):
+        model = SectionStatus
+        fields = BaseWriteSerializer.Meta.fields + (
+            "name",
+        )
 
-# status
+# STATUS READ & WRITE
 class StatusReadSerializer(BaseReadSerializer):
-    code = CodeReadSerializer(
+    '''status read serializer'''
+    sectionstatus = SectionStatusReadSerializer(
         read_only = True
     )
-    label = LabelReadSerializer(
+    labelstatus = LabelStatusReadSerializer(
         read_only = True
     )
-
     class Meta(BaseReadSerializer.Meta):
         model = Status
         fields = BaseReadSerializer.Meta.fields + (
-            "label",
-            "code",
+            "labelstatus",
+            "sectionstatus",
         )
 
 class StatusWriteSerializer(BaseWriteSerializer):
+    '''status write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = Status
-        fields = (
-            "scripts",
-            "label",
-            "code",
+        fields = BaseWriteSerializer.Meta.fields + (
+            "script",
+            "labelstatus",
+            "sectionstatus",
         )
 
