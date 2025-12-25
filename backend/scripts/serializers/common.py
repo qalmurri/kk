@@ -1,36 +1,25 @@
-from .base import PolicyBasedSerializer
+from .base import PolicyBasedSerializer, BaseReadSerializer, BaseWriteSerializer
 from scripts.models import Size, Institute
 
-class BaseReadSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-        fields = (
-            "id",
-            "created_at",
-            "updated_at",
-        )
-
-class BaseWriteSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-        fields = (
-            "name",
-        )
-
-# size
 class SizeReadSerializer(BaseReadSerializer):
+    '''size read serializer'''
     class Meta(BaseReadSerializer.Meta):
         model = Size
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
-class SizeWriteSerializer(BaseWriteSerializer):
-    class Meta(BaseWriteSerializer.Meta):
+class SizeWriteSerializer(PolicyBasedSerializer):
+    '''size write serializer'''
+    class Meta:
         model = Size
+        fields = (
+            "name",
+        )
 
 # institute
 class InstituteReadSerializer(BaseReadSerializer):
+    '''institute read serializer'''
     class Meta(BaseReadSerializer.Meta):
         model = Institute
         fields = BaseReadSerializer.Meta.fields + (
@@ -38,5 +27,9 @@ class InstituteReadSerializer(BaseReadSerializer):
         )
 
 class InstituteWriteSerializer(BaseWriteSerializer):
+    '''institute write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = Institute
+        fields = BaseWriteSerializer.Meta.fields + (
+            "name",
+        )

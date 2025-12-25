@@ -95,3 +95,10 @@ class BaseReadSerializer(PolicyBasedSerializer):
             "created_at",
             "updated_at",
         )
+
+class BaseWriteSerializer(PolicyBasedSerializer):
+    class Meta:
+        abstract = True
+        fields = (
+            "updated_at",
+        )

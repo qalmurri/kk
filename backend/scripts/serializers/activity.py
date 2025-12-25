@@ -1,7 +1,7 @@
 from .base import PolicyBasedSerializer
 from scripts.models import ActivityLog
 
-class ActivitySerializer(PolicyBasedSerializer):
+class ActivityReadSerializer(PolicyBasedSerializer):
     class Meta:
         model = ActivityLog
         fields = (
