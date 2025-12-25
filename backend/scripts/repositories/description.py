@@ -30,15 +30,15 @@ class DescriptionCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-    
-from scripts.models import Section
+
+from scripts.models import DescriptionPart
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
 )
 
-class SectionQueryRepository(BaseQueryRepository):
-    model = Section
+class DescriptionPartQueryRepository(BaseQueryRepository):
+    model = DescriptionPart
 
     @classmethod
     def query(cls):
@@ -46,15 +46,15 @@ class SectionQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
 
-class SectionCommandRepository(BaseCommandRepository):
-    model = Section
+class DescriptionPartCommandRepository(BaseCommandRepository):
+    model = DescriptionPart
 
     @classmethod
-    def create(cls, **data) -> Section:
+    def create(cls, **data) -> DescriptionPart:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Section, **data) -> Section:
+    def update(cls, instance: DescriptionPart, **data) -> DescriptionPart:
         for field, value in data.items():
             setattr(
                 instance,
@@ -63,6 +63,8 @@ class SectionCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
+
+
     
 from scripts.models import Text
 from scripts.repositories.base import (
