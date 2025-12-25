@@ -1,6 +1,12 @@
-from .base import BaseReadSerializer, BaseWriteSerializer
+from .base import (
+    BaseReadSerializer,
+    BaseWriteSerializer
+)
 from .common import InstituteReadSerializer
-from scripts.models import Orderer, ScriptsOrderer
+from scripts.models import (
+    Orderer,
+    ScriptsOrderer
+)
 
 # ORDERER READ & WRITE
 class OrdererReadSerializer(BaseReadSerializer):

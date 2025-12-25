@@ -1,5 +1,11 @@
-from .base import BaseWriteSerializer, BaseReadSerializer
-from scripts.models import Flag, Part
+from .base import (
+    BaseReadSerializer,
+    BaseWriteSerializer
+)
+from scripts.models import (
+    Flag,
+    Part
+)
 
 # PART READ & WRITE
 class PartReadSerializer(BaseReadSerializer):

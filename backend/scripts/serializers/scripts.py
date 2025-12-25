@@ -1,4 +1,7 @@
-from .base import PolicyBasedSerializer, BaseWriteSerializer, BaseReadSerializer
+from .base import (
+    BaseReadSerializer,
+    BaseWriteSerializer
+)
 from scripts.models import Script
 from .common import (
     InstituteReadSerializer,

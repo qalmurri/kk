@@ -1,5 +1,12 @@
-from .base import BaseReadSerializer, BaseWriteSerializer
-from scripts.models import Note, SectionNote, TextNote
+from .base import (
+    BaseReadSerializer,
+    BaseWriteSerializer
+)
+from scripts.models import (
+    Note,
+    SectionNote,
+    TextNote
+)
 
 # SECTIONNOTE READ & WRITE
 class SectionNoteReadSerializer(BaseReadSerializer):

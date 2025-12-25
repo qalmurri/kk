@@ -1,5 +1,12 @@
-from .base import BaseReadSerializer, BaseWriteSerializer
-from scripts.models import Description, SectionDescription, TextDescription
+from .base import (
+    BaseReadSerializer,
+    BaseWriteSerializer
+)
+from scripts.models import (
+    Description,
+    SectionDescription,
+    TextDescription
+)
 
 # TEXTDESCRIPTION READ & WRITE
 class TextDescriptionReadSerializer(BaseReadSerializer):

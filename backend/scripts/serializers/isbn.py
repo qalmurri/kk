@@ -1,5 +1,11 @@
-from .base import BaseWriteSerializer, BaseReadSerializer
-from scripts.models import Type, Isbn
+from .base import (
+    BaseReadSerializer,
+    BaseWriteSerializer
+)
+from scripts.models import (
+    Type,
+    Isbn
+)
 
 # TYPE READ & WRITE
 class TypeReadSerializer(BaseReadSerializer):

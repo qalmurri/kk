@@ -1,5 +1,11 @@
-from .base import BaseReadSerializer, BaseWriteSerializer
-from scripts.models import Size, Institute
+from .base import (
+    BaseReadSerializer,
+    BaseWriteSerializer
+)
+from scripts.models import (
+    Size,
+    Institute
+)
 
 # SIZE READ & WRITE
 class SizeReadSerializer(BaseReadSerializer):

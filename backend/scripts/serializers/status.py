@@ -1,5 +1,12 @@
-from .base import BaseReadSerializer, BaseWriteSerializer
-from scripts.models import LabelStatus, SectionStatus, Status
+from .base import (
+    BaseReadSerializer,
+    BaseWriteSerializer
+)
+from scripts.models import (
+    LabelStatus,
+    SectionStatus,
+    Status
+)
 
 # LABEL READ & WRITE
 class LabelStatusReadSerializer(BaseReadSerializer):

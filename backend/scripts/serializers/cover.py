@@ -1,4 +1,7 @@
-from .base import BaseReadSerializer, BaseWriteSerializer
+from .base import (
+    BaseReadSerializer,
+    BaseWriteSerializer
+)
 from scripts.models import Cover
 
 cover_fields = (

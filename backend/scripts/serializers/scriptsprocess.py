@@ -1,5 +1,12 @@
-from .base import BaseReadSerializer, BaseWriteSerializer
-from scripts.models import Section, By, ScriptProcess
+from .base import (
+    BaseReadSerializer,
+    BaseWriteSerializer
+)
+from scripts.models import (
+    Section,
+    By,
+    ScriptProcess
+)
 from .user import UserSerializer
 
 # SECTION READ & WRITE
