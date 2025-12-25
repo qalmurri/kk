@@ -1,6 +1,7 @@
 from .base import BaseWriteSerializer, BaseReadSerializer
 from scripts.models import Flag, Part
 
+# PART READ & WRITE
 class PartReadSerializer(BaseReadSerializer):
     '''part read serializer'''
     class Meta(BaseReadSerializer.Meta):
@@ -17,6 +18,7 @@ class PartWriteSerializer(BaseWriteSerializer):
             "name",
         )
 
+# FLAG READ & WRITE
 class FlagReadSerializer(BaseReadSerializer):
     '''flag read serializer'''
     part = PartReadSerializer(

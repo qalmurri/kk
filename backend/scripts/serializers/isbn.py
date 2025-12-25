@@ -1,6 +1,7 @@
 from .base import BaseWriteSerializer, BaseReadSerializer
 from scripts.models import Type, Isbn
 
+# TYPE READ & WRITE
 class TypeReadSerializer(BaseReadSerializer):
     '''type read serializer'''
     class Meta(BaseReadSerializer.Meta):
@@ -17,6 +18,7 @@ class TypeWriteSerializer(BaseWriteSerializer):
             "name",
         )
 
+# ISBN READ & WRITE
 class IsbnReadSerializer(BaseReadSerializer):
     '''isbn read serializer'''
     type = TypeReadSerializer(
@@ -33,7 +35,7 @@ class IsbnWriteSerializer(BaseWriteSerializer):
     '''isbn write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = Isbn
-        fields = BaseReadSerializer.Meta.fields + (
+        fields = BaseWriteSerializer.Meta.fields + (
             "script",
             "isbn",
             "type",

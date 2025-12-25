@@ -1,6 +1,7 @@
 from .base import BaseReadSerializer, BaseWriteSerializer
 from scripts.models import Description, SectionDescription, TextDescription
 
+# TEXTDESCRIPTION READ & WRITE
 class TextDescriptionReadSerializer(BaseReadSerializer):
     '''text description read serializer'''
     class Meta(BaseReadSerializer.Meta):
@@ -18,6 +19,7 @@ class TextDescriptionWriteSerializer(BaseWriteSerializer):
             "description",
         )
 
+# SECTIONDESCRIPTION READ & WRITE
 class SectionDescriptionReadSerializer(BaseReadSerializer):
     '''section description read serializer'''
     class Meta(BaseReadSerializer.Meta):
@@ -34,6 +36,7 @@ class SectionDescriptionWriteSerializer(BaseWriteSerializer):
             "name",
         )
 
+# DESCRIPTION READ & WRITE
 class DescriptionReadSerializer(BaseReadSerializer):
     '''description read serializer'''
     textdescription = TextDescriptionReadSerializer(

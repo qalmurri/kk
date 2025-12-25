@@ -10,6 +10,7 @@ cover_fields = (
     "y_axis",
 )
 
+# COVER READ & WRITE
 class CoverReadSerializer(BaseReadSerializer):
     '''cover read serializer'''
     class Meta(BaseReadSerializer.Meta):

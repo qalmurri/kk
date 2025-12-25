@@ -1,6 +1,7 @@
 from .base import BaseReadSerializer, BaseWriteSerializer
 from scripts.models import Size, Institute
 
+# SIZE READ & WRITE
 class SizeReadSerializer(BaseReadSerializer):
     '''size read serializer'''
     class Meta(BaseReadSerializer.Meta):
@@ -17,6 +18,7 @@ class SizeWriteSerializer(BaseWriteSerializer):
             "name",
         )
 
+# INSTITUTE READ & WRITE
 class InstituteReadSerializer(BaseReadSerializer):
     '''institute read serializer'''
     class Meta(BaseReadSerializer.Meta):
