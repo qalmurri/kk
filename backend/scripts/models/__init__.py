@@ -1,7 +1,6 @@
 from .user import User
 from .activity import ActivityLog
 from .base import TimeStampedModel
-from .activity import ActivityLog
 from .common import Institute, Size
 from .cover import Cover
 from .description import SectionDescription as DescriptionPart, Description, TextDescription as Text
