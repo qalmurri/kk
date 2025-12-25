@@ -1,4 +1,4 @@
-from scripts.models import Note
+from scripts.models import Note, SectionNote, TextNote
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
@@ -30,15 +30,9 @@ class NoteCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-    
-from scripts.models import NotePart
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
 
 class NotePartQueryRepository(BaseQueryRepository):
-    model = NotePart
+    model = SectionNote
 
     @classmethod
     def query(cls):
@@ -47,14 +41,14 @@ class NotePartQueryRepository(BaseQueryRepository):
         )
 
 class NotePartCommandRepository(BaseCommandRepository):
-    model = NotePart
+    model = SectionNote
 
     @classmethod
-    def create(cls, **data) -> NotePart:
+    def create(cls, **data) -> SectionNote:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: NotePart, **data) -> NotePart:
+    def update(cls, instance: SectionNote, **data) -> SectionNote:
         for field, value in data.items():
             setattr(
                 instance,
@@ -63,15 +57,9 @@ class NotePartCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-    
-from scripts.models import Content
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
 
 class ContentQueryRepository(BaseQueryRepository):
-    model = Content
+    model = TextNote
 
     @classmethod
     def query(cls):
@@ -80,14 +68,14 @@ class ContentQueryRepository(BaseQueryRepository):
         )
 
 class ContentCommandRepository(BaseCommandRepository):
-    model = Content
+    model = TextNote
 
     @classmethod
-    def create(cls, **data) -> Content:
+    def create(cls, **data) -> TextNote:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Content, **data) -> Content:
+    def update(cls, instance: TextNote, **data) -> TextNote:
         for field, value in data.items():
             setattr(
                 instance,

@@ -1,34 +1,17 @@
-from .base import PolicyBasedSerializer
+from .base import PolicyBasedSerializer, BaseWriteSerializer, BaseReadSerializer
 from scripts.models import Script
 from .common import (
     InstituteReadSerializer,
     SizeReadSerializer
 )
-from .content import (
-    FlagReadSerializer,
-    ISBNReadSerializer,
-    CoverBookReadSerializer
-)
-from .pivot import (
-    ScriptOrdererReadSerializer,
-    StatusReadSerializer,
-    DescriptionReadSerializer,
-    NoteReadSerializer,
-    ScriptsProcessReadSerializer
-)
-
-class BaseReadSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-        fields = (
-            "id",
-            "created_at",
-            "updated_at",
-        )
-
-class BaseWriteSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
+from .flag import FlagReadSerializer
+from .isbn import IsbnReadSerializer
+from .cover import CoverReadSerializer
+from .status import StatusReadSerializer
+from .description import DescriptionReadSerializer
+from .note import NoteReadSerializer
+from .orderer import ScriptOrdererReadSerializer
+from .scriptsprocess import ScriptProcessReadSerializer
 
 SCRIPTS_BASE_FIELDS = (
             "title",
@@ -73,17 +56,17 @@ class ScriptsReadSerializer(BaseReadSerializer):
         many=True,
         read_only=True
     )
-    identification = ISBNReadSerializer(
+    identification = IsbnReadSerializer(
         source="scripts_ISBN",
         many=True,
         read_only=True
     )
-    process = ScriptsProcessReadSerializer(
+    process = ScriptProcessReadSerializer(
         source="scripts_ScriptsProcess",
         many=True,
         read_only=True
     )
-    cover = CoverBookReadSerializer(
+    cover = CoverReadSerializer(
         source="scripts_Cover",
         many=True,
         read_only=True

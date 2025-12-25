@@ -1,5 +1,3 @@
-from .user import User
-#from .activity import ActivitySerializer
 from .base import (
     BaseQueryRepository,
     BaseCommandRepository,

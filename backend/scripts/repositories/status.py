@@ -1,4 +1,4 @@
-from scripts.models import Status
+from scripts.models import Status, LabelStatus, SectionStatus
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
@@ -30,15 +30,9 @@ class StatusCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-    
-from scripts.models import ScriptsStatusCode
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
 
 class ScriptsStatusCodeQueryRepository(BaseQueryRepository):
-    model = ScriptsStatusCode
+    model = SectionStatus
 
     @classmethod
     def query(cls):
@@ -47,14 +41,14 @@ class ScriptsStatusCodeQueryRepository(BaseQueryRepository):
         )
 
 class ScriptsStatusCodeCommandRepository(BaseCommandRepository):
-    model = ScriptsStatusCode
+    model = SectionStatus
 
     @classmethod
-    def create(cls, **data) -> ScriptsStatusCode:
+    def create(cls, **data) -> SectionStatus:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: ScriptsStatusCode, **data) -> ScriptsStatusCode:
+    def update(cls, instance: SectionStatus, **data) -> SectionStatus:
         for field, value in data.items():
             setattr(
                 instance,
@@ -63,15 +57,9 @@ class ScriptsStatusCodeCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-    
-from scripts.models import Label
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
 
 class LabelQueryRepository(BaseQueryRepository):
-    model = Label
+    model = LabelStatus
 
     @classmethod
     def query(cls):
@@ -80,14 +68,14 @@ class LabelQueryRepository(BaseQueryRepository):
         )
 
 class LabelCommandRepository(BaseCommandRepository):
-    model = Label
+    model = LabelStatus
 
     @classmethod
-    def create(cls, **data) -> Label:
+    def create(cls, **data) -> LabelStatus:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Label, **data) -> Label:
+    def update(cls, instance: LabelStatus, **data) -> LabelStatus:
         for field, value in data.items():
             setattr(
                 instance,

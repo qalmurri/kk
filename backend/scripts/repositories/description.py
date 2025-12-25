@@ -1,4 +1,4 @@
-from scripts.models import Description
+from scripts.models import Description, SectionDescription, TextDescription
 from .base import (
     BaseQueryRepository,
     BaseCommandRepository
@@ -31,14 +31,8 @@ class DescriptionCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-from scripts.models import DescriptionPart
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
 class DescriptionPartQueryRepository(BaseQueryRepository):
-    model = DescriptionPart
+    model = SectionDescription
 
     @classmethod
     def query(cls):
@@ -47,14 +41,14 @@ class DescriptionPartQueryRepository(BaseQueryRepository):
         )
 
 class DescriptionPartCommandRepository(BaseCommandRepository):
-    model = DescriptionPart
+    model = SectionDescription
 
     @classmethod
-    def create(cls, **data) -> DescriptionPart:
+    def create(cls, **data) -> SectionDescription:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: DescriptionPart, **data) -> DescriptionPart:
+    def update(cls, instance: SectionDescription, **data) -> SectionDescription:
         for field, value in data.items():
             setattr(
                 instance,
@@ -63,17 +57,9 @@ class DescriptionPartCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-
-
     
-from scripts.models import Text
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
 class TextQueryRepository(BaseQueryRepository):
-    model = Text
+    model = TextDescription
 
     @classmethod
     def query(cls):
@@ -82,14 +68,14 @@ class TextQueryRepository(BaseQueryRepository):
         )
 
 class TextCommandRepository(BaseCommandRepository):
-    model = Text
+    model = TextDescription
 
     @classmethod
-    def create(cls, **data) -> Text:
+    def create(cls, **data) -> TextDescription:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Text, **data) -> Text:
+    def update(cls, instance: TextDescription, **data) -> TextDescription:
         for field, value in data.items():
             setattr(
                 instance,

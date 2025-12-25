@@ -1,11 +1,11 @@
-from scripts.models import CoverBook
+from scripts.models import Cover
 from .base import (
     BaseQueryRepository,
     BaseCommandRepository
 )
 
 class CoverBookQueryRepository(BaseQueryRepository):
-    model = CoverBook
+    model = Cover
 
     @classmethod
     def query(cls):
@@ -14,14 +14,14 @@ class CoverBookQueryRepository(BaseQueryRepository):
         )
 
 class CoverBookCommandRepository(BaseCommandRepository):
-    model = CoverBook
+    model = Cover
 
     @classmethod
-    def create(cls, **data) -> CoverBook:
+    def create(cls, **data) -> Cover:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: CoverBook, **data) -> CoverBook:
+    def update(cls, instance: Cover, **data) -> Cover:
         for field, value in data.items():
             setattr(
                 instance,

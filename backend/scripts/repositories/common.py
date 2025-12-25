@@ -1,4 +1,4 @@
-from scripts.models import Size
+from scripts.models import Size, Institute
 from .base import (
     BaseQueryRepository,
     BaseCommandRepository
@@ -31,13 +31,6 @@ class SizeCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
     
-
-from scripts.models import Institute
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
 class InstituteQueryRepository(BaseQueryRepository):
     model = Institute
 

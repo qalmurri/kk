@@ -1,4 +1,4 @@
-from scripts.models import Orderer
+from scripts.models import Orderer, ScriptsOrderer
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
@@ -31,12 +31,6 @@ class OrdererCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
     
-from scripts.models import ScriptsOrderer
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
 class ScriptsOrdererQueryRepository(BaseQueryRepository):
     model = ScriptsOrderer
 

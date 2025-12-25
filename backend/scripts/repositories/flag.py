@@ -1,4 +1,4 @@
-from scripts.models import Flag
+from scripts.models import Flag, Part
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
@@ -31,12 +31,6 @@ class FlagCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
     
-from scripts.models import Part
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
 class PartQueryRepository(BaseQueryRepository):
     model = Part
 

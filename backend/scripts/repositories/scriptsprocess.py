@@ -1,11 +1,11 @@
-from scripts.models import ScriptsProcess
+from scripts.models import ScriptProcess, By, Section
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
 )
 
 class ScriptsProcessQueryRepository(BaseQueryRepository):
-    model = ScriptsProcess
+    model = ScriptProcess
 
     @classmethod
     def query(cls):
@@ -14,14 +14,14 @@ class ScriptsProcessQueryRepository(BaseQueryRepository):
         )
 
 class ScriptsProcessCommandRepository(BaseCommandRepository):
-    model = ScriptsProcess
+    model = ScriptProcess
 
     @classmethod
-    def create(cls, **data) -> ScriptsProcess:
+    def create(cls, **data) -> ScriptProcess:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: ScriptsProcess, **data) -> ScriptsProcess:
+    def update(cls, instance: ScriptProcess, **data) -> ScriptProcess:
         for field, value in data.items():
             setattr(
                 instance,
@@ -30,12 +30,6 @@ class ScriptsProcessCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-    
-from scripts.models import By
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
 
 class ByQueryRepository(BaseQueryRepository):
     model = By
@@ -63,12 +57,6 @@ class ByCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-    
-from scripts.models import Section
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
 
 class SectionQueryRepository(BaseQueryRepository):
     model = Section

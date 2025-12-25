@@ -30,8 +30,3 @@ class Isbn(TimeStampedModel):
         db_table = "isbn"
         verbose_name = "Isbn"
         verbose_name_plural = "Isbns"
-        ordering = ["scripts", "type"]
-        indexes = [
-            models.Index(fields=["scripts"]),
-            models.Index(fields=["type"]),
-        ]

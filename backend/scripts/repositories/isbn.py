@@ -1,11 +1,11 @@
-from scripts.models import ISBN
+from scripts.models import Isbn, Type
 from scripts.repositories.base import (
     BaseQueryRepository,
     BaseCommandRepository
 )
 
 class ISBNQueryRepository(BaseQueryRepository):
-    model = ISBN
+    model = Isbn
 
     @classmethod
     def query(cls):
@@ -14,14 +14,14 @@ class ISBNQueryRepository(BaseQueryRepository):
         )
 
 class ISBNCommandRepository(BaseCommandRepository):
-    model = ISBN
+    model = Isbn
 
     @classmethod
-    def create(cls, **data) -> ISBN:
+    def create(cls, **data) -> Isbn:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: ISBN, **data) -> ISBN:
+    def update(cls, instance: Isbn, **data) -> Isbn:
         for field, value in data.items():
             setattr(
                 instance,
@@ -31,12 +31,6 @@ class ISBNCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
     
-from scripts.models import Type
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
 class TypeQueryRepository(BaseQueryRepository):
     model = Type
 

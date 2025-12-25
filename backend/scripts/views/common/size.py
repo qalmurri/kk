@@ -3,7 +3,7 @@ from scripts.serializers.common import (
     SizeReadSerializer,
     SizeWriteSerializer
     )
-from scripts.repositories.common.size import (
+from scripts.repositories.common import (
     SizeQueryRepository,
     SizeCommandRepository
     )
