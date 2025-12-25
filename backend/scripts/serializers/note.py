@@ -1,67 +1,58 @@
-from .base import BaseReadSerializer, PolicyBasedSerializer
-from scripts.models import Note, NotePart, Content
+from .base import BaseReadSerializer, BaseWriteSerializer
+from scripts.models import Note, SectionNote, TextNote
 
-class BaseWriteSerializer(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-
-class BaseWriteSerializer2(PolicyBasedSerializer):
-    class Meta:
-        abstract = True
-        fields = (
-            "name",
-        )
-
-# notepart
-class NotePartReadSerializer(BaseReadSerializer):
+# NOTEPART READ & WRITE
+class SectionNoteReadSerializer(BaseReadSerializer):
     class Meta(BaseReadSerializer.Meta):
-        model = NotePart
+        model = SectionNote
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
-class NotePartWriteSerializer(BaseWriteSerializer2):
-    class Meta(BaseWriteSerializer2.Meta):
-        model = NotePart
-
-# content
-class ContentReadSerializer(BaseReadSerializer):
-    class Meta(BaseReadSerializer.Meta):
-        model = Content
-        fields = BaseReadSerializer.Meta.fields + (
-            "content",
-        )
-
-class ContentWriteSerializer(BaseWriteSerializer):
+class SectionNoteWriteSerializer(BaseWriteSerializer):
     class Meta(BaseWriteSerializer.Meta):
-        model = Content
-        fields = (
-            "note",
-            "content",
+        model = SectionNote
+        fields = BaseWriteSerializer.Meta.fields + (
+            "name",
         )
 
-# note
+# CONTENT READ & WRITE
+class TextNoteReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = TextNote
+        fields = BaseReadSerializer.Meta.fields + (
+            "text",
+        )
+
+class TextNoteWriteSerializer(BaseWriteSerializer):
+    class Meta(BaseWriteSerializer.Meta):
+        model = TextNote
+        fields = BaseWriteSerializer.Meta.fields + (
+            "note",
+            "text",
+        )
+
+# NOTE_ READ & WRITE
 class NoteReadSerializer(BaseReadSerializer):
-    items = ContentReadSerializer(
+    textnote = TextNoteReadSerializer(
         source="note_Content",
         many=True,
         read_only = True
     )
-    notepart = NotePartReadSerializer(
+    sectionnote = SectionNoteReadSerializer(
         read_only = True
     )
-
     class Meta(BaseReadSerializer.Meta):
         model = Note
         fields = BaseReadSerializer.Meta.fields + (
             "items",
-            "notepart",
+            "sectionnote",
         )
 
 class NoteWriteSerializer(BaseWriteSerializer):
     class Meta(BaseWriteSerializer.Meta):
         model = Note
         fields = (
-            "scripts",
-            "notepart"
+            "script",
+            "sectionnote"
         )
