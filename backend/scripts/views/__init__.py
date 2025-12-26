@@ -41,3 +41,4 @@ from .status import (
     LabelViewSet,
     StatusViewSet
 )
+from .logout import LogoutView

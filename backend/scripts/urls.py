@@ -4,33 +4,31 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView
 )
-from .views.logout import LogoutView
-from .views.scripts import ScriptsViewSet
-from .views.common.size import SizeViewSet
-from .views.common.type import TypeViewSet
-from .views.common.section import SectionViewSet
-from .views.common.part import PartViewSet
-from .views.common.orderer import OrdererViewSet
-from .views.common.notepart import NotePartViewSet
-from .views.common.label import LabelViewSet
-from .views.common.institute import InstituteViewSet
-from .views.common.descriptionpart import DescriptionPartViewSet
-from .views.common.code import CodeViewSet
-
-from .views.content.content import ContentViewSet
-from .views.content.coverbook import CoverBookViewSet
-from .views.content.flag import FlagViewSet
-from .views.content.isbn import ISBNViewSet
-from .views.content.text import TextViewSet
-
-from .views.pivot.by import ByViewSet
-from .views.pivot.description import DescriptionViewSet
-from .views.pivot.noscripts import NoScriptsViewSet
-from .views.pivot.note import NoteViewSet
-from .views.pivot.scriptsorderer import ScriptsOrdererViewSet
-from .views.pivot.scriptsprocess import ScriptsProcessViewSet
-from .views.pivot.status import StatusViewSet
-
+from .views import (
+    LogoutView,
+    ScriptsViewSet,
+    SizeViewSet,
+    TypeViewSet,
+    SectionViewSet,
+    PartViewSet,
+    OrdererViewSet,
+    NotePartViewSet,
+    LabelViewSet,
+    InstituteViewSet,
+    DescriptionPartViewSet,
+    CodeViewSet,
+    ContentViewSet,
+    CoverViewset,
+    FlagViewSet,
+    IsbnViewSet,
+    TextViewSet,
+    ByViewSet,
+    DescriptionViewSet,
+    NoteViewSet,
+    ScriptOrdererViewSet,
+    ScriptProcessViewSet,
+    StatusViewSet
+)
 
 router = DefaultRouter()
 router.register(r"scripts", ScriptsViewSet, basename="scripts")
@@ -45,17 +43,16 @@ router.register(r"institute", InstituteViewSet, basename="institute")
 router.register(r"descriptionpart", DescriptionPartViewSet, basename="descriptionpart")
 router.register(r"code", CodeViewSet, basename="code")
 router.register(r"content", ContentViewSet, basename="content")
-router.register(r"coverbook", CoverBookViewSet, basename="coverbook")
+router.register(r"coverbook", CoverViewset, basename="coverbook")
 router.register(r"flag", FlagViewSet, basename="flag")
 router.register(r"status", StatusViewSet, basename="status")
-router.register(r"isbn", ISBNViewSet, basename="isbn")
+router.register(r"isbn", IsbnViewSet, basename="isbn")
 router.register(r"text", TextViewSet, basename="text")
 router.register(r"by", ByViewSet, basename="by")
 router.register(r"description", DescriptionViewSet, basename="description")
-router.register(r"noscripts", NoScriptsViewSet, basename="noscripts")
 router.register(r"note", NoteViewSet, basename="note")
-router.register(r"scriptsorderer", ScriptsOrdererViewSet, basename="scriptsorderer")
-router.register(r"scriptsprocess", ScriptsProcessViewSet,basename="scriptsprocess"
+router.register(r"scriptsorderer", ScriptOrdererViewSet, basename="scriptsorderer")
+router.register(r"scriptsprocess", ScriptProcessViewSet,basename="scriptsprocess"
 )
 
 urlpatterns = [
