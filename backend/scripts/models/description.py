@@ -21,7 +21,7 @@ class Description(TimeStampedModel):
     )
     sectiondescription = models.ForeignKey(
         SectionDescription,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name="descriptionpart_Description"
     )
     class Meta:
@@ -33,7 +33,7 @@ class TextDescription(TimeStampedModel):
     '''content: (many to one) untuk model Description, berisi tentang text'''
     description = models.ForeignKey(
         Description,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name="description_Text"
     )
     text = models.CharField(
