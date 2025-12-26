@@ -1,4 +1,4 @@
-from .base import PolicyBasedSerializer
+from scripts.serializers.base import PolicyBasedSerializer
 from scripts.models import ActivityLog
 
 class ActivityReadSerializer(PolicyBasedSerializer):

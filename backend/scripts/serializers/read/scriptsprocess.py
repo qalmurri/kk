@@ -4,7 +4,7 @@ from scripts.models import (
     By,
     ScriptProcess
 )
-from .user import UserSerializer
+from .user import UserReadSerializer
 
 class SectionReadSerializer(BaseReadSerializer):
     '''section read serializer'''
@@ -16,7 +16,7 @@ class SectionReadSerializer(BaseReadSerializer):
 
 class ByReadSerializer(BaseReadSerializer):
     '''by read serializer'''
-    user = UserSerializer(
+    user = UserReadSerializer(
         read_only=True
     )
     class Meta(BaseReadSerializer.Meta):

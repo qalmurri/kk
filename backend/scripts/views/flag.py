@@ -5,7 +5,7 @@ from scripts.serializers.read import (
     )
 from scripts.serializers.write import (
     FlagWriteSerializer,
-    PartReadSerializer,
+    PartWriteSerializer,
     )
 from scripts.repositories.command import (
     FlagCommandRepository,
