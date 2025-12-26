@@ -1,12 +1,13 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers import (
+from scripts.serializers.read import (
     NoteReadSerializer,
-    NoteWriteSerializer,
     SectionNoteReadSerializer,
-    SectionNoteWriteSerializer,
     TextNoteReadSerializer,
+    )
+from scripts.serializers.write import (
+    NoteWriteSerializer,
+    SectionNoteWriteSerializer,
     TextNoteWriteSerializer
-
     )
 from scripts.repositories.command import (
     NoteCommandRepository,

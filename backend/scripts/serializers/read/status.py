@@ -1,14 +1,10 @@
-from .base import (
-    BaseReadSerializer,
-    BaseWriteSerializer
-)
+from scripts.serializers.base import BaseReadSerializer
 from scripts.models import (
     LabelStatus,
     SectionStatus,
     Status
 )
 
-# LABEL READ & WRITE
 class LabelStatusReadSerializer(BaseReadSerializer):
     '''label status read serializer'''
     class Meta(BaseReadSerializer.Meta):
@@ -17,15 +13,6 @@ class LabelStatusReadSerializer(BaseReadSerializer):
             "name",
         )
 
-class LabelStatusWriteSerializer(BaseWriteSerializer):
-    '''label status write serializer'''
-    class Meta(BaseWriteSerializer.Meta):
-        model = LabelStatus
-        fields = BaseWriteSerializer.Meta.fields + (
-            "name",
-        )
-
-# CODE READ & WRITE
 class SectionStatusReadSerializer(BaseReadSerializer):
     '''section status read serializer'''
     class Meta(BaseReadSerializer.Meta):
@@ -34,15 +21,6 @@ class SectionStatusReadSerializer(BaseReadSerializer):
             "name",
         )
 
-class SectionStatusWriteSerializer(BaseWriteSerializer):
-    '''section status write serializer'''
-    class Meta(BaseWriteSerializer.Meta):
-        model = SectionStatus
-        fields = BaseWriteSerializer.Meta.fields + (
-            "name",
-        )
-
-# STATUS READ & WRITE
 class StatusReadSerializer(BaseReadSerializer):
     '''status read serializer'''
     sectionstatus = SectionStatusReadSerializer(
@@ -57,14 +35,3 @@ class StatusReadSerializer(BaseReadSerializer):
             "labelstatus",
             "sectionstatus",
         )
-
-class StatusWriteSerializer(BaseWriteSerializer):
-    '''status write serializer'''
-    class Meta(BaseWriteSerializer.Meta):
-        model = Status
-        fields = BaseWriteSerializer.Meta.fields + (
-            "script",
-            "labelstatus",
-            "sectionstatus",
-        )
-

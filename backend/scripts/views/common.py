@@ -1,13 +1,15 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers.common import (
-    SizeReadSerializer,
+from scripts.serializers.write import (
     SizeWriteSerializer,
-    InstituteReadSerializer,
     InstituteWriteSerializer
     )
 from scripts.repositories.command import (
     SizeCommandRepository,
     InstituteCommandRepository
+    )
+from scripts.serializers.read import (
+    SizeReadSerializer,
+    InstituteReadSerializer,
     )
 from scripts.repositories.query import (
     SizeQueryRepository,

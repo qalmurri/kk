@@ -1,8 +1,10 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers import (
+from scripts.serializers.read import (
     OrdererReadSerializer,
+    ScriptOrdererReadSerializer
+    )
+from scripts.serializers.write import (
     OrdererWriteSerializer,
-    ScriptOrdererReadSerializer,
     ScriptOrdererWriteSerializer
     )
 from scripts.repositories.command import (

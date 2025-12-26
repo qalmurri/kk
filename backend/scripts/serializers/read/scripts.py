@@ -1,7 +1,4 @@
-from .base import (
-    BaseReadSerializer,
-    BaseWriteSerializer
-)
+from scripts.serializers.base import BaseReadSerializer
 from scripts.models import Script
 from .common import (
     InstituteReadSerializer,
@@ -87,8 +84,3 @@ class ScriptsReadSerializer(BaseReadSerializer):
             "process",
             "cover",
         )
-
-class ScriptsWriteSerializer(BaseWriteSerializer):
-    class Meta(BaseWriteSerializer.Meta):
-        model = Script
-        fields = SCRIPTS_BASE_FIELDS

@@ -1,7 +1,4 @@
-from .base import (
-    BaseReadSerializer,
-    BaseWriteSerializer
-)
+from scripts.serializers.base import BaseWriteSerializer
 from scripts.models import Cover
 
 cover_fields = (
@@ -12,13 +9,6 @@ cover_fields = (
     "x_axis",
     "y_axis",
 )
-
-# COVER READ & WRITE
-class CoverReadSerializer(BaseReadSerializer):
-    '''cover read serializer'''
-    class Meta(BaseReadSerializer.Meta):
-        model = Cover
-        fields = BaseReadSerializer.Meta.fields + cover_fields
 
 class CoverWriteSerializer(BaseWriteSerializer):
     '''cover read serializer'''

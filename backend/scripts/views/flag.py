@@ -1,9 +1,11 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers import (
+from scripts.serializers.read import (
     FlagReadSerializer,
+    PartReadSerializer,
+    )
+from scripts.serializers.write import (
     FlagWriteSerializer,
     PartReadSerializer,
-    PartWriteSerializer
     )
 from scripts.repositories.command import (
     FlagCommandRepository,
