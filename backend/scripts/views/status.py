@@ -1,18 +1,46 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers.pivot import (
+from scripts.serializers import (
     StatusReadSerializer,
-    StatusWriteSerializer
+    StatusWriteSerializer,
+    LabelStatusReadSerializer,
+    LabelStatusWriteSerializer,
+    SectionReadSerializer,
+    SectionWriteSerializer
     )
-from scripts.repositories.pivot.status import (
+from scripts.repositories import (
     StatusQueryRepository,
-    StatusCommandRepository
+    StatusCommandRepository,
+    LabelQueryRepository,
+    LabelCommandRepository,
+    ScriptsStatusCodeQueryRepository,
+    ScriptsStatusCodeCommandRepository
     )
 
-class StatusViewSet(BaseCRUDViewSet):
+class CodeViewSet(BaseCRUDViewSet):
+    '''cover viewset'''
     throttle_classes = []
     authentication_classes = []
     permission_classes = []
+    read_serializer_class = SectionReadSerializer
+    write_serializer_class = SectionWriteSerializer
+    query_repo = ScriptsStatusCodeQueryRepository
+    command_repo = ScriptsStatusCodeCommandRepository
 
+class LabelViewSet(BaseCRUDViewSet):
+    '''label viewset'''
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
+    read_serializer_class = LabelStatusReadSerializer
+    write_serializer_class = LabelStatusWriteSerializer
+    query_repo = LabelQueryRepository
+    command_repo = LabelCommandRepository
+
+class StatusViewSet(BaseCRUDViewSet):
+    '''status viewset'''
+    throttle_classes = []
+    authentication_classes = []
+    permission_classes = []
     read_serializer_class = StatusReadSerializer
     write_serializer_class = StatusWriteSerializer
     query_repo = StatusQueryRepository
