@@ -5,11 +5,13 @@ from scripts.serializers.common import (
     InstituteReadSerializer,
     InstituteWriteSerializer
     )
-from scripts.repositories.common import (
-    SizeQueryRepository,
+from scripts.repositories.command import (
     SizeCommandRepository,
-    InstituteQueryRepository,
     InstituteCommandRepository
+    )
+from scripts.repositories.query import (
+    SizeQueryRepository,
+    InstituteQueryRepository
     )
 
 class SizeViewSet(BaseCRUDViewSet):

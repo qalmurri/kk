@@ -1,17 +1,5 @@
 from scripts.models import Cover
-from .base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
-class CoverBookQueryRepository(BaseQueryRepository):
-    model = Cover
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
+from scripts.repositories.base import BaseCommandRepository
 
 class CoverBookCommandRepository(BaseCommandRepository):
     model = Cover

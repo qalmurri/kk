@@ -1,17 +1,5 @@
 from scripts.models import Description, SectionDescription, TextDescription
-from .base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
-class DescriptionQueryRepository(BaseQueryRepository):
-    model = Description
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
+from scripts.repositories.base import BaseCommandRepository
 
 class DescriptionCommandRepository(BaseCommandRepository):
     model = Description
@@ -31,15 +19,6 @@ class DescriptionCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class DescriptionPartQueryRepository(BaseQueryRepository):
-    model = SectionDescription
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
-
 class DescriptionPartCommandRepository(BaseCommandRepository):
     model = SectionDescription
 
@@ -57,15 +36,6 @@ class DescriptionPartCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-    
-class TextQueryRepository(BaseQueryRepository):
-    model = TextDescription
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
 
 class TextCommandRepository(BaseCommandRepository):
     model = TextDescription

@@ -1,17 +1,5 @@
 from scripts.models import NoScripts
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
-class NoScriptsQueryRepository(BaseQueryRepository):
-    model = NoScripts
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
+from scripts.repositories.base import BaseCommandRepository
 
 class NoScriptsCommandRepository(BaseCommandRepository):
     model = NoScripts

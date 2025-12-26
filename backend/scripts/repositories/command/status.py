@@ -1,17 +1,5 @@
 from scripts.models import Status, LabelStatus, SectionStatus
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
-class StatusQueryRepository(BaseQueryRepository):
-    model = Status
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
+from scripts.repositories.base import BaseCommandRepository
 
 class StatusCommandRepository(BaseCommandRepository):
     model = Status
@@ -31,15 +19,6 @@ class StatusCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class ScriptsStatusCodeQueryRepository(BaseQueryRepository):
-    model = SectionStatus
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
-
 class ScriptsStatusCodeCommandRepository(BaseCommandRepository):
     model = SectionStatus
 
@@ -57,15 +36,6 @@ class ScriptsStatusCodeCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-
-class LabelQueryRepository(BaseQueryRepository):
-    model = LabelStatus
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
 
 class LabelCommandRepository(BaseCommandRepository):
     model = LabelStatus

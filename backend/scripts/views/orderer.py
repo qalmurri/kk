@@ -5,11 +5,13 @@ from scripts.serializers import (
     ScriptOrdererReadSerializer,
     ScriptOrdererWriteSerializer
     )
-from scripts.repositories import (
-    OrdererQueryRepository,
+from scripts.repositories.command import (
     OrdererCommandRepository,
-    ScriptsOrdererQueryRepository,
     ScriptsOrdererCommandRepository
+    )
+from scripts.repositories.query import (
+    OrdererQueryRepository,
+    ScriptsOrdererQueryRepository
     )
 
 class OrdererViewSet(BaseCRUDViewSet):

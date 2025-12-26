@@ -4,13 +4,15 @@ from scripts.serializers import (
     IsbnWriteSerializer,
     TypeReadSerializer,
     TypeWriteSerializer
-    )
-from scripts.repositories import (
-    ISBNQueryRepository,
+)
+from scripts.repositories.command import (
     ISBNCommandRepository,
-    TypeQueryRepository,
     TypeCommandRepository
-    )
+)
+from scripts.repositories.query import (
+    ISBNQueryRepository,
+    TypeQueryRepository
+)
 
 class IsbnViewSet(BaseCRUDViewSet):
     '''isbn viewset'''

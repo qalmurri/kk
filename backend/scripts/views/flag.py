@@ -5,11 +5,13 @@ from scripts.serializers import (
     PartReadSerializer,
     PartWriteSerializer
     )
-from scripts.repositories import (
-    FlagQueryRepository,
+from scripts.repositories.command import (
     FlagCommandRepository,
-    PartQueryRepository,
     PartCommandRepository
+    )
+from scripts.repositories.query import (
+    FlagQueryRepository,
+    PartQueryRepository,
     )
 
 class FlagViewSet(BaseCRUDViewSet):

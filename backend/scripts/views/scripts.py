@@ -4,10 +4,8 @@ from scripts.serializers.scripts import (
     ScriptsReadSerializer,
     ScriptsWriteSerializer
     )
-from scripts.repositories.scripts import (
-    ScriptsQueryRepository,
-    ScriptsCommandRepository
-    )
+from scripts.repositories.command import ScriptsCommandRepository
+from scripts.repositories.query import ScriptsQueryRepository
 
 class ScriptsViewSet(BaseViewSet):
     throttle_classes = []

@@ -8,13 +8,15 @@ from scripts.serializers import (
     TextNoteWriteSerializer
 
     )
-from scripts.repositories import (
-    NoteQueryRepository,
+from scripts.repositories.command import (
     NoteCommandRepository,
-    ContentQueryRepository,
     ContentCommandRepository,
-    NotePartQueryRepository,
     NotePartCommandRepository
+    )
+from scripts.repositories.query import (
+    NoteQueryRepository,
+    ContentQueryRepository,
+    NotePartQueryRepository
     )
 
 class NoteViewSet(BaseCRUDViewSet):
@@ -32,8 +34,8 @@ class ContentViewSet(BaseCRUDViewSet):
     throttle_classes = []
     authentication_classes = []
     permission_classes = []
-    read_serializer_class = SectionNoteReadSerializer
-    write_serializer_class = SectionNoteWriteSerializer
+    read_serializer_class = TextNoteReadSerializer
+    write_serializer_class = TextNoteWriteSerializer
     query_repo = ContentQueryRepository
     command_repo = ContentCommandRepository
 
@@ -42,7 +44,7 @@ class NotePartViewSet(BaseCRUDViewSet):
     throttle_classes = []
     authentication_classes = []
     permission_classes = []
-    read_serializer_class = TextNoteReadSerializer
-    write_serializer_class = TextNoteWriteSerializer
+    read_serializer_class = SectionNoteReadSerializer
+    write_serializer_class = SectionNoteWriteSerializer
     query_repo = NotePartQueryRepository
     command_repo = NotePartCommandRepository

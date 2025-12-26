@@ -1,7 +1,7 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from .models import (
+from ..models import (
     Status,
     Institute,
     Orderer,
@@ -14,7 +14,16 @@ from .models import (
     By,
     Type,
     Part,
-    Section
+    Section,
+    SectionDescription,
+    SectionNote,
+    LabelStatus,
+    SectionStatus,
+    Isbn,
+    ScriptProcess,
+    TextNote,
+    TextDescription,
+    Cover
 )
 
 @receiver(post_migrate)
@@ -22,6 +31,7 @@ def create_default_table(sender, **kwargs):
     if sender.name != "scripts":
         return
 
+    # USER
     User = get_user_model()
     default_users = [
         {"username": "qodri", "password": "pakisaji"},
@@ -52,7 +62,7 @@ def create_default_table(sender, **kwargs):
         "Produksi"
     ]
     for item in valuuu1:
-        DescriptionPart.objects.get_or_create(
+        SectionDescription.objects.get_or_create(
             name=item
         )
 
@@ -62,7 +72,7 @@ def create_default_table(sender, **kwargs):
         "Produksi"
     ]
     for item in valuuu2:
-        NotePart.objects.get_or_create(
+        SectionNote.objects.get_or_create(
             name=item
         )
 
@@ -73,7 +83,7 @@ def create_default_table(sender, **kwargs):
         "Produksi",
     ]
     for item in valuuu:
-        Label.objects.get_or_create(
+        LabelStatus.objects.get_or_create(
             name=item
         )
 
@@ -101,7 +111,7 @@ def create_default_table(sender, **kwargs):
         "Sudah"
     ]
     for item in code:
-        ScriptsStatusCode.objects.get_or_create(
+        SectionStatus.objects.get_or_create(
             name=item
         )
 
@@ -182,34 +192,34 @@ def create_default_table(sender, **kwargs):
         )
 
     purpose = [
-        {"scripts": 1, "code": 1,"label": 1},
-        {"scripts": 1, "code": 2, "label": 2},
-        {"scripts": 1, "code": 4, "label": 3}
+        {"script": 1, "sectionstatus": 1,"labelstatus": 1},
+        {"script": 1, "sectionstatus": 2, "labelstatus": 2},
+        {"script": 1, "sectionstatus": 4, "labelstatus": 3}
     ]
     for item in purpose:
         Status.objects.get_or_create(
-            scripts_id=item["scripts"],
-            code_id=item["code"],
-            label_id=item["label"]
+            script_id=item["script"],
+            sectionstatus_id=item["sectionstatus"],
+            labelstatus_id=item["labelstatus"]
         )
 
     scriptsorderer = [
-        {"scripts": 1, "orderer": 1},
-        {"scripts": 1, "orderer": 3}
+        {"script": 1, "orderer": 1},
+        {"script": 1, "orderer": 3}
     ]
     for item in scriptsorderer:
         ScriptsOrderer.objects.get_or_create(
-            scripts_id=item["scripts"],
+            script_id=item["script"],
             orderer_id=item["orderer"]
         )
 
     isbn2 = [
-        {"scripts": 1, "isbn": "32123123", "type": 1},
-        {"scripts": 1, "isbn": "3212312323", "type": 2}
+        {"script": 1, "isbn": "32123123", "type": 1},
+        {"script": 1, "isbn": "3212312323", "type": 2}
     ]
     for item in isbn2:
-        ISBN.objects.get_or_create(
-            scripts_id=item["scripts"],
+        Isbn.objects.get_or_create(
+            script_id=item["script"],
             isbn=item["isbn"],
             type_id=item["type"]
         )
@@ -226,56 +236,56 @@ def create_default_table(sender, **kwargs):
         )
         
     bool = [
-        {"scripts": 1, "section": 1},
-        {"scripts": 1, "section": 2}
+        {"script": 1, "section": 1},
+        {"script": 1, "section": 2}
     ]
     for item in bool:
-        ScriptsProcess.objects.get_or_create(
-            scripts_id=item["scripts"],
+        ScriptProcess.objects.get_or_create(
+            script_id=item["script"],
             section_id=item["section"]
         )
         
     balll = [
-        {"scriptsprocess": 1, "user": 1},
-        {"scriptsprocess": 1, "user": 2},
-        {"scriptsprocess": 1, "user": 3},
+        {"scriptprocess": 1, "user": 1},
+        {"scriptprocess": 1, "user": 2},
+        {"scriptprocess": 1, "user": 3},
     ]
     for item in balll:
         By.objects.get_or_create(
-            scriptsprocess_id=item["scriptsprocess"],
+            scriptprocess_id=item["scriptprocess"],
             user_id=item["user"]
         )
 
     description = [
-        {"scripts": 1, "descriptionpart": 1},
-        {"scripts": 1, "descriptionpart": 2}
+        {"script": 1, "descriptionpart": 1},
+        {"script": 1, "descriptionpart": 2}
     ]
     for item in description:
         Description.objects.get_or_create(
-            scripts_id=item["scripts"],
+            script_id=item["script"],
             sectiondescription_id=item["descriptionpart"]
         )
 
     description2 = [
-        {"scripts": 1, "notepart": 1},
-        {"scripts": 1, "notepart": 2}
+        {"script": 1, "sectionnote": 1},
+        {"script": 1, "sectionnote": 2}
     ]
     for item in description2:
         Note.objects.get_or_create(
-            scripts_id=item["scripts"],
-            notepart_id=item["notepart"]
+            script_id=item["script"],
+            sectionnote_id=item["sectionnote"]
         )
 
     content = [
-        {"note": 1, "content": "Cover ini proval"},
-        {"note": 1, "content": "Cover revisi terus"},
-        {"note": 1, "content": "cover e angeeel"},
-        {"note": 1, "content": "Penulis e njauk revisi terus hmm"}
+        {"note": 1, "text": "Cover ini proval"},
+        {"note": 1, "text": "Cover revisi terus"},
+        {"note": 1, "text": "cover e angeeel"},
+        {"note": 1, "text": "Penulis e njauk revisi terus hmm"}
     ]
     for item in content:
-        Content.objects.get_or_create(
+        TextNote.objects.get_or_create(
             note_id=item["note"],
-            content=item["content"],
+            text=item["text"],
         )
 
     content22 = [
@@ -285,17 +295,17 @@ def create_default_table(sender, **kwargs):
         {"description": 1, "text": "warna fakultas"}
     ]
     for item in content22:
-        Text.objects.get_or_create(
+        TextDescription.objects.get_or_create(
             description_id=item["description"],
             text=item["text"],
         )
 
     cov = [
-        {"scripts": 1, "thumbnail": "media/thumbnail/image001.jpeg", "length": 10, "height": 250, "width": 160, "x_axis": 1, "y_axis": 1},
+        {"script": 1, "thumbnail": "media/thumbnail/image001.jpeg", "length": 10, "height": 250, "width": 160, "x_axis": 1, "y_axis": 1},
     ]
     for item in cov:
-        CoverBook.objects.get_or_create(
-            scripts_id=item["scripts"],
+        Cover.objects.get_or_create(
+            script_id=item["script"],
             thumbnail=item["thumbnail"],
             length=item["length"],
             height=item["height"],

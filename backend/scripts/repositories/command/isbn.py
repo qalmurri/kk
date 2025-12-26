@@ -1,17 +1,5 @@
 from scripts.models import Isbn, Type
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
-class ISBNQueryRepository(BaseQueryRepository):
-    model = Isbn
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
+from scripts.repositories.base import BaseCommandRepository
 
 class ISBNCommandRepository(BaseCommandRepository):
     model = Isbn
@@ -30,15 +18,6 @@ class ISBNCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-    
-class TypeQueryRepository(BaseQueryRepository):
-    model = Type
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
 
 class TypeCommandRepository(BaseCommandRepository):
     model = Type

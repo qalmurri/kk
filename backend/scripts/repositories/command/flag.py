@@ -1,17 +1,5 @@
 from scripts.models import Flag, Part
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
-class FlagQueryRepository(BaseQueryRepository):
-    model = Flag
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
+from scripts.repositories.base import BaseCommandRepository
 
 class FlagCommandRepository(BaseCommandRepository):
     model = Flag
@@ -30,15 +18,6 @@ class FlagCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-    
-class PartQueryRepository(BaseQueryRepository):
-    model = Part
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
 
 class PartCommandRepository(BaseCommandRepository):
     model = Part

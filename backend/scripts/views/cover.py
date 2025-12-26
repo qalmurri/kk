@@ -3,10 +3,8 @@ from scripts.serializers import (
     CoverReadSerializer,
     CoverWriteSerializer
     )
-from scripts.repositories import (
-    CoverBookQueryRepository,
-    CoverBookCommandRepository
-    )
+from scripts.repositories.command import CoverBookCommandRepository
+from scripts.repositories.query import CoverBookQueryRepository
 
 class CoverViewset(BaseCRUDViewSet):
     '''cover viewset'''

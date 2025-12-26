@@ -1,17 +1,5 @@
 from scripts.models import Size, Institute
-from .base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
-class SizeQueryRepository(BaseQueryRepository):
-    model = Size
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
+from scripts.repositories.base import BaseCommandRepository
 
 class SizeCommandRepository(BaseCommandRepository):
     model = Size
@@ -31,15 +19,6 @@ class SizeCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
     
-class InstituteQueryRepository(BaseQueryRepository):
-    model = Institute
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
-
 class InstituteCommandRepository(BaseCommandRepository):
     model = Institute
 

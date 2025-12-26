@@ -7,13 +7,15 @@ from scripts.serializers import (
     SectionDescriptionReadSerializer,
     SectionDescriptionWriteSerializer
     )
-from scripts.repositories import (
-    DescriptionQueryRepository,
+from scripts.repositories.command import (
     DescriptionCommandRepository,
-    TextQueryRepository,
     TextCommandRepository,
-    DescriptionPartQueryRepository,
     DescriptionPartCommandRepository
+    )
+from scripts.repositories.query import (
+    DescriptionQueryRepository,
+    TextQueryRepository,
+    DescriptionPartQueryRepository
     )
 
 class DescriptionViewSet(BaseCRUDViewSet):

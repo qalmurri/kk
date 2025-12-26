@@ -7,13 +7,15 @@ from scripts.serializers import (
     SectionReadSerializer,
     SectionWriteSerializer
     )
-from scripts.repositories import (
-    ScriptsProcessQueryRepository,
+from scripts.repositories.command import (
     ScriptsProcessCommandRepository,
-    ByQueryRepository,
     ByCommandRepository,
-    SectionQueryRepository,
     SectionCommandRepository
+    )
+from scripts.repositories.query import (
+    ScriptsProcessQueryRepository,
+    ByQueryRepository,
+    SectionQueryRepository
     )
 
 class SectionViewSet(BaseCRUDViewSet):

@@ -7,13 +7,15 @@ from scripts.serializers import (
     SectionReadSerializer,
     SectionWriteSerializer
     )
-from scripts.repositories import (
-    StatusQueryRepository,
+from scripts.repositories.command import (
     StatusCommandRepository,
-    LabelQueryRepository,
     LabelCommandRepository,
-    ScriptsStatusCodeQueryRepository,
     ScriptsStatusCodeCommandRepository
+    )
+from scripts.repositories.query import (
+    StatusQueryRepository,
+    LabelQueryRepository,
+    ScriptsStatusCodeQueryRepository
     )
 
 class CodeViewSet(BaseCRUDViewSet):

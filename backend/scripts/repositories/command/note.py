@@ -1,17 +1,5 @@
 from scripts.models import Note, SectionNote, TextNote
-from scripts.repositories.base import (
-    BaseQueryRepository,
-    BaseCommandRepository
-)
-
-class NoteQueryRepository(BaseQueryRepository):
-    model = Note
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
+from scripts.repositories.base import BaseCommandRepository
 
 class NoteCommandRepository(BaseCommandRepository):
     model = Note
@@ -31,15 +19,6 @@ class NoteCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class NotePartQueryRepository(BaseQueryRepository):
-    model = SectionNote
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
-
 class NotePartCommandRepository(BaseCommandRepository):
     model = SectionNote
 
@@ -57,15 +36,6 @@ class NotePartCommandRepository(BaseCommandRepository):
             )
         instance.save()
         return instance
-
-class ContentQueryRepository(BaseQueryRepository):
-    model = TextNote
-
-    @classmethod
-    def query(cls):
-        return (
-            cls.model.objects
-        )
 
 class ContentCommandRepository(BaseCommandRepository):
     model = TextNote
