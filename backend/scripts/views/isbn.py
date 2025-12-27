@@ -26,7 +26,7 @@ class IsbnViewSet(BaseCRUDViewSet):
     query_repo = IsbnQueryRepository
     command_repo = IsbnCommandRepository
 
-class TypeIsbnViewSet(BaseCRUDViewSet):
+class TypeViewSet(BaseCRUDViewSet):
     '''type viewset'''
     throttle_classes = []
     authentication_classes = []
