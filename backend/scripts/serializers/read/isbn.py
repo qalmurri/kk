@@ -21,5 +21,5 @@ class IsbnReadSerializer(BaseReadSerializer):
         model = Isbn
         fields = BaseReadSerializer.Meta.fields + (
             "isbn",
-            "type",
+            "typeisbn",
         )
