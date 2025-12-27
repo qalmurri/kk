@@ -5,7 +5,7 @@ from scripts.serializers.write import ScriptsWriteSerializer
 from scripts.repositories.command import ScriptsCommandRepository
 from scripts.repositories.query import ScriptsQueryRepository
 
-class ScriptsViewSet(BaseViewSet):
+class ScriptViewSet(BaseViewSet):
     throttle_classes = []
     authentication_classes = []
     permission_classes = []

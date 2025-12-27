@@ -9,8 +9,8 @@ from .common import (
 from .cover import CoverViewset
 from .description import (
     DescriptionViewSet, 
-    TextViewSet,
-    DescriptionPartViewSet
+    TextDescriptionViewSet,
+    SectionDescriptionViewSet
 )
 from .flag import (
     FlagViewSet,
@@ -18,7 +18,7 @@ from .flag import (
 )
 from .isbn import (
     IsbnViewSet,
-    TypeViewSet,
+    TypeIsbnViewSet,
 
 )
 from .note import (
@@ -30,7 +30,7 @@ from .orderer import (
     OrdererViewSet,
     ScriptOrdererViewSet
 )
-from .scripts import ScriptsViewSet
+from .scripts import ScriptViewSet
 from .scriptsprocess import (
     SectionViewSet,
     ByViewSet,

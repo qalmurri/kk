@@ -4,7 +4,7 @@ from scripts.models import (
     Isbn
 )
 
-class TypeReadSerializer(BaseReadSerializer):
+class TypeIsbnReadSerializer(BaseReadSerializer):
     '''type read serializer'''
     class Meta(BaseReadSerializer.Meta):
         model = Type
@@ -14,7 +14,7 @@ class TypeReadSerializer(BaseReadSerializer):
 
 class IsbnReadSerializer(BaseReadSerializer):
     '''isbn read serializer'''
-    type = TypeReadSerializer(
+    typeisbn = TypeIsbnReadSerializer(
         read_only=True
     )
     class Meta(BaseReadSerializer.Meta):

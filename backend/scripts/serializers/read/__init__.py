@@ -15,7 +15,7 @@ from .flag import (
     FlagReadSerializer
 )
 from .isbn import (
-    TypeReadSerializer,
+    TypeIsbnReadSerializer,
     IsbnReadSerializer
 )
 from .note import (

@@ -1,7 +1,7 @@
 from scripts.models import Isbn, Type
 from scripts.repositories.base import BaseCommandRepository
 
-class ISBNCommandRepository(BaseCommandRepository):
+class IsbnCommandRepository(BaseCommandRepository):
     model = Isbn
 
     @classmethod
@@ -19,7 +19,7 @@ class ISBNCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class TypeCommandRepository(BaseCommandRepository):
+class TypeIsbnCommandRepository(BaseCommandRepository):
     model = Type
 
     @classmethod

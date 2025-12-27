@@ -15,8 +15,8 @@ from .flag import (
     PartCommandRepository
 )
 from .isbn import (
-    TypeCommandRepository,
-    ISBNCommandRepository,
+    TypeIsbnCommandRepository,
+    IsbnCommandRepository,
 
 )
 from .note import (

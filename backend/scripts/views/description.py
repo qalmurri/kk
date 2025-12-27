@@ -30,7 +30,7 @@ class DescriptionViewSet(BaseCRUDViewSet):
     query_repo = DescriptionQueryRepository
     command_repo = DescriptionCommandRepository
 
-class TextViewSet(BaseCRUDViewSet):
+class TextDescriptionViewSet(BaseCRUDViewSet):
     '''text viewset'''
     throttle_classes = []
     authentication_classes = []
@@ -40,7 +40,7 @@ class TextViewSet(BaseCRUDViewSet):
     query_repo = TextQueryRepository
     command_repo = TextCommandRepository
 
-class DescriptionPartViewSet(BaseCRUDViewSet):
+class SectionDescriptionViewSet(BaseCRUDViewSet):
     '''description part viewset'''
     throttle_classes = []
     authentication_classes = []
