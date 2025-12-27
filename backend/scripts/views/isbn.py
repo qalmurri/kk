@@ -1,19 +1,19 @@
 from scripts.views.base import BaseCRUDViewSet
 from scripts.serializers.read import (
     IsbnReadSerializer,
-    TypeIsbnReadSerializer
+    TypeReadSerializer
 )
 from scripts.serializers.write import (
     IsbnWriteSerializer,
-    TypeIsbnWriteSerializer
+    TypeWriteSerializer
 )
 from scripts.repositories.command import (
     IsbnCommandRepository,
-    TypeIsbnCommandRepository
+    TypeCommandRepository
 )
 from scripts.repositories.query import (
     IsbnQueryRepository,
-    TypeIsbnQueryRepository
+    TypeQueryRepository
 )
 
 class IsbnViewSet(BaseCRUDViewSet):
@@ -31,7 +31,7 @@ class TypeIsbnViewSet(BaseCRUDViewSet):
     throttle_classes = []
     authentication_classes = []
     permission_classes = []
-    read_serializer_class = TypeIsbnReadSerializer
-    write_serializer_class = TypeIsbnWriteSerializer
-    query_repo = TypeIsbnQueryRepository
-    command_repo = TypeIsbnCommandRepository
+    read_serializer_class = TypeReadSerializer
+    write_serializer_class = TypeWriteSerializer
+    query_repo = TypeQueryRepository
+    command_repo = TypeCommandRepository

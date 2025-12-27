@@ -10,7 +10,7 @@ class IsbnQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
     
-class TypeIsbnQueryRepository(BaseQueryRepository):
+class TypeQueryRepository(BaseQueryRepository):
     model = Type
 
     @classmethod

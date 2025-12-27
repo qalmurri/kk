@@ -4,7 +4,7 @@ from scripts.models import (
     Isbn
 )
 
-class TypeIsbnWriteSerializer(BaseWriteSerializer):
+class TypeWriteSerializer(BaseWriteSerializer):
     '''type write serializer'''
     class Meta(BaseWriteSerializer.Meta):
         model = Type

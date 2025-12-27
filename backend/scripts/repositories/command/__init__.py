@@ -15,7 +15,7 @@ from .flag import (
     PartCommandRepository
 )
 from .isbn import (
-    TypeIsbnCommandRepository,
+    TypeCommandRepository,
     IsbnCommandRepository,
 
 )

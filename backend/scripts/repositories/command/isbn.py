@@ -19,7 +19,7 @@ class IsbnCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class TypeIsbnCommandRepository(BaseCommandRepository):
+class TypeCommandRepository(BaseCommandRepository):
     model = Type
 
     @classmethod
