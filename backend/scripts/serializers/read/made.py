@@ -1,10 +1,10 @@
 from scripts.serializers.base import BaseReadSerializer
+from .user import UserReadSerializer
 from scripts.models import (
     Made,
     SectionMade,
     ByMade
 )
-from .user import UserReadSerializer
 
 class SectionMadeReadSerializer(BaseReadSerializer):
     '''section read serializer'''
