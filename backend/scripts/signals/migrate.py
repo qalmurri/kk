@@ -13,7 +13,7 @@ from ..models import (
     Note,
     By,
     TypeIsbn,
-    Part,
+    SectionFlag,
     Section,
     SectionDescription,
     SectionNote,
@@ -100,7 +100,7 @@ def create_default_table(sender, **kwargs):
         #???
     ]
     for item in valuuuuu:
-        Part.objects.get_or_create(
+        SectionFlag.objects.get_or_create(
             name=item
         )
 
@@ -225,13 +225,13 @@ def create_default_table(sender, **kwargs):
         )
 
     bool = [
-        {"scripts": 1, "part": 1, "is_active": False},
-        {"scripts": 1, "part": 3, "is_active": True}
+        {"scripts": 1, "sectionflag": 1, "is_active": False},
+        {"scripts": 1, "sectionflag": 3, "is_active": True}
     ]
     for item in bool:
         Flag.objects.get_or_create(
             scripts_id=item["scripts"],
-            part_id=item["part"],
+            sectionflag_id=item["sectionflag"],
             is_active=item["is_active"]
         )
         

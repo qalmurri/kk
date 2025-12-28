@@ -87,7 +87,7 @@ router.register(r"section", SectionViewSet, basename="section")
 router.register(r"scriptsprocess", ScriptProcessViewSet,basename="scriptsprocess")
 
 # FLAG
-router.register(r"part", SectionFlagViewSet, basename="part")
+router.register(r"sectionflag", SectionFlagViewSet, basename="section_flag")
 router.register(r"flag", FlagViewSet, basename="flag")
 
 # ORDERER

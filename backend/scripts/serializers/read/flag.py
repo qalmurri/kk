@@ -14,7 +14,7 @@ class SectionFlagReadSerializer(BaseReadSerializer):
 
 class FlagReadSerializer(BaseReadSerializer):
     '''flag read serializer'''
-    sectionflag = SectionFlag(
+    sectionflag = SectionFlagReadSerializer(
         read_only=True
     )
     class Meta(BaseReadSerializer):
