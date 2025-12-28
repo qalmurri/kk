@@ -8,8 +8,6 @@ from .views import (
     # SCRIPT
     ScriptViewSet,
 
-
-
     # COMMON
     SizeViewSet,
     InstituteViewSet,
