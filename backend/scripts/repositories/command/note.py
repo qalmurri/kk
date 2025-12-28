@@ -19,7 +19,7 @@ class NoteCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class NotePartCommandRepository(BaseCommandRepository):
+class SectionNoteCommandRepository(BaseCommandRepository):
     model = SectionNote
 
     @classmethod
@@ -37,7 +37,7 @@ class NotePartCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class ContentCommandRepository(BaseCommandRepository):
+class TextNoteCommandRepository(BaseCommandRepository):
     model = TextNote
 
     @classmethod

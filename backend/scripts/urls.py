@@ -5,29 +5,50 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView
 )
 from .views import (
-    LogoutView,
+    # SCRIPT
     ScriptViewSet,
+
+    # COMMON
     SizeViewSet,
-    TypeIsbnViewSet,
-    SectionViewSet,
-    PartViewSet,
-    OrdererViewSet,
-    NotePartViewSet,
-    LabelViewSet,
     InstituteViewSet,
-    SectionDescriptionViewSet,
-    CodeViewSet,
-    ContentViewSet,
-    CoverViewset,
-    FlagViewSet,
-    IsbnViewSet,
-    TextDescriptionViewSet,
-    ByViewSet,
-    DescriptionViewSet,
+
+    # NOTE_
     NoteViewSet,
+    SectionNoteViewSet,
+    TextNoteViewSet,
+
+    # DESCRIPTION
+    DescriptionViewSet,
+    SectionDescriptionViewSet,
+    TextDescriptionViewSet,
+
+    # TYPE
+    TypeIsbnViewSet,
+    IsbnViewSet,
+
+    # STATUS
+    LabelViewSet,
+    CodeViewSet,
+    StatusViewSet,
+
+    # COVER
+    CoverViewset,
+
+    # ORDERER 
+    OrdererViewSet,
     ScriptOrdererViewSet,
+
+    # SCRIPPROCESS
+    ByViewSet,
+    SectionViewSet,
     ScriptProcessViewSet,
-    StatusViewSet
+
+    # FLAG
+    PartViewSet,
+    FlagViewSet,
+
+    # OTHER
+    LogoutView
 )
 
 router = DefaultRouter()
@@ -46,14 +67,14 @@ router.register(r"description", DescriptionViewSet, basename="description")
 router.register(r"sectiondescription", SectionDescriptionViewSet, basename="section_description")
 router.register(r"textdescription", TextDescriptionViewSet, basename="text_description")
 
+# NOTE_
+router.register(r"note", NoteViewSet, basename="note")
+router.register(r"sectionnote", SectionNoteViewSet, basename="section_note")
+router.register(r"textnote", TextNoteViewSet, basename="text_note")
+
 # ISBN
 router.register(r"isbn", IsbnViewSet, basename="isbn")
 router.register(r"typeisbn", TypeIsbnViewSet, basename="type_isbn")
-
-# NOTE_
-router.register(r"note", NoteViewSet, basename="note")
-router.register(r"notepart", NotePartViewSet, basename="notepart")
-router.register(r"content", ContentViewSet, basename="content")
 
 # STATUS
 router.register(r"label", LabelViewSet, basename="label")

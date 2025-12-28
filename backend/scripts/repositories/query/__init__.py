@@ -19,8 +19,8 @@ from .isbn import (
     IsbnQueryRepository
 )
 from .note import (
-    NotePartQueryRepository,
-    ContentQueryRepository,
+    SectionNoteQueryRepository,
+    TextNoteQueryRepository,
     NoteQueryRepository
 )
 from .orderer import (

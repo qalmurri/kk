@@ -20,8 +20,8 @@ from .isbn import (
 
 )
 from .note import (
-    NotePartCommandRepository,
-    ContentCommandRepository,
+    SectionNoteCommandRepository,
+    TextNoteCommandRepository,
     NoteCommandRepository
 )
 from .orderer import (

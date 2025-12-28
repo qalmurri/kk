@@ -10,7 +10,7 @@ class NoteQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
 
-class NotePartQueryRepository(BaseQueryRepository):
+class SectionNoteQueryRepository(BaseQueryRepository):
     model = SectionNote
 
     @classmethod
@@ -19,7 +19,7 @@ class NotePartQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
 
-class ContentQueryRepository(BaseQueryRepository):
+class TextNoteQueryRepository(BaseQueryRepository):
     model = TextNote
 
     @classmethod

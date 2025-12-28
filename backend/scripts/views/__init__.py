@@ -23,8 +23,8 @@ from .isbn import (
 )
 from .note import (
     NoteViewSet,
-    ContentViewSet,
-    NotePartViewSet
+    TextNoteViewSet,
+    SectionNoteViewSet
 )
 from .orderer import (
     OrdererViewSet,
