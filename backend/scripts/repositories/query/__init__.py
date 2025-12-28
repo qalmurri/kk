@@ -15,7 +15,7 @@ from .flag import (
     PartQueryRepository
 )
 from .isbn import (
-    TypeQueryRepository,
+    TypeIsbnQueryRepository,
     IsbnQueryRepository
 )
 from .note import (

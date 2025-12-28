@@ -18,7 +18,7 @@ from .flag import (
 )
 from .isbn import (
     IsbnViewSet,
-    TypeViewSet,
+    TypeIsbnViewSet,
 
 )
 from .note import (

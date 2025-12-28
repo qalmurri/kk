@@ -8,7 +8,7 @@ from .views import (
     LogoutView,
     ScriptViewSet,
     SizeViewSet,
-    TypeViewSet,
+    TypeIsbnViewSet,
     SectionViewSet,
     PartViewSet,
     OrdererViewSet,
@@ -35,20 +35,20 @@ router = DefaultRouter()
 router.register(r"script", ScriptViewSet, basename="script")
 
 # COMMON
-router.register(r"common/size", SizeViewSet, basename="size")
-router.register(r"common/institute", InstituteViewSet, basename="institute")
+router.register(r"size", SizeViewSet, basename="size")
+router.register(r"institute", InstituteViewSet, basename="institute")
 
 # COVER
 router.register(r"cover", CoverViewset, basename="cover")
 
 # DESCRIPTION
 router.register(r"description", DescriptionViewSet, basename="description")
-router.register(r"description/sectiondescription", SectionDescriptionViewSet, basename="sectiondescription")
-router.register(r"description/textdescription", TextDescriptionViewSet, basename="textdescription")
+router.register(r"sectiondescription", SectionDescriptionViewSet, basename="section_description")
+router.register(r"textdescription", TextDescriptionViewSet, basename="text_description")
 
 # ISBN
-router.register(r"isbn/type", TypeViewSet, basename="type")
 router.register(r"isbn", IsbnViewSet, basename="isbn")
+router.register(r"typeisbn", TypeIsbnViewSet, basename="type_isbn")
 
 # NOTE_
 router.register(r"note", NoteViewSet, basename="note")

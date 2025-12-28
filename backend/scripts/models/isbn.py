@@ -2,7 +2,7 @@ from django.db import models
 from scripts.models.base import TimeStampedModel
 from scripts.models.script import Script
 
-class Type(TimeStampedModel):
+class TypeIsbn(TimeStampedModel):
     name = models.CharField(
         max_length=10
     )
@@ -18,8 +18,8 @@ class Isbn(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="scripts_ISBN"
     )
-    type = models.ForeignKey(
-        Type,
+    typeisbn = models.ForeignKey(
+        TypeIsbn,
         on_delete=models.CASCADE,
         related_name="type_ISBN"
     )

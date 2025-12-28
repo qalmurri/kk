@@ -1,25 +1,25 @@
 from scripts.serializers.base import BaseReadSerializer
 from scripts.models import (
-    Type,
+    TypeIsbn,
     Isbn
 )
 
-class TypeReadSerializer(BaseReadSerializer):
+class TypeIsbnReadSerializer(BaseReadSerializer):
     '''type read serializer'''
     class Meta(BaseReadSerializer.Meta):
-        model = Type
+        model = TypeIsbn
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
 class IsbnReadSerializer(BaseReadSerializer):
     '''isbn read serializer'''
-    type = TypeReadSerializer(
+    typeisbn = TypeIsbnReadSerializer(
         read_only=True
     )
     class Meta(BaseReadSerializer.Meta):
         model = Isbn
         fields = BaseReadSerializer.Meta.fields + (
-            "type",
+            "typeisbn",
             "isbn",
         )

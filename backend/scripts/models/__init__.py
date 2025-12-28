@@ -5,7 +5,7 @@ from .common import Institute, Size
 from .cover import Cover
 from .description import SectionDescription, Description, TextDescription
 from .flag import Part, Flag
-from .isbn import Type, Isbn
+from .isbn import TypeIsbn, Isbn
 from .note import SectionNote, Note, TextNote
 from .orderer import Orderer, ScriptsOrderer
 from .script import Script, No, NoScripts

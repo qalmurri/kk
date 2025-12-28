@@ -1,4 +1,4 @@
-from scripts.models import Isbn, Type
+from scripts.models import Isbn, TypeIsbn
 from scripts.repositories.base import BaseCommandRepository
 
 class IsbnCommandRepository(BaseCommandRepository):
@@ -19,15 +19,15 @@ class IsbnCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class TypeCommandRepository(BaseCommandRepository):
-    model = Type
+class TypeIsbnCommandRepository(BaseCommandRepository):
+    model = TypeIsbn
 
     @classmethod
-    def create(cls, **data) -> Type:
+    def create(cls, **data) -> TypeIsbn:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Type, **data) -> Type:
+    def update(cls, instance: TypeIsbn, **data) -> TypeIsbn:
         for field, value in data.items():
             setattr(
                 instance,

@@ -12,7 +12,7 @@ from ..models import (
     Description,
     Note,
     By,
-    Type,
+    TypeIsbn,
     Part,
     Section,
     SectionDescription,
@@ -120,7 +120,7 @@ def create_default_table(sender, **kwargs):
         "E-ISBN",
     ]
     for item in code321:
-        Type.objects.get_or_create(
+        TypeIsbn.objects.get_or_create(
             name=item
         )
 
@@ -214,14 +214,14 @@ def create_default_table(sender, **kwargs):
         )
 
     isbn2 = [
-        {"script": 1, "isbn": "32123123", "type": 1},
-        {"script": 1, "isbn": "3212312323", "type": 2}
+        {"script": 1, "isbn": "32123123", "typeisbn": 1},
+        {"script": 1, "isbn": "3212312323", "typeisbn": 2}
     ]
     for item in isbn2:
         Isbn.objects.get_or_create(
             script_id=item["script"],
             isbn=item["isbn"],
-            type_id=item["type"]
+            typeisbn_id=item["typeisbn"]
         )
 
     bool = [

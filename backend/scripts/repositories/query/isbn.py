@@ -1,4 +1,4 @@
-from scripts.models import Isbn, Type
+from scripts.models import Isbn, TypeIsbn
 from scripts.repositories.base import BaseQueryRepository
 
 class IsbnQueryRepository(BaseQueryRepository):
@@ -10,8 +10,8 @@ class IsbnQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
     
-class TypeQueryRepository(BaseQueryRepository):
-    model = Type
+class TypeIsbnQueryRepository(BaseQueryRepository):
+    model = TypeIsbn
 
     @classmethod
     def query(cls):

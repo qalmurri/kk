@@ -13,7 +13,7 @@ from .flag import (
     FlagWriteSerializer
 )
 from .isbn import (
-    TypeWriteSerializer,
+    TypeIsbnWriteSerializer,
     IsbnWriteSerializer,
 
 )
