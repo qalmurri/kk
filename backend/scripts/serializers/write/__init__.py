@@ -9,7 +9,7 @@ from .description import (
     DescriptionWriteSerializer
 )
 from .flag import (
-    PartWriteSerializer,
+    SectionFlagWriteSerializer,
     FlagWriteSerializer
 )
 from .isbn import (

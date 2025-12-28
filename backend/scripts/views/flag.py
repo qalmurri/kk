@@ -1,19 +1,19 @@
 from scripts.views.base import BaseCRUDViewSet
 from scripts.serializers.read import (
     FlagReadSerializer,
-    PartReadSerializer,
+    SectionFlagReadSerializer,
     )
 from scripts.serializers.write import (
     FlagWriteSerializer,
-    PartWriteSerializer,
+    SectionFlagWriteSerializer,
     )
 from scripts.repositories.command import (
     FlagCommandRepository,
-    PartCommandRepository
+    SectionFlagCommandRepository
     )
 from scripts.repositories.query import (
     FlagQueryRepository,
-    PartQueryRepository,
+    SectionFlagQueryRepository,
     )
 
 class FlagViewSet(BaseCRUDViewSet):
@@ -26,12 +26,12 @@ class FlagViewSet(BaseCRUDViewSet):
     query_repo = FlagQueryRepository
     command_repo = FlagCommandRepository
 
-class PartViewSet(BaseCRUDViewSet):
+class SectionFlagViewSet(BaseCRUDViewSet):
     '''part viewset'''
     throttle_classes = []
     authentication_classes = []
     permission_classes = []
-    read_serializer_class = PartReadSerializer
-    write_serializer_class = PartWriteSerializer
-    query_repo = PartQueryRepository
-    command_repo = PartCommandRepository
+    read_serializer_class = SectionFlagReadSerializer
+    write_serializer_class = SectionFlagWriteSerializer
+    query_repo = SectionFlagQueryRepository
+    command_repo = SectionFlagCommandRepository

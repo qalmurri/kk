@@ -12,7 +12,7 @@ from .description import (
 )
 from .flag import (
     FlagQueryRepository,
-    PartQueryRepository
+    SectionFlagQueryRepository
 )
 from .isbn import (
     TypeIsbnQueryRepository,

@@ -1,4 +1,4 @@
-from scripts.models import Flag, Part
+from scripts.models import Flag, SectionFlag
 from scripts.repositories.base import BaseQueryRepository
 
 class FlagQueryRepository(BaseQueryRepository):
@@ -10,8 +10,8 @@ class FlagQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
     
-class PartQueryRepository(BaseQueryRepository):
-    model = Part
+class SectionFlagQueryRepository(BaseQueryRepository):
+    model = SectionFlag
 
     @classmethod
     def query(cls):

@@ -1,13 +1,13 @@
 from scripts.serializers.base import BaseWriteSerializer
 from scripts.models import (
     Flag,
-    Part
+    SectionFlag
 )
 
-class PartWriteSerializer(BaseWriteSerializer):
+class SectionFlagWriteSerializer(BaseWriteSerializer):
     '''part write serializer'''
     class Meta(BaseWriteSerializer.Meta):
-        model = Part
+        model = SectionFlag
         fields = BaseWriteSerializer.Meta.fields + (
             "name",
         )
@@ -19,5 +19,5 @@ class FlagWriteSerializer(BaseWriteSerializer):
         fields = BaseWriteSerializer.Meta.fields + (
             "scripts",
             "is_active",
-            "part",
+            "sectionflag",
         )

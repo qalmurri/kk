@@ -40,7 +40,7 @@ from .views import (
     ScriptProcessViewSet,
 
     # FLAG
-    PartViewSet,
+    SectionFlagViewSet,
     FlagViewSet,
 
     # ORDERER 
@@ -87,7 +87,7 @@ router.register(r"section", SectionViewSet, basename="section")
 router.register(r"scriptsprocess", ScriptProcessViewSet,basename="scriptsprocess")
 
 # FLAG
-router.register(r"part", PartViewSet, basename="part")
+router.register(r"part", SectionFlagViewSet, basename="part")
 router.register(r"flag", FlagViewSet, basename="flag")
 
 # ORDERER

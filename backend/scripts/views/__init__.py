@@ -14,7 +14,7 @@ from .description import (
 )
 from .flag import (
     FlagViewSet,
-    PartViewSet
+    SectionFlagViewSet
 )
 from .isbn import (
     IsbnViewSet,

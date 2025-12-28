@@ -1,4 +1,4 @@
-from scripts.models import Flag, Part
+from scripts.models import Flag, SectionFlag
 from scripts.repositories.base import BaseCommandRepository
 
 class FlagCommandRepository(BaseCommandRepository):
@@ -19,15 +19,15 @@ class FlagCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class PartCommandRepository(BaseCommandRepository):
-    model = Part
+class SectionFlagCommandRepository(BaseCommandRepository):
+    model = SectionFlag
 
     @classmethod
-    def create(cls, **data) -> Part:
+    def create(cls, **data) -> SectionFlag:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Part, **data) -> Part:
+    def update(cls, instance: SectionFlag, **data) -> SectionFlag:
         for field, value in data.items():
             setattr(
                 instance,

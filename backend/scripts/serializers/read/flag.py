@@ -1,25 +1,25 @@
 from scripts.serializers.base import BaseReadSerializer
 from scripts.models import (
     Flag,
-    Part
+    SectionFlag
 )
 
-class PartReadSerializer(BaseReadSerializer):
+class SectionFlagReadSerializer(BaseReadSerializer):
     '''part read serializer'''
     class Meta(BaseReadSerializer.Meta):
-        model = Part
+        model = SectionFlag
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
 class FlagReadSerializer(BaseReadSerializer):
     '''flag read serializer'''
-    part = PartReadSerializer(
+    sectionflag = SectionFlag(
         read_only=True
     )
     class Meta(BaseReadSerializer):
         model = Flag
         fields = BaseReadSerializer.Meta.fields + (
-            "part",
+            "sectionflag",
             "is_active",
         )

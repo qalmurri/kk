@@ -2,7 +2,7 @@ from django.db import models
 from scripts.models.base import TimeStampedModel
 from scripts.models.script import Script
 
-class Part(TimeStampedModel):
+class SectionFlag(TimeStampedModel):
     name = models.CharField(
         max_length=10,
     )
@@ -20,8 +20,8 @@ class Flag(TimeStampedModel):
     is_active = models.BooleanField(
         default=False
     )
-    part = models.ForeignKey(
-        Part,
+    sectionflag = models.ForeignKey(
+        SectionFlag,
         on_delete=models.CASCADE,
         related_name="part_Flag"
     )

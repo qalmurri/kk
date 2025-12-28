@@ -7,9 +7,9 @@ class TypeIsbn(TimeStampedModel):
         max_length=10
     )
     class Meta:
-        db_table = "type"
-        verbose_name = "Type"
-        verbose_name_plural = "Types"
+        db_table = "typeisbn"
+        verbose_name = "TypeIsbn"
+        verbose_name_plural = "TypeIsbns"
         ordering = ["name"]
 
 class Isbn(TimeStampedModel):

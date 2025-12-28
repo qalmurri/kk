@@ -11,7 +11,7 @@ from .description import (
     DescriptionReadSerializer
 )
 from .flag import (
-    PartReadSerializer,
+    SectionFlagReadSerializer,
     FlagReadSerializer
 )
 from .isbn import (
