@@ -8,21 +8,26 @@ from .views import (
     # SCRIPT
     ScriptViewSet,
 
+
+
     # COMMON
     SizeViewSet,
     InstituteViewSet,
 
-    # NOTE_
-    NoteViewSet,
-    SectionNoteViewSet,
-    TextNoteViewSet,
+    # COVER
+    CoverViewset,
 
     # DESCRIPTION
     DescriptionViewSet,
     SectionDescriptionViewSet,
     TextDescriptionViewSet,
 
-    # TYPE
+    # NOTE_
+    NoteViewSet,
+    SectionNoteViewSet,
+    TextNoteViewSet,
+
+    # ISBN
     TypeIsbnViewSet,
     IsbnViewSet,
 
@@ -30,13 +35,6 @@ from .views import (
     LabelViewSet,
     CodeViewSet,
     StatusViewSet,
-
-    # COVER
-    CoverViewset,
-
-    # ORDERER 
-    OrdererViewSet,
-    ScriptOrdererViewSet,
 
     # SCRIPPROCESS
     ByViewSet,
@@ -46,6 +44,10 @@ from .views import (
     # FLAG
     PartViewSet,
     FlagViewSet,
+
+    # ORDERER 
+    OrdererViewSet,
+    ScriptOrdererViewSet,
 
     # OTHER
     LogoutView
