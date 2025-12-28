@@ -19,7 +19,7 @@ class StatusCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class ScriptsStatusCodeCommandRepository(BaseCommandRepository):
+class SectionStatusCommandRepository(BaseCommandRepository):
     model = SectionStatus
 
     @classmethod
@@ -37,7 +37,7 @@ class ScriptsStatusCodeCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class LabelCommandRepository(BaseCommandRepository):
+class LabelStatusCommandRepository(BaseCommandRepository):
     model = LabelStatus
 
     @classmethod

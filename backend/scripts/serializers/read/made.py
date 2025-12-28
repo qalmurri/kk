@@ -1,42 +1,42 @@
 from scripts.serializers.base import BaseReadSerializer
 from scripts.models import (
-    Section,
-    By,
-    ScriptProcess
+    Made,
+    SectionMade,
+    ByMade
 )
 from .user import UserReadSerializer
 
-class SectionReadSerializer(BaseReadSerializer):
+class SectionMadeReadSerializer(BaseReadSerializer):
     '''section read serializer'''
     class Meta(BaseReadSerializer.Meta):
-        model = Section
+        model = SectionMade
         fields = BaseReadSerializer.Meta.fields + (
             "name",
         )
 
-class ByReadSerializer(BaseReadSerializer):
+class ByMadeReadSerializer(BaseReadSerializer):
     '''by read serializer'''
     user = UserReadSerializer(
         read_only=True
     )
     class Meta(BaseReadSerializer.Meta):
-        model = By
+        model = ByMade
         fields = BaseReadSerializer.Meta.fields + (
             "user",
         )
 
-class ScriptProcessReadSerializer(BaseReadSerializer):
+class MadeReadSerializer(BaseReadSerializer):
     '''script process read serializer'''
-    by = ByReadSerializer(
+    bymade = ByMadeReadSerializer(
         source="scriptsprocess_By",
         many=True
     )
-    section = SectionReadSerializer(
+    sectionmade = SectionMadeReadSerializer(
         read_only = True
     )
     class Meta(BaseReadSerializer.Meta):
-        model = ScriptProcess
+        model = Made
         fields = BaseReadSerializer.Meta.fields + (
-            "by",
-            "section",
+            "bymade",
+            "sectionmade",
         )

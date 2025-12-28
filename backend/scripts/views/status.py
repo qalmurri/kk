@@ -2,43 +2,43 @@ from scripts.views.base import BaseCRUDViewSet
 from scripts.serializers.read import (
     StatusReadSerializer,
     LabelStatusReadSerializer,
-    SectionReadSerializer
+    SectionStatusReadSerializer
     )
 from scripts.serializers.write import (
     StatusWriteSerializer,
     LabelStatusWriteSerializer,
-    SectionWriteSerializer
+    SectionStatusWriteSerializer
     )
 from scripts.repositories.command import (
     StatusCommandRepository,
-    LabelCommandRepository,
-    ScriptsStatusCodeCommandRepository
+    LabelStatusCommandRepository,
+    SectionStatusCommandRepository
     )
 from scripts.repositories.query import (
     StatusQueryRepository,
-    LabelQueryRepository,
-    ScriptsStatusCodeQueryRepository
+    LabelStatusQueryRepository,
+    SectionStatusQueryRepository
     )
 
-class CodeViewSet(BaseCRUDViewSet):
+class SectionStatusViewSet(BaseCRUDViewSet):
     '''cover viewset'''
     throttle_classes = []
     authentication_classes = []
     permission_classes = []
-    read_serializer_class = SectionReadSerializer
-    write_serializer_class = SectionWriteSerializer
-    query_repo = ScriptsStatusCodeQueryRepository
-    command_repo = ScriptsStatusCodeCommandRepository
+    read_serializer_class = SectionStatusReadSerializer
+    write_serializer_class = SectionStatusWriteSerializer
+    query_repo = SectionStatusQueryRepository
+    command_repo = SectionStatusCommandRepository
 
-class LabelViewSet(BaseCRUDViewSet):
+class LabelStatusViewSet(BaseCRUDViewSet):
     '''label viewset'''
     throttle_classes = []
     authentication_classes = []
     permission_classes = []
     read_serializer_class = LabelStatusReadSerializer
     write_serializer_class = LabelStatusWriteSerializer
-    query_repo = LabelQueryRepository
-    command_repo = LabelCommandRepository
+    query_repo = LabelStatusQueryRepository
+    command_repo = LabelStatusCommandRepository
 
 class StatusViewSet(BaseCRUDViewSet):
     '''status viewset'''

@@ -31,13 +31,13 @@ from .orderer import (
 from .scripts import (
     ScriptsCommandRepository
 )
-from .scriptsprocess import (
-    SectionCommandRepository,
-    ByCommandRepository,
-    ScriptsProcessCommandRepository
+from .made import (
+    SectionMadeCommandRepository,
+    ByMadeCommandRepository,
+    MadeCommandRepository
 )
 from .status import (
-    LabelCommandRepository,
-    ScriptsStatusCodeCommandRepository,
+    LabelStatusCommandRepository,
+    SectionStatusCommandRepository,
     StatusCommandRepository
 )

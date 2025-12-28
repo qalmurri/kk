@@ -1,8 +1,8 @@
-from scripts.models import ScriptProcess, By, Section
+from scripts.models import Made, ByMade, SectionMade
 from scripts.repositories.base import BaseQueryRepository
 
-class ScriptsProcessQueryRepository(BaseQueryRepository):
-    model = ScriptProcess
+class MadeQueryRepository(BaseQueryRepository):
+    model = Made
 
     @classmethod
     def query(cls):
@@ -10,8 +10,8 @@ class ScriptsProcessQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
 
-class ByQueryRepository(BaseQueryRepository):
-    model = By
+class ByMadeQueryRepository(BaseQueryRepository):
+    model = ByMade
 
     @classmethod
     def query(cls):
@@ -19,8 +19,8 @@ class ByQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
 
-class SectionQueryRepository(BaseQueryRepository):
-    model = Section
+class SectionMadeQueryRepository(BaseQueryRepository):
+    model = SectionMade
 
     @classmethod
     def query(cls):

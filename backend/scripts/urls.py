@@ -30,14 +30,14 @@ from .views import (
     IsbnViewSet,
 
     # STATUS
-    LabelViewSet,
-    CodeViewSet,
+    LabelStatusViewSet,
+    SectionStatusViewSet,
     StatusViewSet,
 
     # SCRIPPROCESS
-    ByViewSet,
-    SectionViewSet,
-    ScriptProcessViewSet,
+    ByMadeViewSet,
+    SectionMadeViewSet,
+    MadeViewSet,
 
     # FLAG
     SectionFlagViewSet,
@@ -77,14 +77,14 @@ router.register(r"isbn", IsbnViewSet, basename="isbn")
 router.register(r"typeisbn", TypeIsbnViewSet, basename="type_isbn")
 
 # STATUS
-router.register(r"label", LabelViewSet, basename="label")
-router.register(r"code", CodeViewSet, basename="code")
+router.register(r"labelstatus", LabelStatusViewSet, basename="label_status")
+router.register(r"sectionstatus", SectionStatusViewSet, basename="section_status")
 router.register(r"status", StatusViewSet, basename="status")
 
 # SCRIPT PROCESS
-router.register(r"by", ByViewSet, basename="by")
-router.register(r"section", SectionViewSet, basename="section")
-router.register(r"scriptsprocess", ScriptProcessViewSet,basename="scriptsprocess")
+router.register(r"bymade", ByMadeViewSet, basename="by_made")
+router.register(r"sectionmade", SectionMadeViewSet, basename="section_made")
+router.register(r"made", MadeViewSet,basename="made")
 
 # FLAG
 router.register(r"sectionflag", SectionFlagViewSet, basename="section_flag")

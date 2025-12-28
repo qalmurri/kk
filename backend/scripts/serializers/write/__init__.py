@@ -27,10 +27,10 @@ from .orderer import (
     ScriptOrdererWriteSerializer
 )
 from .scripts import ScriptsWriteSerializer
-from .scriptsprocess import (
-    SectionWriteSerializer,
-    ByWriteSerializer,
-    ScriptProcessWriteSerializer
+from .made import (
+    SectionMadeWriteSerializer,
+    ByMadeWriteSerializer,
+    MadeWriteSerializer
 )
 from .status import (
     LabelStatusWriteSerializer,

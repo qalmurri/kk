@@ -30,13 +30,13 @@ from .orderer import (
 from .scripts import (
     ScriptsQueryRepository
 )
-from .scriptsprocess import (
-    SectionQueryRepository,
-    ByQueryRepository,
-    ScriptsProcessQueryRepository
+from .made import (
+    SectionMadeQueryRepository,
+    ByMadeQueryRepository,
+    MadeQueryRepository
 )
 from .status import (
-    LabelQueryRepository,
-    ScriptsStatusCodeQueryRepository,
+    LabelStatusQueryRepository,
+    SectionStatusQueryRepository,
     StatusQueryRepository
 )

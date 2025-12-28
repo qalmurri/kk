@@ -5,30 +5,30 @@ from scripts.models.script import Script
 
 User = get_user_model()
 
-class Section(TimeStampedModel):
+class SectionMade(TimeStampedModel):
     name = models.CharField(
         max_length=10
     )
     class Meta:
         pass
 
-class ScriptProcess(TimeStampedModel): 
+class Made(TimeStampedModel): 
     script = models.ForeignKey(
         Script,
         on_delete=models.CASCADE,
         related_name="scripts_ScriptsProcess"
     )
-    section = models.ForeignKey(
-        Section,
+    sectionmade = models.ForeignKey(
+        SectionMade,
         on_delete=models.CASCADE,
         related_name="section_ScriptsProcess"
     )
     class Meta:
         pass
 
-class By(TimeStampedModel): 
-    scriptprocess = models.ForeignKey(
-        ScriptProcess,
+class ByMade(TimeStampedModel): 
+    made = models.ForeignKey(
+        Made,
         on_delete=models.CASCADE,
         related_name="scriptsprocess_By"
     )

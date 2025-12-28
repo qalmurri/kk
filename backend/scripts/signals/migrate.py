@@ -11,16 +11,16 @@ from ..models import (
     Flag,
     Description,
     Note,
-    By,
+    ByMade,
     TypeIsbn,
     SectionFlag,
-    Section,
+    SectionMade,
     SectionDescription,
     SectionNote,
     LabelStatus,
     SectionStatus,
     Isbn,
-    ScriptProcess,
+    Made,
     TextNote,
     TextDescription,
     Cover
@@ -51,7 +51,7 @@ def create_default_table(sender, **kwargs):
         "Produksi"
     ]
     for item in valuuu5:
-        Section.objects.get_or_create(
+        SectionMade.objects.get_or_create(
             name=item
         )
 
@@ -236,23 +236,23 @@ def create_default_table(sender, **kwargs):
         )
         
     bool = [
-        {"script": 1, "section": 1},
-        {"script": 1, "section": 2}
+        {"script": 1, "sectionmade": 1},
+        {"script": 1, "sectionmade": 2}
     ]
     for item in bool:
-        ScriptProcess.objects.get_or_create(
+        Made.objects.get_or_create(
             script_id=item["script"],
-            section_id=item["section"]
+            sectionmade_id=item["sectionmade"]
         )
         
     balll = [
-        {"scriptprocess": 1, "user": 1},
-        {"scriptprocess": 1, "user": 2},
-        {"scriptprocess": 1, "user": 3},
+        {"made": 1, "user": 1},
+        {"made": 1, "user": 2},
+        {"made": 1, "user": 3},
     ]
     for item in balll:
-        By.objects.get_or_create(
-            scriptprocess_id=item["scriptprocess"],
+        ByMade.objects.get_or_create(
+            made_id=item["made"],
             user_id=item["user"]
         )
 

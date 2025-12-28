@@ -31,14 +31,14 @@ from .orderer import (
     ScriptOrdererViewSet
 )
 from .scripts import ScriptViewSet
-from .scriptsprocess import (
-    SectionViewSet,
-    ByViewSet,
-    ScriptProcessViewSet
+from .made import (
+    SectionMadeViewSet,
+    ByMadeViewSet,
+    MadeViewSet
 )
 from .status import (
-    CodeViewSet,
-    LabelViewSet,
+    SectionStatusViewSet,
+    LabelStatusViewSet,
     StatusViewSet
 )
 from .logout import LogoutView

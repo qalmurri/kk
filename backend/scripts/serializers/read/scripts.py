@@ -11,7 +11,7 @@ from .status import StatusReadSerializer
 from .description import DescriptionReadSerializer
 from .note import NoteReadSerializer
 from .orderer import ScriptOrdererReadSerializer
-from .scriptsprocess import ScriptProcessReadSerializer
+from .made import MadeReadSerializer
 
 SCRIPTS_BASE_FIELDS = (
             "title",
@@ -61,7 +61,7 @@ class ScriptsReadSerializer(BaseReadSerializer):
         many=True,
         read_only=True
     )
-    process = ScriptProcessReadSerializer(
+    process = MadeReadSerializer(
         source="scripts_ScriptsProcess",
         many=True,
         read_only=True

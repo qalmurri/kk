@@ -1,15 +1,15 @@
-from scripts.models import ScriptProcess, By, Section
+from scripts.models import Made, ByMade, SectionMade
 from scripts.repositories.base import BaseCommandRepository
 
-class ScriptsProcessCommandRepository(BaseCommandRepository):
-    model = ScriptProcess
+class MadeCommandRepository(BaseCommandRepository):
+    model = Made
 
     @classmethod
-    def create(cls, **data) -> ScriptProcess:
+    def create(cls, **data) -> Made:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: ScriptProcess, **data) -> ScriptProcess:
+    def update(cls, instance: Made, **data) -> Made:
         for field, value in data.items():
             setattr(
                 instance,
@@ -19,15 +19,15 @@ class ScriptsProcessCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class ByCommandRepository(BaseCommandRepository):
-    model = By
+class ByMadeCommandRepository(BaseCommandRepository):
+    model = ByMade
 
     @classmethod
-    def create(cls, **data) -> By:
+    def create(cls, **data) -> ByMade:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: By, **data) -> By:
+    def update(cls, instance: ByMade, **data) -> ByMade:
         for field, value in data.items():
             setattr(
                 instance,
@@ -37,15 +37,15 @@ class ByCommandRepository(BaseCommandRepository):
         instance.save()
         return instance
 
-class SectionCommandRepository(BaseCommandRepository):
-    model = Section
+class SectionMadeCommandRepository(BaseCommandRepository):
+    model = SectionMade
 
     @classmethod
-    def create(cls, **data) -> Section:
+    def create(cls, **data) -> SectionMade:
         return super().create(**data)
 
     @classmethod
-    def update(cls, instance: Section, **data) -> Section:
+    def update(cls, instance: SectionMade, **data) -> SectionMade:
         for field, value in data.items():
             setattr(
                 instance,

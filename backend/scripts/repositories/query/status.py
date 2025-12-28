@@ -10,7 +10,7 @@ class StatusQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
 
-class ScriptsStatusCodeQueryRepository(BaseQueryRepository):
+class SectionStatusQueryRepository(BaseQueryRepository):
     model = SectionStatus
 
     @classmethod
@@ -19,7 +19,7 @@ class ScriptsStatusCodeQueryRepository(BaseQueryRepository):
             cls.model.objects
         )
 
-class LabelQueryRepository(BaseQueryRepository):
+class LabelStatusQueryRepository(BaseQueryRepository):
     model = LabelStatus
 
     @classmethod

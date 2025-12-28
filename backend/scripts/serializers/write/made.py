@@ -1,31 +1,31 @@
 from scripts.serializers.base import BaseWriteSerializer
 from scripts.models import (
-    Section,
-    By,
-    ScriptProcess
+    SectionMade,
+    ByMade,
+    Made
 )
 
-class SectionWriteSerializer(BaseWriteSerializer):
+class SectionMadeWriteSerializer(BaseWriteSerializer):
     '''section write serializer'''
     class Meta(BaseWriteSerializer.Meta):
-        model = Section
+        model = SectionMade
         fields = BaseWriteSerializer.Meta.fields + (
             "name",
         )
 
-class ByWriteSerializer(BaseWriteSerializer):
+class ByMadeWriteSerializer(BaseWriteSerializer):
     '''by write serializer'''
     class Meta(BaseWriteSerializer.Meta):
-        model = By
+        model = ByMade
         fields = BaseWriteSerializer.Meta.fields + (
-            "scriptprocess",
+            "made",
             "user",
         )
 
-class ScriptProcessWriteSerializer(BaseWriteSerializer):
+class MadeWriteSerializer(BaseWriteSerializer):
     '''script process write serializer'''
     class Meta(BaseWriteSerializer.Meta):
-        model = ScriptProcess
+        model = Made
         fields = (
             "script",
             "section",
