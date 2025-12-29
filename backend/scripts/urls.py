@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView
 )
-from .views import (
+from .views.script import (
     # SCRIPT
     ScriptViewSet,
 

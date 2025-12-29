@@ -1,5 +1,5 @@
 from rest_framework.decorators import action
-from .base import BaseViewSet
+from scripts.views.base import BaseViewSet
 from scripts.serializers.read import ScriptsReadSerializer
 from scripts.serializers.write import ScriptsWriteSerializer
 from scripts.repositories.command import ScriptsCommandRepository
