@@ -1,5 +1,5 @@
 from scripts.models.script import Description, SectionDescription, TextDescription
-from scripts.repositories.base import BaseQueryRepository
+from scripts.repositories.query import BaseQueryRepository
 
 class DescriptionQueryRepository(BaseQueryRepository):
     model = Description

@@ -1,6 +1,6 @@
 from django.db.models import Q
 from scripts.models.script import Script
-from scripts.repositories.base import BaseQueryRepository
+from scripts.repositories.query import BaseQueryRepository
 
 class ScriptsQueryRepository(BaseQueryRepository):
     model = Script

@@ -1,5 +1,5 @@
 from scripts.models.script import NoScripts
-from scripts.repositories.base import BaseQueryRepository
+from scripts.repositories.query import BaseQueryRepository
 
 class NoScriptsQueryRepository(BaseQueryRepository):
     model = NoScripts

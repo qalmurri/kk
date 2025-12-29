@@ -1,4 +1,4 @@
-from scripts.serializers.base import BaseReadSerializer
+from scripts.serializers.read import BaseReadSerializer
 from scripts.models.script import (
     Description,
     SectionDescription,

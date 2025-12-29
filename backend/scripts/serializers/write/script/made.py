@@ -1,4 +1,4 @@
-from scripts.serializers.base import BaseWriteSerializer
+from scripts.serializers.write import BaseWriteSerializer
 from scripts.models.script import (
     SectionMade,
     ByMade,

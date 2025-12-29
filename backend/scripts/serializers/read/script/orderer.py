@@ -1,4 +1,4 @@
-from scripts.serializers.base import BaseReadSerializer
+from scripts.serializers.read import BaseReadSerializer
 from .common import InstituteReadSerializer
 from scripts.models.script import (
     Orderer,

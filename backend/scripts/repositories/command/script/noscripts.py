@@ -1,5 +1,5 @@
 from scripts.models.script import NoScripts
-from scripts.repositories.base import BaseCommandRepository
+from scripts.repositories.command import BaseCommandRepository
 
 class NoScriptsCommandRepository(BaseCommandRepository):
     model = NoScripts

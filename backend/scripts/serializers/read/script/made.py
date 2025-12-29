@@ -1,5 +1,4 @@
-from scripts.serializers.base import BaseReadSerializer
-from .user import UserReadSerializer
+from scripts.serializers.read import BaseReadSerializer, UserReadSerializer
 from scripts.models.script import (
     Made,
     SectionMade,

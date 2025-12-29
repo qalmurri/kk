@@ -1,5 +1,5 @@
 from scripts.models.script import Cover
-from scripts.repositories.base import BaseCommandRepository
+from scripts.repositories.command import BaseCommandRepository
 
 class CoverBookCommandRepository(BaseCommandRepository):
     model = Cover

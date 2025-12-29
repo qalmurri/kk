@@ -1,5 +1,5 @@
 from scripts.models.script import Made, ByMade, SectionMade
-from scripts.repositories.base import BaseQueryRepository
+from scripts.repositories.query import BaseQueryRepository
 
 class MadeQueryRepository(BaseQueryRepository):
     model = Made

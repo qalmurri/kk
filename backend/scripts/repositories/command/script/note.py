@@ -1,5 +1,5 @@
 from scripts.models.script import Note, SectionNote, TextNote
-from scripts.repositories.base import BaseCommandRepository
+from scripts.repositories.command import BaseCommandRepository
 
 class NoteCommandRepository(BaseCommandRepository):
     model = Note

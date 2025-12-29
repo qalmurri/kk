@@ -1,5 +1,5 @@
 from scripts.models.script import Description, SectionDescription, TextDescription
-from scripts.repositories.base import BaseCommandRepository
+from scripts.repositories.command import BaseCommandRepository
 
 class DescriptionCommandRepository(BaseCommandRepository):
     model = Description

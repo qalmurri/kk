@@ -1,5 +1,5 @@
 from scripts.models.script import Made, ByMade, SectionMade
-from scripts.repositories.base import BaseCommandRepository
+from scripts.repositories.command import BaseCommandRepository
 
 class MadeCommandRepository(BaseCommandRepository):
     model = Made

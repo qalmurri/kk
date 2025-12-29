@@ -1,5 +1,5 @@
 from scripts.models.script import Isbn, TypeIsbn
-from scripts.repositories.base import BaseCommandRepository
+from scripts.repositories.command import BaseCommandRepository
 
 class IsbnCommandRepository(BaseCommandRepository):
     model = Isbn

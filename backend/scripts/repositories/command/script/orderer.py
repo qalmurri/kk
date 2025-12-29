@@ -1,5 +1,5 @@
 from scripts.models.script import Orderer, ScriptsOrderer
-from scripts.repositories.base import BaseCommandRepository
+from scripts.repositories.command import BaseCommandRepository
 
 class OrdererCommandRepository(BaseCommandRepository):
     model = Orderer

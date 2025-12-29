@@ -1,5 +1,5 @@
 from scripts.models.script import Size, Institute
-from scripts.repositories.base import BaseQueryRepository
+from scripts.repositories.query import BaseQueryRepository
 
 class SizeQueryRepository(BaseQueryRepository):
     model = Size

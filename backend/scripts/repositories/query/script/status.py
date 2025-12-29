@@ -1,5 +1,5 @@
 from scripts.models.script import Status, LabelStatus, SectionStatus
-from scripts.repositories.base import BaseQueryRepository
+from scripts.repositories.query import BaseQueryRepository
 
 class StatusQueryRepository(BaseQueryRepository):
     model = Status
