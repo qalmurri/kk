@@ -7,10 +7,17 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.auth",
+
+    # REST FRAMEWORK
     "rest_framework",         
     "rest_framework.authtoken",
     'rest_framework_simplejwt.token_blacklist',
-    "scripts"
+
+    # APP
+    "scripts",
+
+    # PIHAK KE TELU
+    "channels",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -77,3 +84,9 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 AUTH_USER_MODEL = 'scripts.User'
+ASGI_APPLICATION = "scripts.asgi.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}

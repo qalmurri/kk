@@ -10,7 +10,9 @@ class SectionMade(TimeStampedModel):
         max_length=10
     )
     class Meta:
-        pass
+        db_table = "sectionmade"
+        verbose_name = "SectionMade"
+        verbose_name_plural = "SectionMades"
 
 class Made(TimeStampedModel): 
     script = models.ForeignKey(
@@ -24,7 +26,9 @@ class Made(TimeStampedModel):
         related_name="section_ScriptsProcess"
     )
     class Meta:
-        pass
+        db_table = "made"
+        verbose_name = "Made"
+        verbose_name_plural = "Mades"
 
 class ByMade(TimeStampedModel): 
     made = models.ForeignKey(
@@ -38,4 +42,6 @@ class ByMade(TimeStampedModel):
         related_name="user_By"
     )
     class Meta:
-        pass
+        db_table = "bymade"
+        verbose_name = "ByMade"
+        verbose_name_plural = "ByMades"

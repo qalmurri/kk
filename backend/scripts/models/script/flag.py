@@ -7,9 +7,9 @@ class SectionFlag(TimeStampedModel):
         max_length=10,
     )
     class Meta:
-        db_table = "part"
-        verbose_name = "Part"
-        verbose_name_plural = "Parts"
+        db_table = "sectionflag"
+        verbose_name = "SectionFlaf"
+        verbose_name_plural = "SectionFlags"
 
 class Flag(TimeStampedModel):
     scripts = models.ForeignKey(
