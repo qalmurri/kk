@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 from .consumers import ChatConsumer
 from .views import LogoutView
@@ -92,10 +92,6 @@ router.register(r"flag", FlagViewSet, basename="flag")
 # ORDERER
 router.register(r"orderer", OrdererViewSet, basename="orderer")
 router.register(r"scriptsorderer", ScriptOrdererViewSet, basename="scriptsorderer")
-
-websocket_urlpatterns = [
-    re_path(r"ws/chat/$", ChatConsumer.as_asgi()),
-]
 
 urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

@@ -84,7 +84,7 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 AUTH_USER_MODEL = 'scripts.User'
-ASGI_APPLICATION = "scripts.asgi.application"
+ASGI_APPLICATION = "kk.asgi.application"
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer",
