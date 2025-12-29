@@ -1,5 +1,3 @@
-from .user import UserReadSerializer
-from .activity import ActivityReadSerializer
 from .common import (
     SizeReadSerializer,
     InstituteReadSerializer,

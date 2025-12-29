@@ -1,7 +1,3 @@
-from ..base import (
-    BaseViewSet,
-    BaseCRUDViewSet,
-)
 from .common import (
     SizeViewSet,
     InstituteViewSet,
