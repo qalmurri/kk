@@ -1,20 +1,20 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers.read import (
+from scripts.serializers.read.script import (
     DescriptionReadSerializer,
     TextDescriptionReadSerializer,
     SectionDescriptionReadSerializer,
     )
-from scripts.serializers.write import (
+from scripts.serializers.write.script import (
     DescriptionWriteSerializer,
     TextDescriptionWriteSerializer,
     SectionDescriptionWriteSerializer
     )
-from scripts.repositories.command import (
+from scripts.repositories.command.script import (
     DescriptionCommandRepository,
     TextCommandRepository,
     DescriptionPartCommandRepository
     )
-from scripts.repositories.query import (
+from scripts.repositories.query.script import (
     DescriptionQueryRepository,
     TextQueryRepository,
     DescriptionPartQueryRepository

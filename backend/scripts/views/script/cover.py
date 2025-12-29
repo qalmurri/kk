@@ -1,8 +1,8 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers.read import CoverReadSerializer
-from scripts.serializers.write import CoverWriteSerializer
-from scripts.repositories.command import CoverBookCommandRepository
-from scripts.repositories.query import CoverBookQueryRepository
+from scripts.serializers.read.script import CoverReadSerializer
+from scripts.serializers.write.script import CoverWriteSerializer
+from scripts.repositories.command.script import CoverBookCommandRepository
+from scripts.repositories.query.script import CoverBookQueryRepository
 
 class CoverViewset(BaseCRUDViewSet):
     '''cover viewset'''

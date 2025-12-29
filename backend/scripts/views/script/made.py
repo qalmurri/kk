@@ -1,20 +1,20 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers.read import (
+from scripts.serializers.read.script import (
     MadeReadSerializer,
     ByMadeReadSerializer,
     SectionMadeReadSerializer
     )
-from scripts.serializers.write import (
+from scripts.serializers.write.script import (
     MadeWriteSerializer,
     ByMadeWriteSerializer,
     SectionMadeWriteSerializer
     )
-from scripts.repositories.command import (
+from scripts.repositories.command.script import (
     MadeCommandRepository,
     ByMadeCommandRepository,
     SectionMadeCommandRepository
     )
-from scripts.repositories.query import (
+from scripts.repositories.query.script import (
     MadeQueryRepository,
     ByMadeQueryRepository,
     SectionMadeQueryRepository

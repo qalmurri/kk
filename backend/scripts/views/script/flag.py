@@ -1,17 +1,17 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers.read import (
+from scripts.serializers.read.script import (
     FlagReadSerializer,
     SectionFlagReadSerializer,
     )
-from scripts.serializers.write import (
+from scripts.serializers.write.script import (
     FlagWriteSerializer,
     SectionFlagWriteSerializer,
     )
-from scripts.repositories.command import (
+from scripts.repositories.command.script import (
     FlagCommandRepository,
     SectionFlagCommandRepository
     )
-from scripts.repositories.query import (
+from scripts.repositories.query.script import (
     FlagQueryRepository,
     SectionFlagQueryRepository,
     )

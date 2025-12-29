@@ -1,20 +1,20 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers.read import (
+from scripts.serializers.read.script import (
     StatusReadSerializer,
     LabelStatusReadSerializer,
     SectionStatusReadSerializer
     )
-from scripts.serializers.write import (
+from scripts.serializers.write.script import (
     StatusWriteSerializer,
     LabelStatusWriteSerializer,
     SectionStatusWriteSerializer
     )
-from scripts.repositories.command import (
+from scripts.repositories.command.script import (
     StatusCommandRepository,
     LabelStatusCommandRepository,
     SectionStatusCommandRepository
     )
-from scripts.repositories.query import (
+from scripts.repositories.query.script import (
     StatusQueryRepository,
     LabelStatusQueryRepository,
     SectionStatusQueryRepository

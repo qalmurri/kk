@@ -1,17 +1,17 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers.read import (
+from scripts.serializers.read.script import (
     IsbnReadSerializer,
     TypeIsbnReadSerializer
 )
-from scripts.serializers.write import (
+from scripts.serializers.write.script import (
     IsbnWriteSerializer,
     TypeIsbnWriteSerializer
 )
-from scripts.repositories.command import (
+from scripts.repositories.command.script import (
     IsbnCommandRepository,
     TypeIsbnCommandRepository
 )
-from scripts.repositories.query import (
+from scripts.repositories.query.script import (
     IsbnQueryRepository,
     TypeIsbnQueryRepository
 )

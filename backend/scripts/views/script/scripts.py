@@ -1,9 +1,9 @@
 from rest_framework.decorators import action
 from scripts.views.base import BaseViewSet
-from scripts.serializers.read import ScriptsReadSerializer
-from scripts.serializers.write import ScriptsWriteSerializer
-from scripts.repositories.command import ScriptsCommandRepository
-from scripts.repositories.query import ScriptsQueryRepository
+from scripts.serializers.read.script import ScriptsReadSerializer
+from scripts.serializers.write.script import ScriptsWriteSerializer
+from scripts.repositories.command.script import ScriptsCommandRepository
+from scripts.repositories.query.script import ScriptsQueryRepository
 
 class ScriptViewSet(BaseViewSet):
     throttle_classes = []

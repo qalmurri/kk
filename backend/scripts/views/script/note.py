@@ -1,20 +1,20 @@
 from scripts.views.base import BaseCRUDViewSet
-from scripts.serializers.read import (
+from scripts.serializers.read.script import (
     NoteReadSerializer,
     SectionNoteReadSerializer,
     TextNoteReadSerializer,
     )
-from scripts.serializers.write import (
+from scripts.serializers.write.script import (
     NoteWriteSerializer,
     SectionNoteWriteSerializer,
     TextNoteWriteSerializer
     )
-from scripts.repositories.command import (
+from scripts.repositories.command.script import (
     NoteCommandRepository,
     TextNoteCommandRepository,
     SectionNoteCommandRepository
     )
-from scripts.repositories.query import (
+from scripts.repositories.query.script import (
     NoteQueryRepository,
     TextNoteQueryRepository,
     SectionNoteQueryRepository
