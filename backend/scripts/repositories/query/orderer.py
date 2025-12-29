@@ -1,4 +1,4 @@
-from scripts.models import Orderer, ScriptsOrderer
+from scripts.models.script import Orderer, ScriptsOrderer
 from scripts.repositories.base import BaseQueryRepository
 
 class OrdererQueryRepository(BaseQueryRepository):

@@ -1,4 +1,4 @@
-from scripts.models import Made, ByMade, SectionMade
+from scripts.models.script import Made, ByMade, SectionMade
 from scripts.repositories.base import BaseCommandRepository
 
 class MadeCommandRepository(BaseCommandRepository):

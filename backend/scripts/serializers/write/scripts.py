@@ -1,5 +1,5 @@
 from scripts.serializers.base import BaseWriteSerializer
-from scripts.models import Script
+from scripts.models.script import Script
 
 SCRIPTS_BASE_FIELDS = (
             "title",

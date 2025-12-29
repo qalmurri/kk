@@ -1,4 +1,4 @@
-from scripts.models import Size, Institute
+from scripts.models.script import Size, Institute
 from scripts.repositories.base import BaseCommandRepository
 
 class SizeCommandRepository(BaseCommandRepository):

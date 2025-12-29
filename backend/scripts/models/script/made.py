@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from scripts.models.base import TimeStampedModel
-from scripts.models.script import Script
+from .script import Script
 
 User = get_user_model()
 

@@ -1,4 +1,4 @@
-from scripts.models import NoScripts
+from scripts.models.script import NoScripts
 from scripts.repositories.base import BaseCommandRepository
 
 class NoScriptsCommandRepository(BaseCommandRepository):

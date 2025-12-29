@@ -1,5 +1,5 @@
 from scripts.serializers.base import BaseWriteSerializer
-from scripts.models import (
+from scripts.models.script import (
     Orderer,
     ScriptsOrderer
 )

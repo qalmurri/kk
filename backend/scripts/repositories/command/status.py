@@ -1,4 +1,4 @@
-from scripts.models import Status, LabelStatus, SectionStatus
+from scripts.models.script import Status, LabelStatus, SectionStatus
 from scripts.repositories.base import BaseCommandRepository
 
 class StatusCommandRepository(BaseCommandRepository):

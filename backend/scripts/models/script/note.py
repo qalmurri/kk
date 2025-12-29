@@ -1,6 +1,6 @@
 from django.db import models
 from scripts.models.base import TimeStampedModel
-from scripts.models.script import Script
+from .script import Script
 
 class SectionNote(TimeStampedModel):
     '''common: pilihan section untuk model Note'''

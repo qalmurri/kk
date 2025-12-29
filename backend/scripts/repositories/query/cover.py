@@ -1,4 +1,4 @@
-from scripts.models import Cover
+from scripts.models.script import Cover
 from scripts.repositories.base import BaseQueryRepository
 
 class CoverBookQueryRepository(BaseQueryRepository):

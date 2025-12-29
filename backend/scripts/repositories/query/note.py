@@ -1,4 +1,4 @@
-from scripts.models import Note, SectionNote, TextNote
+from scripts.models.script import Note, SectionNote, TextNote
 from scripts.repositories.base import BaseQueryRepository
 
 class NoteQueryRepository(BaseQueryRepository):

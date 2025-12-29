@@ -1,5 +1,5 @@
 from scripts.serializers.base import BaseWriteSerializer
-from scripts.models import Cover
+from scripts.models.script import Cover
 
 cover_fields = (
     "thumbnail",

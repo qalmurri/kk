@@ -1,5 +1,5 @@
 from django.db.models import Q
-from scripts.models import Script
+from scripts.models.script import Script
 from scripts.repositories.base import BaseCommandRepository
     
 class ScriptsCommandRepository(BaseCommandRepository):

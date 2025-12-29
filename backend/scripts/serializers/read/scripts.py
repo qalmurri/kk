@@ -1,5 +1,5 @@
 from scripts.serializers.base import BaseReadSerializer
-from scripts.models import Script
+from scripts.models.script import Script
 from .common import (
     InstituteReadSerializer,
     SizeReadSerializer

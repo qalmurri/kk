@@ -1,4 +1,4 @@
-from scripts.models import Flag, SectionFlag
+from scripts.models.script import Flag, SectionFlag
 from scripts.repositories.base import BaseQueryRepository
 
 class FlagQueryRepository(BaseQueryRepository):

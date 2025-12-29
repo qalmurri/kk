@@ -1,7 +1,7 @@
 from django.db import models
 from scripts.models.base import TimeStampedModel
-from scripts.models.script import Script
-from scripts.models.common import Institute
+from .script import Script
+from .common import Institute
 
 class Orderer(TimeStampedModel):
     '''pivot: relasi orderer & script'''

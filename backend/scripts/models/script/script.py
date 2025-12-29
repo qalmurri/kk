@@ -1,6 +1,6 @@
 from django.db import models
 from scripts.models.base import TimeStampedModel
-from scripts.models.common import (
+from .common import (
     Institute,
     Size
 )
