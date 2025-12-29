@@ -5,7 +5,6 @@ from channels.auth import AuthMiddlewareStack
 import scripts.routing
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "kk.settings")
-
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
     "websocket": AuthMiddlewareStack(

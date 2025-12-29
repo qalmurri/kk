@@ -3,6 +3,7 @@ import json
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        print("🔥 WEBSOCKET CONNECTED 🔥")
         await self.accept()
 
     async def receive(self, text_data):

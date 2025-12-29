@@ -7,21 +7,25 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.auth",
+    "django.contrib.sessions",
 
     # REST FRAMEWORK
     "rest_framework",         
     "rest_framework.authtoken",
     'rest_framework_simplejwt.token_blacklist',
 
-    # APP
-    "scripts",
-
     # PIHAK KE TELU
     "channels",
+
+    # APP
+    "scripts"
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware"
 ]
 ROOT_URLCONF = 'kk.urls'
 DATABASES = {
