@@ -70,7 +70,7 @@ Use the `BLANK_README.md` to get started.
 
 ### Dibuat Dengan
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+Disini saya memakai full Python, karena saya sering bermain disana.
 
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
@@ -86,12 +86,11 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Untuk Memulai
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Ini adalah contoh bagaimana Anda dapat memberikan instruksi tentang cara menyiapkan proyek Anda secara lokal. Untuk menjalankan salinan lokal, ikuti langkah-langkah sederhana berikut ini.
 
-### Prerequisites
+### Prasyarat
 
 This is an example of how to list things you need to use the software and how to install them.
 * npm
@@ -140,7 +139,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Changelog
+- [x] Django Api
 - [x] Add back to top links
 - [ ] Add Additional Templates w/ Examples
 - [ ] Add "components" document to easily copy & paste sections of the readme
