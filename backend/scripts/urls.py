@@ -1,6 +1,5 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-from .consumers import ChatConsumer
 from .views import LogoutView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,

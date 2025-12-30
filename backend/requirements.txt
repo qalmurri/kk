@@ -1,2 +1,2 @@
 channels # websocket
-daphne # ganok iki gak iso ndek ASGI | daphne -p 8000 kk.asgi:application
+daphne # ganok iki gak iso ndek ASGI | daphne -p 8000 kk.asgi:application 

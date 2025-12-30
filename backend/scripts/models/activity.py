@@ -1,6 +1,7 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from scripts.utils import current_timestamp
+from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
 class ActivityLog(models.Model):
