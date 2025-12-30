@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path, re_path
 from rest_framework.routers import DefaultRouter
 from .views import LogoutView
+from .consumers import PresenceConsumer
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView
@@ -99,3 +100,7 @@ urlpatterns = [
 ]
 
 urlpatterns += router.urls
+
+websocket_urlpatterns = [
+    re_path(r"ws/presence/$", PresenceConsumer.as_asgi()),
+]
