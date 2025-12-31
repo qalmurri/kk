@@ -34,30 +34,30 @@ COMPACT_FIELD_MAP = {
 }
 
 class BaseCompactSerializer(serializers.ModelSerializer):
-    #pass
-    def get_fields(self):
-        fields = super().get_fields()
-        compacted = {}
-
-        for field_name, field in fields.items():
-            if field_name == "id":
-                compacted[field_name] = field
-                continue
-
-            short_name = COMPACT_FIELD_MAP.get(field_name)
-            if short_name:
-                field.source = field_name
-                compacted[short_name] = field
-            else:
-                compacted[field_name] = field
-        return compacted
-   
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        return {
-            k: v for k, v in data.items()
-            if v not in (None, [], {})
-        }
+    pass
+#    def get_fields(self):
+#        fields = super().get_fields()
+#        compacted = {}
+#
+#        for field_name, field in fields.items():
+#            if field_name == "id":
+#                compacted[field_name] = field
+#                continue
+#
+#            short_name = COMPACT_FIELD_MAP.get(field_name)
+#            if short_name:
+#                field.source = field_name
+#                compacted[short_name] = field
+#            else:
+#                compacted[field_name] = field
+#        return compacted
+#   
+#    def to_representation(self, instance):
+#        data = super().to_representation(instance)
+#        return {
+#            k: v for k, v in data.items()
+#            if v not in (None, [], {})
+#        }
 
 class PolicyBasedSerializer(BaseCompactSerializer):
     PROTECTED_FIELDS = set()
