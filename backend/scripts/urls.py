@@ -52,7 +52,8 @@ from .views import (
     LogoutView,
 
     # WEBSOCKET
-    PresenceConsumer
+    PresenceConsumer,
+    NotificationConsumer
 )
 
 router = DefaultRouter()
@@ -108,4 +109,5 @@ urlpatterns += router.urls
 
 websocket_urlpatterns = [
     re_path(r"ws/presence/$", PresenceConsumer.as_asgi()),
+    re_path("ws/notifications/", NotificationConsumer.as_asgi())
 ]

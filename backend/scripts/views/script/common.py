@@ -18,9 +18,6 @@ from scripts.repositories.query.script import (
 
 class SizeViewSet(BaseCRUDViewSet):
     '''size viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = SizeReadSerializer
     write_serializer_class = SizeWriteSerializer
     query_repo = SizeQueryRepository

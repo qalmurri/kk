@@ -3,14 +3,17 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 class BaseViewSet(ViewSet):
     """
     Base ViewSet untuk semua resource
     """
 
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     throttle_classes = []
 
     # ---------- Response Helpers ----------
