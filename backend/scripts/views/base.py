@@ -11,7 +11,6 @@ class BaseViewSet(ViewSet):
     """
     Base ViewSet untuk semua resource
     """
-
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     throttle_classes = []

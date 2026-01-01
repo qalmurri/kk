@@ -22,9 +22,6 @@ from scripts.repositories.query.script import (
 
 class DescriptionViewSet(BaseCRUDViewSet):
     ''''description viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = DescriptionReadSerializer
     write_serializer_class = DescriptionWriteSerializer
     query_repo = DescriptionQueryRepository
@@ -32,9 +29,6 @@ class DescriptionViewSet(BaseCRUDViewSet):
 
 class TextDescriptionViewSet(BaseCRUDViewSet):
     '''text viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = TextDescriptionReadSerializer
     write_serializer_class = TextDescriptionWriteSerializer
     query_repo = TextQueryRepository
@@ -42,9 +36,6 @@ class TextDescriptionViewSet(BaseCRUDViewSet):
 
 class SectionDescriptionViewSet(BaseCRUDViewSet):
     '''description part viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = SectionDescriptionReadSerializer
     write_serializer_class = SectionDescriptionWriteSerializer
     query_repo = DescriptionPartQueryRepository

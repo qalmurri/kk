@@ -22,9 +22,6 @@ from scripts.repositories.query.script import (
 
 class SectionStatusViewSet(BaseCRUDViewSet):
     '''cover viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = SectionStatusReadSerializer
     write_serializer_class = SectionStatusWriteSerializer
     query_repo = SectionStatusQueryRepository
@@ -32,9 +29,6 @@ class SectionStatusViewSet(BaseCRUDViewSet):
 
 class LabelStatusViewSet(BaseCRUDViewSet):
     '''label viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = LabelStatusReadSerializer
     write_serializer_class = LabelStatusWriteSerializer
     query_repo = LabelStatusQueryRepository
@@ -42,9 +36,6 @@ class LabelStatusViewSet(BaseCRUDViewSet):
 
 class StatusViewSet(BaseCRUDViewSet):
     '''status viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = StatusReadSerializer
     write_serializer_class = StatusWriteSerializer
     query_repo = StatusQueryRepository

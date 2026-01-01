@@ -6,10 +6,6 @@ from scripts.repositories.command.script import ScriptsCommandRepository
 from scripts.repositories.query.script import ScriptsQueryRepository
 
 class ScriptViewSet(BaseViewSet):
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
-
     # GET /scripts/ = /scripts/?title=...&active=...
     def list(self, request):
         queryset = ScriptsQueryRepository.query(

@@ -18,9 +18,6 @@ from scripts.repositories.query.script import (
 
 class OrdererViewSet(BaseCRUDViewSet):
     '''orderer viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = OrdererReadSerializer
     write_serializer_class = OrdererWriteSerializer
     query_repo = OrdererQueryRepository
@@ -28,9 +25,6 @@ class OrdererViewSet(BaseCRUDViewSet):
 
 class ScriptOrdererViewSet(BaseCRUDViewSet):
     '''script orderer viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = ScriptOrdererReadSerializer
     write_serializer_class = ScriptOrdererWriteSerializer
     query_repo = ScriptsOrdererQueryRepository

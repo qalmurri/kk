@@ -22,9 +22,6 @@ from scripts.repositories.query.script import (
 
 class SectionMadeViewSet(BaseCRUDViewSet):
     '''section viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = SectionMadeReadSerializer
     write_serializer_class = SectionMadeWriteSerializer
     query_repo = SectionMadeQueryRepository
@@ -32,9 +29,6 @@ class SectionMadeViewSet(BaseCRUDViewSet):
 
 class ByMadeViewSet(BaseCRUDViewSet):
     '''by viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = ByMadeReadSerializer
     write_serializer_class = ByMadeWriteSerializer
     query_repo = ByMadeQueryRepository

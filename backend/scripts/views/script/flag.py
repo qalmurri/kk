@@ -18,9 +18,6 @@ from scripts.repositories.query.script import (
 
 class FlagViewSet(BaseCRUDViewSet):
     '''flag viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = FlagReadSerializer
     write_serializer_class = FlagWriteSerializer
     query_repo = FlagQueryRepository
@@ -28,9 +25,6 @@ class FlagViewSet(BaseCRUDViewSet):
 
 class SectionFlagViewSet(BaseCRUDViewSet):
     '''part viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = SectionFlagReadSerializer
     write_serializer_class = SectionFlagWriteSerializer
     query_repo = SectionFlagQueryRepository

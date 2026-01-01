@@ -22,9 +22,6 @@ from scripts.repositories.query.script import (
 
 class NoteViewSet(BaseCRUDViewSet):
     '''note viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = NoteReadSerializer
     write_serializer_class = NoteWriteSerializer
     query_repo = NoteQueryRepository
@@ -32,20 +29,14 @@ class NoteViewSet(BaseCRUDViewSet):
 
 class TextNoteViewSet(BaseCRUDViewSet):
     '''content viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = TextNoteReadSerializer
     write_serializer_class = TextNoteWriteSerializer
-    query_repo = SectionNoteQueryRepository
+    query_repo = TextNoteQueryRepository
     command_repo = TextNoteCommandRepository
 
 class SectionNoteViewSet(BaseCRUDViewSet):
     '''note part viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = SectionNoteReadSerializer
     write_serializer_class = SectionNoteWriteSerializer
     query_repo = SectionNoteQueryRepository
-    command_repo = TextNoteCommandRepository
+    command_repo = SectionNoteCommandRepository
