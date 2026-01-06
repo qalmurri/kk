@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
     QMenu,
     QMessageBox
 )
+from PySide6.QtCore import QSize
 from core.session import Session
 from controllers.auth.logout_controller import LogoutController
 
@@ -13,7 +14,13 @@ class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Main Window")
-        self.resize(500*300)
+
+        # PENYIMPANAN SIZE WINDOW
+        size = Session.load_main_window_size()
+        if isinstance(size, QSize):
+            self.resize(size)
+        else:
+            self.resize(500, 500)
 
         # MENU  BAR
         self.menu_bar = QMenuBar(self)
@@ -47,7 +54,7 @@ class MainWindow(QWidget):
         self.logout_btn.clicked.connect(self.controller.logout)
         logout_action.triggered.connect(self.controller.logout)
         exit_action.triggered.connect(self.close)
-        about_action.triggered.connect(self.shot_about)
+        about_action.triggered.connect(self.show_about)
 
     def show_about(self):
         QMessageBox.information(
@@ -55,6 +62,10 @@ class MainWindow(QWidget):
             "About",
             "Gae dewe iki bro APP ne xixi"
         )
+
+    def closeEvent(self, event):
+        Session.save_main_window_size(self.size())
+        return super().closeEvent(event)
 
     def logout(self):
         Session.clear_tokens()

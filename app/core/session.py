@@ -35,3 +35,11 @@ class Session:
     @classmethod
     def is_logged_in(cls) -> bool:
         return cls.get_access_token() is not None
+    
+    @classmethod
+    def save_main_window_size(cls, size):
+        cls._settings.setValue("main_window/size", size)
+
+    @classmethod
+    def load_main_window_size(cls):
+        return cls._settings.value("main_window/size")
