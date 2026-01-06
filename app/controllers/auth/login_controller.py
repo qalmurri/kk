@@ -13,6 +13,9 @@ class LoginController(QObject):
 
     @Slot()
     def login(self):
+        if self.thread and self.thread.isRunning():
+            return
+        
         self.view.set_loading(True)
 
         self.thread = QThread(self)
@@ -27,10 +30,6 @@ class LoginController(QObject):
         self.worker.success.connect(self._success)
         self.worker.error.connect(self._error)
 
-        self.worker.finished.connect(self.thread.quit)
-        self.worker.finished.connect(self.worker.deleteLater)
-        self.thread.finished.connect(self.thread.deleteLater)
-
         self.thread.start()
 
     @Slot(dict)
@@ -43,3 +42,14 @@ class LoginController(QObject):
     def _error(self, msg: str):
         self.view.set_loading(False)
         self.view.show_error(msg)
+
+    def cleanup(self):
+        if self.thread and self.thread.isRunning():
+            self.thread.quit()
+            self.thread.wait()
+
+        if self.worker:
+            self.worker.deleteLater()
+
+        if self.thread:
+            self.thread.deleteLater()

@@ -44,3 +44,8 @@ class LoginWindow(QWidget):
         self.main = MainWindow()   # WAJIB disimpan
         self.main.show()
         self.close()
+
+    def closeEvent(self, event):
+        if hasattr(self, "controller"):
+            self.controller.cleanup()
+        event.accept()

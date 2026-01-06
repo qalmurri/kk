@@ -9,8 +9,6 @@ class LogoutController(QObject):
         self.thread = None
         self.worker = None
 
-        self.view.logout_btn.clicked.connect(self.logout)
-
     @Slot()
     def logout(self):
         self.thread = QThread(self)
@@ -18,21 +16,28 @@ class LogoutController(QObject):
         self.worker.moveToThread(self.thread)
 
         self.thread.started.connect(self.worker.run)
-        self.worker.success.connect(self._done)
-        self.worker.error.connect(self._done)
 
-        self.worker.finished.connect(self.thread.quit)
-        self.worker.finished.connect(self.worker.deleteLater)
-        self.thread.finished.connect(self.thread.deleteLater)
+        self.worker.finished.connect(self._cleanup)
 
         self.thread.start()
 
     @Slot()
-    def _done(self):
+    def _cleanup(self):
+        if self.thread and self.thread.isRunning():
+            self.thread.quit()
+            self.thread.wait()
+            
+        self.worker.deleteLater()
+        self.thread.deleteLater()
+
         Session.clear_tokens()
 
         from views.auth.login_window import LoginWindow
         login = LoginWindow()
         login.show()
 
+
+
         self.view.close()
+
+
