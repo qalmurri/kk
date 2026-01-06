@@ -1,8 +1,18 @@
 from django.urls import path, re_path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (
+    # LOGIN
     TokenObtainPairView,
+
+    # TOKEN REFRESH
     TokenRefreshView
+)
+from .views import (
+    # AUTH
+    LogoutView,
+
+    # WEBSOCKET
+    PresenceConsumer
 )
 from .views.script import (
     # SCRIPT
@@ -46,13 +56,6 @@ from .views.script import (
     # ORDERER 
     OrdererViewSet,
     ScriptOrdererViewSet
-)
-from .views import (
-    # AUTH
-    LogoutView,
-
-    # WEBSOCKET
-    PresenceConsumer
 )
 
 router = DefaultRouter()

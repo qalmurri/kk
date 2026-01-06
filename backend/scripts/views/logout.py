@@ -5,9 +5,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 class LogoutView(APIView):
-    """
-    Logout endpoint: blacklist refresh token dan log aktivitas user.
-    """
     permission_classes = [IsAuthenticated]
 
     def post(self, request):

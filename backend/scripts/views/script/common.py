@@ -25,9 +25,6 @@ class SizeViewSet(BaseCRUDViewSet):
 
 class InstituteViewSet(BaseCRUDViewSet):
     '''institute viewset'''
-    throttle_classes = []
-    authentication_classes = []
-    permission_classes = []
     read_serializer_class = InstituteReadSerializer
     write_serializer_class = InstituteWriteSerializer
     query_repo = InstituteQueryRepository
