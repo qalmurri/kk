@@ -1,7 +1,7 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from ..models.script import (
+from scripts.models.script import (
     Status,
     Institute,
     Orderer,
@@ -30,65 +30,61 @@ from ..models.script import (
 def create_default_table(sender, **kwargs):
     if sender.name != "scripts":
         return
-
+    
     # USER
-    User = get_user_model()
-    default_users = [
+    for user in [
         {"username": "qodri", "password": "pakisaji"},
         {"username": "sarah", "password": "pakisaji"},
         {"username": "menik", "password": "pakisaji"},
-    ]
-    for u in default_users:
-        if not User.objects.filter(username=u["username"]).exists():
+    ]:
+        User = get_user_model()
+        if not User.objects.filter(username=user["username"]).exists():
             User.objects.create_user(
-                username=u["username"],
-                password=u["password"]
+                username=user["username"],
+                password=user["password"]
             )
 
-    valuuu5 = [
+    # SECTIONMADE
+    for item in [
         "Layouter",
         "Desainer",
         "Produksi"
-    ]
-    for item in valuuu5:
+    ]:
         SectionMade.objects.get_or_create(
             name=item
         )
 
-    valuuu1 = [
+    # SECTIONDESCRIPTION
+    for item in [
         "Layouter",
         "Desainer",
         "ISBN",
         "Produksi"
-    ]
-    for item in valuuu1:
+    ]:
         SectionDescription.objects.get_or_create(
             name=item
         )
 
-    valuuu2 = [
+    for item in [
         "Cover",
         "Isbn",
         "Produksi"
-    ]
-    for item in valuuu2:
+    ]:
         SectionNote.objects.get_or_create(
             name=item
         )
 
-    valuuu = [
+    for item in [
         "Layouter",
         "Desainer",
         "ISBN",
         "Produksi",
-    ]
-    for item in valuuu:
+    ]:
         LabelStatus.objects.get_or_create(
             name=item
         )
-
-    valuuuuu = [
-        #kelengkapan dokumen
+ 
+    for item in [
         "File",
         "Photo",
         "CV",
@@ -98,33 +94,30 @@ def create_default_table(sender, **kwargs):
         "Daftar Isi",
         "Daftar Pustaka"
         #???
-    ]
-    for item in valuuuuu:
+    ]:
         SectionFlag.objects.get_or_create(
             name=item
         )
 
-    code = [
+    for item in [
         "Belum",
         "Proses",
         "Pengajuan",
         "Sudah"
-    ]
-    for item in code:
+    ]:
         SectionStatus.objects.get_or_create(
             name=item
         )
 
-    code321 = [
+    for item in [
         "ISBN",
         "E-ISBN",
-    ]
-    for item in code321:
+    ]:
         TypeIsbn.objects.get_or_create(
             name=item
         )
 
-    institute = [
+    for item in [
         "Fakultas Teknik",
         "Fakultas Pertanian",
         "Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA)",
@@ -139,28 +132,26 @@ def create_default_table(sender, **kwargs):
         "Fakultas Teknologi Informasi dan Sains Data",
         "Sekolah Vokasi",
         "Sekolah Pascasarjana",
-    ]
-    for item in institute:
+    ]:
         Institute.objects.get_or_create(
             name=item
         )
 
-    name = [
+    for item in [
         {"name": "Prof. Anjar", "no": 12345678, "institute": 1},
         {"name": "Prof. Tiwul", "no": 56498742, "institute": 2},
         {"name": "Prof. Sukiman", "no": 32122244, "institute": 3},
         {"name": "Prof. Andi", "no": 65464556, "institute": 4},
         {"name": "Prof. Alam", "no": 46545668, "institute": 5},
         {"name": "Prof. Sujiwo", "no": 98454665, "institute": 6},
-    ]
-    for item in name:
+    ]:
         Orderer.objects.get_or_create(
             name=item["name"],
             no=item["no"],
             institute_id=item["institute"]
         )
 
-    size = [
+    for item in [
         "160x250 (buku teks)",
         "A5",
         "A4",
@@ -174,136 +165,123 @@ def create_default_table(sender, **kwargs):
         "F4 / Folio (210 x 330 mm)",
         "Quarto (215 x 275 mm)",
         "Executive (7.25 x 10.5 inch)"
-    ]
-    for item in size:
+    ]:
         Size.objects.get_or_create(
             name=item
         )
 
-    scripts = [
+    for item in [
         {"title": "Values of Life", "institute": 1, "size": 1},
         {"title": "The Power of Core Values", "institute": 1, "size": 2}
-    ]
-    for item in scripts:
+    ]:
         Script.objects.get_or_create(
             title=item["title"],
             institute_id=item["institute"],
             size_id=item["size"]
         )
 
-    purpose = [
+    for item in [
         {"script": 1, "sectionstatus": 1,"labelstatus": 1},
         {"script": 1, "sectionstatus": 2, "labelstatus": 2},
         {"script": 1, "sectionstatus": 4, "labelstatus": 3}
-    ]
-    for item in purpose:
+    ]:
         Status.objects.get_or_create(
             script_id=item["script"],
             sectionstatus_id=item["sectionstatus"],
             labelstatus_id=item["labelstatus"]
         )
 
-    scriptsorderer = [
+    for item in [
         {"script": 1, "orderer": 1},
         {"script": 1, "orderer": 3}
-    ]
-    for item in scriptsorderer:
+    ]:
         ScriptsOrderer.objects.get_or_create(
             script_id=item["script"],
             orderer_id=item["orderer"]
         )
 
-    isbn2 = [
+    for item in [
         {"script": 1, "isbn": "32123123", "typeisbn": 1},
         {"script": 1, "isbn": "3212312323", "typeisbn": 2}
-    ]
-    for item in isbn2:
+    ]:
         Isbn.objects.get_or_create(
             script_id=item["script"],
             isbn=item["isbn"],
             typeisbn_id=item["typeisbn"]
         )
 
-    bool = [
+    for item in [
         {"scripts": 1, "sectionflag": 1, "is_active": False},
         {"scripts": 1, "sectionflag": 3, "is_active": True}
-    ]
-    for item in bool:
+    ]:
         Flag.objects.get_or_create(
             scripts_id=item["scripts"],
             sectionflag_id=item["sectionflag"],
             is_active=item["is_active"]
         )
         
-    bool = [
+    for item in [
         {"script": 1, "sectionmade": 1},
         {"script": 1, "sectionmade": 2}
-    ]
-    for item in bool:
+    ]:
         Made.objects.get_or_create(
             script_id=item["script"],
             sectionmade_id=item["sectionmade"]
         )
         
-    balll = [
+    for item in [
         {"made": 1, "user": 1},
         {"made": 1, "user": 2},
         {"made": 1, "user": 3},
-    ]
-    for item in balll:
+    ]:
         ByMade.objects.get_or_create(
             made_id=item["made"],
             user_id=item["user"]
         )
 
-    description = [
+    for item in [
         {"script": 1, "descriptionpart": 1},
         {"script": 1, "descriptionpart": 2}
-    ]
-    for item in description:
+    ]:
         Description.objects.get_or_create(
             script_id=item["script"],
             sectiondescription_id=item["descriptionpart"]
         )
 
-    description2 = [
+    for item in [
         {"script": 1, "sectionnote": 1},
         {"script": 1, "sectionnote": 2}
-    ]
-    for item in description2:
+    ]:
         Note.objects.get_or_create(
             script_id=item["script"],
             sectionnote_id=item["sectionnote"]
         )
 
-    content = [
+    for item in [
         {"note": 1, "text": "Cover ini proval"},
         {"note": 1, "text": "Cover revisi terus"},
         {"note": 1, "text": "cover e angeeel"},
         {"note": 1, "text": "Penulis e njauk revisi terus hmm"}
-    ]
-    for item in content:
+    ]:
         TextNote.objects.get_or_create(
             note_id=item["note"],
             text=item["text"],
         )
 
-    content22 = [
+    for item in [
         {"description": 1, "text": "cover warna biru"},
         {"description": 1, "text": "minta alternatif cover"},
         {"description": 1, "text": "biru sama merah"},
         {"description": 1, "text": "warna fakultas"}
-    ]
-    for item in content22:
+    ]:
         TextDescription.objects.get_or_create(
             description_id=item["description"],
             text=item["text"],
         )
 
-    cov = [
+    for item in [
         {"script": 1, "thumbnail": "media/thumbnail/image001.jpeg", "length": 10, "height": 250, "width": 160, "x_axis": 1, "y_axis": 1},
-    ]
-    for item in cov:
+    ]:
         Cover.objects.get_or_create(
             script_id=item["script"],
             thumbnail=item["thumbnail"],
