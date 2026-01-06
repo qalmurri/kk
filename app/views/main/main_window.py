@@ -1,46 +1,64 @@
 from PySide6.QtWidgets import (
-    QMainWindow, QTableView, QWidget, QVBoxLayout, QLabel
+    QWidget,
+    QVBoxLayout,
+    QPushButton,
+    QMenuBar,
+    QMenu,
+    QMessageBox
 )
-from controllers.main_controller import MainController
+from core.session import Session
+from controllers.auth.logout_controller import LogoutController
 
-class MainWindow(QMainWindow):
+class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Scripts")
-        self.resize(1000, 600)
+        self.setWindowTitle("Main Window")
+        self.resize(500*300)
 
-        self.table = QTableView()
-        self.status_label = QLabel("")
+        # MENU  BAR
+        self.menu_bar = QMenuBar(self)
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.table)
-        layout.addWidget(self.status_label)
+        # FILE MENU
+        file_menu = QMenu("File", self)
+        self.menu_bar.addMenu(file_menu)
 
-        container = QWidget()
-        container.setLayout(layout)
-        self.setCentralWidget(container)
+        logout_action = file_menu.addAction("Logout")
+        exit_action = file_menu.addAction("Exit")
 
-        self.controller = MainController(self)
-        self.table.doubleClicked.connect(self.on_row_double_click)
+        # HELP MENU
+        help_menu = QMenu("Help", self)
+        self.menu_bar.addMenu(help_menu)
 
-    def set_loading(self, loading: bool):
-        self.status_label.setText("Loading data..." if loading else "")
+        about_action = help_menu.addAction("About")
 
-    def show_error(self, message: str):
-        from PySide6.QtWidgets import QMessageBox
-        QMessageBox.critical(self, "Error", message)
+        # CONTENT
+        self.logout_btn = QPushButton("Logout")
 
-    def on_row_double_click(self, index):
-        row = index.row()
-        item = self.controller.model.get_item_at_row(row)
-    
-        if not item:
-            return
-    
-        raw = item.get("_raw")
-        if not raw:
-            return
-    
-        from views.main.detail_dialog import DetailDialog
-        dialog = DetailDialog(raw, self)
-        dialog.exec()
+        layout = QVBoxLayout(self)
+        layout.setMenuBar(self.menu_bar)
+        layout.addStretch()
+        layout.addWidget(self.logout_btn)
+        layout.addStretch()
+
+        # CONTROLLER
+        self.controller = LogoutController(self)
+
+        # SIGNALS
+        self.logout_btn.clicked.connect(self.controller.logout)
+        logout_action.triggered.connect(self.controller.logout)
+        exit_action.triggered.connect(self.close)
+        about_action.triggered.connect(self.shot_about)
+
+    def show_about(self):
+        QMessageBox.information(
+            self,
+            "About",
+            "Gae dewe iki bro APP ne xixi"
+        )
+
+    def logout(self):
+        Session.clear_tokens()
+        from views.auth.login_window import LoginWindow
+        self.login = LoginWindow()
+        self.login.show()
+        self.close()

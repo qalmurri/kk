@@ -1,12 +1,15 @@
-import sys
 from PySide6.QtWidgets import QApplication
+from core.session import Session
 from views.auth.login_window import LoginWindow
+from views.main.main_window import MainWindow
+import sys
 
-def main():
-    app = QApplication(sys.argv)
-    login = LoginWindow()
-    login.show()
-    sys.exit(app.exec())
+app = QApplication(sys.argv)
 
-if __name__ == "__main__":
-    main()
+if Session.is_logged_in():
+    window = MainWindow()
+else:
+    window = LoginWindow()
+
+window.show()
+sys.exit(app.exec())

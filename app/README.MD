@@ -1,39 +1,39 @@
 pyside_app/
 │
-├── app.py                     # Entry point aplikasi
+├── app.py
 │
 ├── core/
 │   ├── __init__.py
-│   ├── config.py              # Global config (API, timeout, env)
-│   ├── session.py             # Menyimpan user, token, ip
-│   ├── exceptions.py          # Custom exception
+│   ├── config.py
+│   ├── session.py           
+│   ├── exceptions.py
 │
 ├── network/
 │   ├── __init__.py
-│   ├── api_client.py          # HTTP client (requests / httpx)
-│   ├── auth_service.py        # Login / logout
-│   ├── data_service.py        # Fetch data utama
+│   ├── api_client.py
+│   ├── auth_service.py
+│   ├── data_service.py
 │
 ├── models/
 │   ├── __init__.py
 │   ├── table/
 │   │   ├── __init__.py
-│   │   └── item_table_model.py   # QAbstractTableModel
+│   │   └── item_table_model.py
 │   │
 │   └── domain/
 │       ├── __init__.py
-│       └── user.py            # (opsional) domain object
+│       └── user.py
 │
 ├── views/
 │   ├── __init__.py
 │   │
 │   ├── auth/
 │   │   ├── __init__.py
-│   │   └── login_window.py    # Window login (IP + user + pass)
+│   │   └── login_window.py
 │   │
 │   ├── main/
 │   │   ├── __init__.py
-│   │   └── main_window.py     # Window utama (table, menu)
+│   │   └── main_window.py
 │   │
 │   └── widgets/
 │       ├── __init__.py
@@ -42,14 +42,17 @@ pyside_app/
 │
 ├── controllers/
 │   ├── __init__.py
-│   ├── auth_controller.py     # Logic login
-│   └── main_controller.py     # Logic data load
+│   ├── auth_controller.py
+│   └── main_controller.py
 │
 ├── utils/
 │   ├── __init__.py
 │   ├── datetime.py
 │   ├── formatter.py
 │   └── validators.py
+│
+├── workers/
+│   └── __init__.py
 │
 ├── resources/
 │   ├── icons/
