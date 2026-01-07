@@ -1,14 +1,13 @@
 from PySide6.QtCore import Qt, QAbstractTableModel
 
-
 class CoverTableModel(QAbstractTableModel):
     HEADERS = ["ID", "Title", "Status"]
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self._data = [
-            {"id": 1, "title": "Cover A", "status": "Draft"},
-            {"id": 2, "title": "Cover B", "status": "Published"},
+            {"id": 1, "title": "Cover A", "status": "Draft", "thumbnail": "http://", "length": 1, "height": 1, "width": 1, "x_axis": 1, "y_axis": 1},
+            {"id": 2, "title": "Cover B", "status": "Published", "thumbnail": "http://", "length": 1, "height": 1, "width": 1, "x_axis": 1, "y_axis": 1},
         ]
 
     def rowCount(self, parent=None):

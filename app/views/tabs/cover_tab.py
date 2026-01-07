@@ -24,6 +24,7 @@ class CoverTab(QWidget):
         self.table.setSelectionBehavior(QTableView.SelectRows)
         self.table.setSelectionMode(QTableView.SingleSelection)
         self.table.horizontalHeader().setStretchLastSection(True)
+        
 
         # PREVIEW
         self.preview = CoverPreview(self)
@@ -40,6 +41,7 @@ class CoverTab(QWidget):
         self.table.selectionModel().selectionChanged.connect(
             self.on_row_selected
         )
+        self.table.selectionModel().selectionChanged.connect(self._on_select)
 
     def on_row_selected(self, selected, deselected):
         if not selected.indexes():
@@ -49,3 +51,12 @@ class CoverTab(QWidget):
         data = self.model._data[row]
 
         self.preview.update_preview(data)
+
+    def _on_select(self):
+        index = self.table.currentIndex()
+        if not index.isValid():
+            return
+    
+        row = index.row()
+        cover_data = self.model._data[row]
+        self.preview.update_preview(cover_data)

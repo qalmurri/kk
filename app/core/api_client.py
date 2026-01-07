@@ -48,4 +48,12 @@ class ApiClient:
         
         return False
 
-
+    @classmethod
+    def ensure_valid_access_token(cls) -> bool:
+        access = Session.get_access_token()
+        if not access:
+            return False
+        
+        # Optional: decode exp JWT (kalau mau advance)
+        # untuk sekarang: refresh selalu kalau mau WS
+        return cls._refresh_token()

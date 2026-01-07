@@ -2,6 +2,7 @@ from PySide6.QtWebSockets import QWebSocket
 from PySide6.QtNetwork import QAbstractSocket
 from PySide6.QtCore import QObject, QUrl, Signal
 from core.session import Session
+from core.api_client import ApiClient
 
 class WebSocketClient(QObject):
     connected = Signal()
@@ -21,6 +22,10 @@ class WebSocketClient(QObject):
         )
 
     def connect(self):
+        if not ApiClient.ensure_valid_access_token():
+            self.error.emit("Unable to refresh access token")
+            return
+
         token = Session.get_access_token()
         if not token:
             self.error.emit("No access token")
