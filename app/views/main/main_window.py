@@ -1,18 +1,20 @@
 from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
-    QPushButton,
+    QHBoxLayout,
     QMenuBar,
     QMenu,
     QMessageBox,
     QTabWidget,
-    QLabel
+    QLabel,
 )
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QSize, Qt
 from core.session import Session
 from network.ws_client import WebSocketClient
 from controllers.auth.logout_controller import LogoutController
 from views.preferences_dialog import PreferencesDialog
+
+from views.tabs import DataTab, ActivityTab, DashboardTab, CoverTab
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -53,6 +55,15 @@ class MainWindow(QWidget):
         self.menu_bar.addMenu(help_menu)
         about_action = help_menu.addAction("About")
 
+        # FOOTER
+        self.status_label = QLabel("offline")
+        self.status_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.status_label.setStyleSheet("color: gray;")
+
+        footer_layout = QHBoxLayout()
+        footer_layout.addStretch()
+        footer_layout.addWidget(self.status_label)
+
         # SIGNALS
         logout_action.triggered.connect(self.controller.logout)
         exit_action.triggered.connect(self.close)
@@ -61,32 +72,35 @@ class MainWindow(QWidget):
 
         # TAB WIDGET (CONTENT)
         self.tabs = QTabWidget(self)
-
-        self.tabs.addTab(self._build_dashboard_tab(), "Dashboard")
-        self.tabs.addTab(self._build_data_tab(), "Data")
-        self.tabs.addTab(self._build_activity_tab(), "Activity")
+        self.tabs.addTab(DashboardTab(self), "Dashboard")
+        self.tabs.addTab(DataTab(self), "Data")
+        self.tabs.addTab(ActivityTab(self), "Activity")
+        self.tabs.addTab(CoverTab(self), "Cover")
 
         # CONTENT
         layout = QVBoxLayout(self)
         layout.setMenuBar(self.menu_bar)
         layout.addWidget(self.tabs)
+        layout.addLayout(footer_layout)
 
     def closeEvent(self, event):
         if self.ws:
             self.ws.disconnect()
 
         Session.save_main_window_size(self.size())
-        
         return super().closeEvent(event)
 
     def on_ws_connected(self):
-        print("WebSocket connected")
+        self.status_label.setText("🟢 Online")
+        self.status_label.setStyleSheet("color: green;")
 
     def on_ws_disconnected(self):
-        print("WebSocket disconnected")
+        self.status_label.setText("🔴 Offline")
+        self.status_label.setStyleSheet("color: red;")
 
     def on_ws_error(self, message):
-        print("WS error:", message)
+        self.status_label.setText("⚠️ Error")
+        self.status_label.setStyleSheet("color: orange;")
 
     def show_about(self):
         QMessageBox.information(
@@ -98,21 +112,3 @@ class MainWindow(QWidget):
     def show_preferences(self):
         dialog = PreferencesDialog(self)
         dialog.exec()
-
-    def _build_dashboard_tab(self) -> QWidget:
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.addWidget(QLabel("Dashboard content here"))
-        return widget
-
-    def _build_data_tab(self) -> QWidget:
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.addWidget(QLabel("Data content here"))
-        return widget
-
-    def _build_activity_tab(self) -> QWidget:
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.addWidget(QLabel("Activity content here"))
-        return widget
