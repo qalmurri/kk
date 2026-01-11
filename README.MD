@@ -27,7 +27,7 @@
 
 <!-- TABLE OF CONTENTSs -->
 <details>
-  <summary>Daftar Isi</summary>
+  <summary>Daftar Isi:</summary>
   <ol>
     <li>
       <a href="#tentang-projek">Tentang Projek</a>
