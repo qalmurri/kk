@@ -3,6 +3,7 @@ from core.session import Session
 from views.auth.login_window import LoginWindow
 from views.main.main_window import MainWindow
 import sys
+# testing git
 
 app = QApplication(sys.argv)
 
