@@ -6,7 +6,6 @@ from PySide6.QtWidgets import (
     )
 from PySide6.QtCore import Qt
 
-
 from models.table.cover_table_model import CoverTableModel
 from views.tabs.widgets.cover_preview import CoverPreview
 
