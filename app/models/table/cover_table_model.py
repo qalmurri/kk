@@ -26,8 +26,8 @@ class CoverTableModel(QAbstractTableModel):
                 "length": 10,
                 "height": 250,
                 "width": 160,
-                "x_axis": 10,
-                "y_axis": 10,
+                "x_axis": 0,
+                "y_axis": 0,
                 "zoom": 0
             },
         ]
