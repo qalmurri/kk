@@ -8,22 +8,17 @@ class InteractiveGraphicsView(QGraphicsView):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # --- TAMBAHKAN RENDER HINTS UNTUK KUALITAS ---
+        # Render Hints untuk Kualitas
         self.setRenderHint(QPainter.Antialiasing)
         self.setRenderHint(QPainter.SmoothPixmapTransform)
         self.setRenderHint(QPainter.TextAntialiasing)
-        # --------------------------------------------
-# --- TAMBAHKAN BARIS INI UNTUK MENGHILANGKAN BAYANGAN ---
-        # Memaksa view membersihkan seluruh area setiap frame
+        
+        # Mencegah bayangan/ghosting
         self.setViewportUpdateMode(QGraphicsView.FullViewportUpdate)
-        # -------------------------------------------------------
-        self.setRenderHint(QPainter.Antialiasing)
-        self.setRenderHint(QPainter.SmoothPixmapTransform)
 
         self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
         self._last_pos = None
         
-        # Rotasi default
         self.rot_x = -20.0 
         self.rot_y = -30.0 
         self._scale = 1.0
@@ -38,8 +33,10 @@ class InteractiveGraphicsView(QGraphicsView):
             dx = event.pos().x() - self._last_pos.x()
             dy = event.pos().y() - self._last_pos.y()
 
+            # Rotasi kebalikan (Inverted)
             self.rot_y -= dx * 0.5 
             self.rot_x += dy * 0.5 
+
             self.rotationChanged.emit(self.rot_x, self.rot_y)
             self._last_pos = event.pos()
         super().mouseMoveEvent(event)
@@ -49,6 +46,5 @@ class InteractiveGraphicsView(QGraphicsView):
         super().mouseReleaseEvent(event)
 
     def wheelEvent(self, event):
-        # Zoom view (opsional, jika ingin zoom kamera)
         factor = 1.15 if event.angleDelta().y() > 0 else 0.85
         self.scale(factor, factor)
