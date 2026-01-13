@@ -6,8 +6,30 @@ class CoverTableModel(QAbstractTableModel):
     def __init__(self, parent=None):
         super().__init__(parent)
         self._data = [
-            {"id": 1, "title": "Cover A", "status": "Draft", "thumbnail": "http://", "length": 10, "height": 250, "width": 160, "x_axis": 0, "y_axis": 0, "zoom": 0},
-            {"id": 2, "title": "Cover B", "status": "Published", "thumbnail": "http://", "length": 5, "height": 250, "width": 160, "x_axis": 0, "y_axis": 0, "zoom": 0},
+            {
+                "id": 1,
+                "title": "Cover A",
+                "status": "Draft",
+                "thumbnail": "https://",
+                "length": 10,
+                "height": 250,
+                "width": 160,
+                "x_axis": 0,
+                "y_axis": 0,
+                "zoom": 0
+            },
+            {
+                "id": 2,
+                "title": "Cover B",
+                "status": "Published",
+                "thumbnail": "cover.jpeg",
+                "length": 5,
+                "height": 250,
+                "width": 160,
+                "x_axis": 0,
+                "y_axis": 0,
+                "zoom": 0
+            },
         ]
 
     def rowCount(self, parent=None):

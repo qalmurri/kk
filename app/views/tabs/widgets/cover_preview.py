@@ -3,25 +3,33 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QGraphicsScene
 from PySide6.QtGui import QPixmap, QBrush, QColor, QTransform
 =======
 from views.tabs.widgets.graphics_view import InteractiveGraphicsView
+<<<<<<< HEAD
 from PySide6.QtGui import (
     QPixmap, QBrush, QColor, QTransform
 )
 >>>>>>> 8dd6eeec919d09620d51292c12b30ea6954b996f
+=======
+from PySide6.QtGui import QPixmap, QBrush, QColor, QPen
+>>>>>>> 47cf6c39715e954809c925e366bd156519e0eea0
 from PySide6.QtCore import Qt, QRectF
 import requests
-
+import os
 
 class CoverPreview(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-
         layout = QVBoxLayout(self)
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
+=======
+        
+>>>>>>> 47cf6c39715e954809c925e366bd156519e0eea0
         self.view = InteractiveGraphicsView()
 >>>>>>> 8dd6eeec919d09620d51292c12b30ea6954b996f
         self.scene = QGraphicsScene(self)
+<<<<<<< HEAD
         from views.tabs.widgets.graphics_view import InteractiveGraphicsView
         self.view = InteractiveGraphicsView()
         self.view.setScene(self.scene)
@@ -58,37 +66,60 @@ class CoverPreview(QWidget):
         self.view.setRenderHint(self.view.renderHints())
         self.view.setAlignment(Qt.AlignCenter)
 
+=======
+        self.view.setScene(self.scene)
+        
+        # Opsional: Beri background gelap pada view agar canvas putih terlihat kontras
+        self.view.setStyleSheet("background-color: #2b2b2b;")
+>>>>>>> 47cf6c39715e954809c925e366bd156519e0eea0
         layout.addWidget(self.view)
 
-    # =====================================================
+
     def update_preview(self, cover: dict):
-        self.scene.clear()
+            self.scene.clear()
 
-        # ========= RAW DATA =========
-        thickness = max(cover.get("length", 5), 1)
-        height = max(cover.get("height", 200), 50)
-        width = max(cover.get("width", 120), 50)
+            # 1. AMBIL DATA DASAR
+            thickness = max(cover.get("length", 10), 1)
+            height = max(cover.get("height", 250), 50)
+            width = max(cover.get("width", 160), 50)
+            thumbnail_url = cover.get("thumbnail")
 
-        thumbnail = cover.get("thumbnail")
+            # 2. HITUNG TOTAL LEBAR (Full Spread)
+            # Total = Lebar Belakang + Lebar Punggung + Lebar Depan
+            total_width = (width * 2) + thickness
+            
+            back_x = 0
+            spine_x = width
+            front_x = width + thickness
 
-        # ========= SCALE (UI FRIENDLY) =========
-        SCALE = 1
-        thickness *= SCALE
-        height *= SCALE
-        width *= SCALE
+            # 3. LOAD GAMBAR UNTUK SELURUH AREA
+            # Sekarang kita kirim total_width ke fungsi loader
+            full_pixmap = self._safe_load_pixmap(thumbnail_url, total_width, height)
 
-        # ========= BASE POS =========
-        origin_x = 0
-        origin_y = 0
+            if full_pixmap:
+                # Masukkan satu gambar besar mulai dari titik 0 (paling kiri/Back Cover)
+                full_cover = self.scene.addPixmap(full_pixmap)
+                full_cover.setOffset(0, 0)
+                full_cover.setZValue(0)
+            else:
+                # Jika gambar tidak ada, buat kotak placeholder abu-abu
+                self.scene.addRect(QRectF(0, 0, total_width, height), brush=QBrush(QColor("#f0f0f0")))
 
-        # ========= LOAD THUMBNAIL =========
-        front_pixmap = self._safe_load_pixmap(thumbnail, width, height)
+            # 4. TAMBAHKAN GARIS BANTU (GUIDES)
+            # Agar user tahu di mana letak lipatan Spine, kita gambar garis di atas gambar
+            guide_pen = QPen(QColor(255, 255, 255, 150)) # Putih transparan
+            guide_pen.setStyle(Qt.DashLine)
+            
+            # Garis Lipatan 1 (Antara Back dan Spine)
+            self.scene.addLine(spine_x, 0, spine_x, height, guide_pen)
+            # Garis Lipatan 2 (Antara Spine dan Front)
+            self.scene.addLine(front_x, 0, front_x, height, guide_pen)
 
-        # ========= TRANSFORM (FAKE 3D) =========
-        transform = QTransform()
-        transform.shear(-0.3, 0)   # perspective
-        transform.rotate(-8)
+            # 5. SET BOUNDING AREA
+            self.scene.setSceneRect(0, 0, total_width, height)
+            self.view.fitInView(self.scene.sceneRect(), Qt.KeepAspectRatio)
 
+<<<<<<< HEAD
         # ========= BACK COVER =========
         back = self.scene.addRect(
             QRectF(origin_x, origin_y, width, height),
@@ -185,14 +216,31 @@ class CoverPreview(QWidget):
 
             pixmap = QPixmap()
             if not pixmap.loadFromData(resp.content):
+=======
+    def _safe_load_pixmap(self, path, w, h):
+            if not path:
+>>>>>>> 47cf6c39715e954809c925e366bd156519e0eea0
                 return None
 
-            return pixmap.scaled(
-                w, h,
-                Qt.IgnoreAspectRatio,
-                Qt.SmoothTransformation
-            )
-
-        except Exception:
+            pix = QPixmap()
+        
+        # LOGIKA 1: Jika ini URL Internet
+            if path.startswith(("http://", "https://")):
+                try:
+                    resp = requests.get(path, timeout=3)
+                    if pix.loadFromData(resp.content):
+                        return pix.scaled(w, h, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+                except Exception as e:
+                    print(f"Error loading URL: {e}")
+                    return None
+        
+        # LOGIKA 2: Jika ini File Lokal
+            else:
+                if os.path.exists(path):
+                    if pix.load(path): # QPixmap bisa langsung load file path
+                        return pix.scaled(w, h, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+                else:
+                    print(f"File tidak ditemukan: {path}")
+        
             return None
 >>>>>>> 8dd6eeec919d09620d51292c12b30ea6954b996f
