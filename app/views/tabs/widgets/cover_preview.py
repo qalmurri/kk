@@ -1,9 +1,8 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QGraphicsScene, QGraphicsPolygonItem
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QGraphicsScene
 from views.tabs.widgets.graphics_view import InteractiveGraphicsView
-from PySide6.QtGui import QPixmap, QBrush, QColor, QPen, QTransform, QPolygonF
+from PySide6.QtGui import QPixmap, QBrush, QColor, QPen, QTransform, QPolygonF, QPainter
 from PySide6.QtCore import Qt, QPointF, QRectF
-import requests
-import math, requests, os
+import math, os, requests
 
 class CoverPreview(QWidget):
     def __init__(self, parent=None):
@@ -12,12 +11,14 @@ class CoverPreview(QWidget):
         self.view = InteractiveGraphicsView()
         self.scene = QGraphicsScene(self)
         self.view.setScene(self.scene)
-        self.view.setStyleSheet("background-color: #1e1e1e;")
+        self.view.setStyleSheet("background-color: #151515;")
         layout.addWidget(self.view)
 
+        # Connect rotasi dari mouse di graphics_view
         self.view.rotationChanged.connect(self.update_rotation)
-        self.rot_x = -15.0
-        self.rot_y = -25.0
+        
+        # Default rotasi
+        self.rot_x, self.rot_y = -20.0, -30.0
         self.last_cover_data = None
         self.base_pixmap = None
 
@@ -25,22 +26,23 @@ class CoverPreview(QWidget):
         self.rot_x, self.rot_y = rx, ry
         self.render_scene()
 
-    def update_preview(self, cover: dict = None, x=None, y=None, zoom=None):
+    def update_preview(self, cover: dict = None):
         if cover:
             self.last_cover_data = cover
             self.base_pixmap = self._load_raw_pixmap(cover.get("thumbnail"))
         self.render_scene()
 
     def project(self, x, y, z):
-        rad_x = math.radians(self.rot_x)
-        rad_y = math.radians(self.rot_y)
+        """Proyeksi 3D ke 2D dengan Rotasi XYZ"""
+        rad_x, rad_y = math.radians(self.rot_x), math.radians(self.rot_y)
         # Rotasi Y
         nx = x * math.cos(rad_y) + z * math.sin(rad_y)
         nz = -x * math.sin(rad_y) + z * math.cos(rad_y)
         # Rotasi X
         ny = y * math.cos(rad_x) - nz * math.sin(rad_x)
         final_z = y * math.sin(rad_x) + nz * math.cos(rad_x)
-        factor = 800 / (800 + final_z)
+        
+        factor = 850 / (850 + final_z)
         return QPointF(nx * factor, ny * factor), final_z
 
     def render_scene(self):
@@ -50,81 +52,101 @@ class CoverPreview(QWidget):
         w = self.last_cover_data.get("width", 160)
         h = self.last_cover_data.get("height", 250)
         t = self.last_cover_data.get("length", 20)
+        
+        x_off = self.last_cover_data.get("x_axis", 0)
+        y_off = self.last_cover_data.get("y_axis", 0)
+        zoom = self.last_cover_data.get("zoom", 1.0)
+        if zoom <= 0: zoom = 1.0
+
         cx, cy, cz = w/2, h/2, t/2
 
-        # DEFINISI TITIK SUDUT (Vertices) - Membentuk Box Solid
-        # Sisi Depan (Front) - Z = -cz
-        f_v = [(0-cx, 0-cy, 0-cz), (w-cx, 0-cy, 0-cz), (w-cx, h-cy, 0-cz), (0-cx, h-cy, 0-cz)]
-        # Sisi Belakang (Back) - Z = cz
-        b_v = [(w-cx, 0-cy, t-cz), (0-cx, 0-cy, t-cz), (0-cx, h-cy, t-cz), (w-cx, h-cy, t-cz)]
-        # Sisi Punggung (Spine) - X = -cx
-        s_v = [(0-cx, 0-cy, t-cz), (0-cx, 0-cy, 0-cz), (0-cx, h-cy, 0-cz), (0-cx, h-cy, t-cz)]
-        # Sisi Kertas (Side/Pages) - X = w-cx
-        p_v = [(w-cx, 0-cy, 0-cz), (w-cx, 0-cy, t-cz), (w-cx, h-cy, t-cz), (w-cx, h-cy, 0-cz)]
-        # Sisi Atas (Top)
-        t_v = [(0-cx, 0-cy, t-cz), (w-cx, 0-cy, t-cz), (w-cx, 0-cy, 0-cz), (0-cx, 0-cy, 0-cz)]
+        # 1. BUAT MASTER WRAP CANVAS (Bentangan Kertas Putih)
+        total_w = (w * 2) + t
+        master_canvas = QPixmap(total_w, h)
+        master_canvas.fill(QColor("#ffffff"))
 
-        # List semua face untuk di-sort berdasarkan kedalaman (Z-depth)
-        faces = [
-            (f_v, QColor("#ffffff"), "front"),
-            (b_v, QColor("#ffffff"), "back"),
-            (s_v, QColor("#eeeeee"), "spine"),
-            (p_v, QColor("#f0f0f0"), "pages"),
-            (t_v, QColor("#ffffff"), "top")
+        if self.base_pixmap:
+            painter = QPainter(master_canvas)
+            painter.setRenderHint(QPainter.SmoothPixmapTransform)
+            
+            # Hitung ukuran gambar (Original * Zoom)
+            tw, th = self.base_pixmap.width() * zoom, self.base_pixmap.height() * zoom
+            
+            # --- PERBAIKAN: TITIK ACUAN DARI KIRI (0,0) ---
+            # Jika x_off=0 dan y_off=0, gambar mulai dari pojok kiri atas Back Cover
+            dx = x_off
+            dy = y_off
+            # ----------------------------------------------
+            
+            painter.drawPixmap(QRectF(dx, dy, tw, th), self.base_pixmap, QRectF(self.base_pixmap.rect()))
+            painter.end()
+
+        # 2. DEFINISI BIDANG 3D (Tetap sama)
+        faces_def = [
+            ([(0-cx,0-cy,0-cz), (w-cx,0-cy,0-cz), (w-cx,h-cy,0-cz), (0-cx,h-cy,0-cz)], "front", (w+t, 0, w, h)),
+            ([(w-cx,0-cy,t-cz), (0-cx,0-cy,t-cz), (0-cx,h-cy,t-cz), (w-cx,h-cy,t-cz)], "back", (0, 0, w, h)),
+            ([(0-cx,0-cy,t-cz), (0-cx,0-cy,0-cz), (0-cx,h-cy,0-cz), (0-cx,h-cy,t-cz)], "spine", (w, 0, t, h)),
+            ([(w-cx,0-cy,0-cz), (w-cx,0-cy,t-cz), (w-cx,h-cy,t-cz), (w-cx,h-cy,0-cz)], "pages", None),
+            ([(0-cx,0-cy,t-cz), (w-cx,0-cy,t-cz), (w-cx,0-cy,0-cz), (0-cx,0-cy,0-cz)], "top", None),
+            ([(0-cx,h-cy,0-cz), (w-cx,h-cy,0-cz), (w-cx,h-cy,t-cz), (0-cx,h-cy,t-cz)], "bottom", None),
         ]
 
-        # Z-Sorting: Hitung rata-rata Z dari setiap bidang agar yang jauh digambar duluan
-        sorted_faces = []
-        for v_list, color, name in faces:
-            avg_z = 0
-            projected_pts = []
+        # 3. PROYEKSI & SORTING (Agar tidak terlihat kopong/terbalik)
+        rendered_faces = []
+        for v_list, name, crop in faces_def:
+            pts, sum_z = [], 0
             for v in v_list:
-                pt, z_depth = self.project(v[0], v[1], v[2])
-                avg_z += z_depth
-                projected_pts.append(pt)
-            sorted_faces.append((avg_z / 4, projected_pts, color, name))
-        
-        # Urutkan dari yang paling jauh (Z besar) ke yang paling dekat (Z kecil)
-        sorted_faces.sort(key=lambda x: x[0], reverse=True)
-
-        for _, pts, color, name in sorted_faces:
-            poly = QPolygonF(pts)
-            self.scene.addPolygon(poly, QPen(QColor(80,80,80), 1), QBrush(color))
+                p2d, z_d = self.project(v[0], v[1], v[2])
+                pts.append(p2d); sum_z += z_d
             
-            if self.base_pixmap and name in ["front", "back", "spine"]:
-                self._apply_texture(name, pts, w, h, t)
+            # Shading sederhana berdasarkan arah hadap
+            it = {"front":1.0, "top":0.9, "spine":0.7, "pages":0.6, "back":0.4, "bottom":0.3}.get(name, 1.0)
+            color = QColor(int(255*it), int(255*it), int(255*it))
+            rendered_faces.append((sum_z / 4, pts, color, name, crop))
 
-    def _apply_texture(self, name, dest_points, w, h, t):
-        total_w_design = (w * 2) + t
-        img_w, img_h = self.base_pixmap.width(), self.base_pixmap.height()
-        sx = img_w / total_w_design
-        sy = img_h / h
+        # Painter's Algorithm: Gambar yang terjauh (Z besar) duluan
+        rendered_faces.sort(key=lambda x: x[0], reverse=True)
 
-        # Crop area berdasarkan standar Full Spread: [Back] [Spine] [Front]
-        if name == "back":
-            rect = QRectF(0 * sx, 0, w * sx, h * sy)
-        elif name == "spine":
-            rect = QRectF(w * sx, 0, t * sx, h * sy)
-        elif name == "front":
-            rect = QRectF((w + t) * sx, 0, w * sx, h * sy)
-        else: return
+        # 4. DRAWING
+        for _, pts, color, name, crop in rendered_faces:
+            poly = QPolygonF(pts)
+            # Gunakan pen warna sama agar tidak bocor (kopong)
+            self.scene.addPolygon(poly, QPen(color, 0.5), QBrush(color))
 
-        cropped = self.base_pixmap.copy(rect.toRect())
-        source_quad = QPolygonF([QPointF(0,0), QPointF(cropped.width(),0), 
-                                 QPointF(cropped.width(),cropped.height()), QPointF(0,cropped.height())])
-        
+            # Tempel Tekstur jika sisi sampul
+            if crop:
+                section = master_canvas.copy(QRectF(*crop).toRect())
+                self._apply_texture(section, pts)
+            
+            # Tekstur kertas untuk sisi lainnya
+            if name in ["pages", "top", "bottom"]:
+                self._draw_paper_texture(pts, name, color)
+
+    def _apply_texture(self, pix, dest_pts):
+        source_quad = QPolygonF([QPointF(0,0), QPointF(pix.width(),0), QPointF(pix.width(),pix.height()), QPointF(0,pix.height())])
         trans = QTransform()
-        if QTransform.quadToQuad(source_quad, QPolygonF(dest_points), trans):
-            item = self.scene.addPixmap(cropped)
+        if QTransform.quadToQuad(source_quad, QPolygonF(dest_pts), trans):
+            item = self.scene.addPixmap(pix)
             item.setTransform(trans)
-            item.setZValue(self.scene.items()[-1].zValue() + 0.1)
+            item.setZValue(self.scene.items()[-1].zValue() + 0.01)
+
+    def _draw_paper_texture(self, pts, name, base_color):
+        pen = QPen(base_color.darker(110), 0.4)
+        for i in range(1, 10):
+            t = i / 10
+            if name == "pages":
+                p1, p2 = pts[0] + (pts[3]-pts[0])*t, pts[1] + (pts[2]-pts[1])*t
+            else:
+                p1, p2 = pts[0] + (pts[1]-pts[0])*t, pts[3] + (pts[2]-pts[3])*t
+            self.scene.addLine(p1.x(), p1.y(), p2.x(), p2.y(), pen)
 
     def _load_raw_pixmap(self, path):
         if not path or path == "https://": return None
         pix = QPixmap()
         try:
-            if path.startswith(("http://", "https://")):
-                resp = requests.get(path, timeout=5); pix.loadFromData(resp.content)
-            elif os.path.exists(path): pix.load(path)
+            if path.startswith(("http", "https")):
+                r = requests.get(path, timeout=5); pix.loadFromData(r.content)
+            elif os.path.exists(path):
+                pix.load(path)
             return pix if not pix.isNull() else None
         except: return None
