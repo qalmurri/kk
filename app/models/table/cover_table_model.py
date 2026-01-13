@@ -23,11 +23,11 @@ class CoverTableModel(QAbstractTableModel):
                 "title": "Cover B",
                 "status": "Published",
                 "thumbnail": "cover.jpeg",
-                "length": 5,
+                "length": 10,
                 "height": 250,
                 "width": 160,
-                "x_axis": 0,
-                "y_axis": 0,
+                "x_axis": 10,
+                "y_axis": 10,
                 "zoom": 0
             },
         ]
