@@ -10,13 +10,13 @@ class CoverTableModel(QAbstractTableModel):
                 "id": 1,
                 "title": "Cover A",
                 "status": "Draft",
-                "thumbnail": "https://",
+                "thumbnail": "cover2.jpeg",
                 "length": 10,
                 "height": 250,
                 "width": 160,
                 "x_axis": 0,
                 "y_axis": 0,
-                "zoom": 0
+                "zoom": 0.205 
             },
             {
                 "id": 2,
@@ -30,6 +30,19 @@ class CoverTableModel(QAbstractTableModel):
                 "y_axis": 0,
                 "zoom": 0.2
             },
+            {
+                "id": 3,
+                "title": "Cover C",
+                "status": "Published",
+                "thumbnail": "None",
+                "length": 10,
+                "height": 250,
+                "width": 160,
+                "x_axis": 0,
+                "y_axis": 0,
+                "zoom": 0.2
+            },
+
         ]
 
     def rowCount(self, parent=None):
