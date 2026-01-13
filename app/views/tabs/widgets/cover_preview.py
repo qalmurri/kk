@@ -1,128 +1,130 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QGraphicsScene, QGraphicsItem
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QGraphicsScene, QGraphicsPolygonItem
 from views.tabs.widgets.graphics_view import InteractiveGraphicsView
-from PySide6.QtGui import QPixmap, QBrush, QColor, QPen
-from PySide6.QtCore import Qt, QRectF
+from PySide6.QtGui import QPixmap, QBrush, QColor, QPen, QTransform, QPolygonF
+from PySide6.QtCore import Qt, QPointF, QRectF
 import requests
-import os
+import math, requests, os
 
 class CoverPreview(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         layout = QVBoxLayout(self)
-
         self.view = InteractiveGraphicsView()
         self.scene = QGraphicsScene(self)
         self.view.setScene(self.scene)
-        self.view.setStyleSheet("background-color: #2b2b2b;")
+        self.view.setStyleSheet("background-color: #1e1e1e;")
         layout.addWidget(self.view)
 
-        # State untuk transformasi
-        self.x_offset = 0
-        self.y_offset = 0
-        self.zoom_level = 1.0
-        
+        self.view.rotationChanged.connect(self.update_rotation)
+        self.rot_x = -15.0
+        self.rot_y = -25.0
         self.last_cover_data = None
-        self.base_pixmap = None 
+        self.base_pixmap = None
+
+    def update_rotation(self, rx, ry):
+        self.rot_x, self.rot_y = rx, ry
+        self.render_scene()
 
     def update_preview(self, cover: dict = None, x=None, y=None, zoom=None):
-        # 1. Update state dan proteksi nilai 0 dari model
-        if cover and cover != self.last_cover_data:
+        if cover:
             self.last_cover_data = cover
-            # Ambil nilai awal dari model
-            self.x_offset = cover.get("x_axis", 0)
-            self.y_offset = cover.get("y_axis", 0)
-            
-            # Proteksi jika zoom di model adalah 0, ubah ke 1.0
-            z_val = cover.get("zoom", 0)
-            self.zoom_level = z_val if z_val > 0 else 1.0
-            
-            thumbnail_url = cover.get("thumbnail")
-            self.base_pixmap = self._load_raw_pixmap(thumbnail_url)
-            
-            # Reset view fit jika ganti buku
-            if hasattr(self, '_initial_fit'):
-                delattr(self, '_initial_fit')
-
-        if x is not None: self.x_offset = x
-        if y is not None: self.y_offset = y
-        if zoom is not None: self.zoom_level = zoom
-
+            self.base_pixmap = self._load_raw_pixmap(cover.get("thumbnail"))
         self.render_scene()
+
+    def project(self, x, y, z):
+        rad_x = math.radians(self.rot_x)
+        rad_y = math.radians(self.rot_y)
+        # Rotasi Y
+        nx = x * math.cos(rad_y) + z * math.sin(rad_y)
+        nz = -x * math.sin(rad_y) + z * math.cos(rad_y)
+        # Rotasi X
+        ny = y * math.cos(rad_x) - nz * math.sin(rad_x)
+        final_z = y * math.sin(rad_x) + nz * math.cos(rad_x)
+        factor = 800 / (800 + final_z)
+        return QPointF(nx * factor, ny * factor), final_z
 
     def render_scene(self):
         self.scene.clear()
-        if not self.last_cover_data:
-            return
+        if not self.last_cover_data: return
 
-        thickness = max(self.last_cover_data.get("length", 10), 1)
-        height = max(self.last_cover_data.get("height", 250), 50)
-        width = max(self.last_cover_data.get("width", 160), 50)
-        total_width = (width * 2) + thickness
+        w = self.last_cover_data.get("width", 160)
+        h = self.last_cover_data.get("height", 250)
+        t = self.last_cover_data.get("length", 20)
+        cx, cy, cz = w/2, h/2, t/2
 
-        # --- LOGIKA CLIPPING ---
+        # DEFINISI TITIK SUDUT (Vertices) - Membentuk Box Solid
+        # Sisi Depan (Front) - Z = -cz
+        f_v = [(0-cx, 0-cy, 0-cz), (w-cx, 0-cy, 0-cz), (w-cx, h-cy, 0-cz), (0-cx, h-cy, 0-cz)]
+        # Sisi Belakang (Back) - Z = cz
+        b_v = [(w-cx, 0-cy, t-cz), (0-cx, 0-cy, t-cz), (0-cx, h-cy, t-cz), (w-cx, h-cy, t-cz)]
+        # Sisi Punggung (Spine) - X = -cx
+        s_v = [(0-cx, 0-cy, t-cz), (0-cx, 0-cy, 0-cz), (0-cx, h-cy, 0-cz), (0-cx, h-cy, t-cz)]
+        # Sisi Kertas (Side/Pages) - X = w-cx
+        p_v = [(w-cx, 0-cy, 0-cz), (w-cx, 0-cy, t-cz), (w-cx, h-cy, t-cz), (w-cx, h-cy, 0-cz)]
+        # Sisi Atas (Top)
+        t_v = [(0-cx, 0-cy, t-cz), (w-cx, 0-cy, t-cz), (w-cx, 0-cy, 0-cz), (0-cx, 0-cy, 0-cz)]
+
+        # List semua face untuk di-sort berdasarkan kedalaman (Z-depth)
+        faces = [
+            (f_v, QColor("#ffffff"), "front"),
+            (b_v, QColor("#ffffff"), "back"),
+            (s_v, QColor("#eeeeee"), "spine"),
+            (p_v, QColor("#f0f0f0"), "pages"),
+            (t_v, QColor("#ffffff"), "top")
+        ]
+
+        # Z-Sorting: Hitung rata-rata Z dari setiap bidang agar yang jauh digambar duluan
+        sorted_faces = []
+        for v_list, color, name in faces:
+            avg_z = 0
+            projected_pts = []
+            for v in v_list:
+                pt, z_depth = self.project(v[0], v[1], v[2])
+                avg_z += z_depth
+                projected_pts.append(pt)
+            sorted_faces.append((avg_z / 4, projected_pts, color, name))
         
-        # 2. Buat "Canvas" (Rect Putih) sebagai PARENT
-        # Kita simpan ke variabel canvas agar bisa menampung child
-        canvas = self.scene.addRect(
-            QRectF(0, 0, total_width, height), 
-            brush=QBrush(QColor("#ffffff")), 
-            pen=QPen(Qt.NoPen)
-        )
+        # Urutkan dari yang paling jauh (Z besar) ke yang paling dekat (Z kecil)
+        sorted_faces.sort(key=lambda x: x[0], reverse=True)
+
+        for _, pts, color, name in sorted_faces:
+            poly = QPolygonF(pts)
+            self.scene.addPolygon(poly, QPen(QColor(80,80,80), 1), QBrush(color))
+            
+            if self.base_pixmap and name in ["front", "back", "spine"]:
+                self._apply_texture(name, pts, w, h, t)
+
+    def _apply_texture(self, name, dest_points, w, h, t):
+        total_w_design = (w * 2) + t
+        img_w, img_h = self.base_pixmap.width(), self.base_pixmap.height()
+        sx = img_w / total_w_design
+        sy = img_h / h
+
+        # Crop area berdasarkan standar Full Spread: [Back] [Spine] [Front]
+        if name == "back":
+            rect = QRectF(0 * sx, 0, w * sx, h * sy)
+        elif name == "spine":
+            rect = QRectF(w * sx, 0, t * sx, h * sy)
+        elif name == "front":
+            rect = QRectF((w + t) * sx, 0, w * sx, h * sy)
+        else: return
+
+        cropped = self.base_pixmap.copy(rect.toRect())
+        source_quad = QPolygonF([QPointF(0,0), QPointF(cropped.width(),0), 
+                                 QPointF(cropped.width(),cropped.height()), QPointF(0,cropped.height())])
         
-        # AKTIFKAN CLIPPING: Anak-anak dari canvas ini tidak akan terlihat jika keluar batas
-        canvas.setFlag(QGraphicsItem.ItemClipsChildrenToShape)
-
-        # 3. Tambahkan Gambar sebagai CHILD dari canvas
-        if self.base_pixmap:
-            scaled_base = self.base_pixmap.scaledToHeight(height, Qt.SmoothTransformation)
-            
-            # Masukkan pixmap ke dalam scene, tapi set canvas sebagai parent
-            pixmap_item = self.scene.addPixmap(scaled_base)
-            pixmap_item.setParentItem(canvas) # <--- KUNCI UTAMA
-            
-            pixmap_item.setScale(self.zoom_level)
-            
-            center_x = scaled_base.width() / 2
-            center_y = scaled_base.height() / 2
-            pixmap_item.setTransformOriginPoint(center_x, center_y)
-
-            # Posisi sekarang relatif terhadap canvas (0,0 adalah pojok kiri atas canvas)
-            default_x = (total_width - scaled_base.width()) / 2
-            default_y = (height - scaled_base.height()) / 2
-            
-            pixmap_item.setPos(default_x + self.x_offset, default_y + self.y_offset)
-
-        # 4. Tambahkan Garis Bantu (Guides) 
-        # Tetap jadikan child dari canvas agar ikut terpotong jika diperlukan, 
-        # tapi letakkan di atas gambar (Z-Value)
-        guide_pen = QPen(QColor(100, 100, 100, 200))
-        guide_pen.setStyle(Qt.DashLine)
-        
-        spine_x = width
-        front_x = width + thickness
-        
-        l1 = self.scene.addLine(spine_x, 0, spine_x, height, guide_pen)
-        l2 = self.scene.addLine(front_x, 0, front_x, height, guide_pen)
-        l1.setParentItem(canvas)
-        l2.setParentItem(canvas)
-        l1.setZValue(2)
-        l2.setZValue(2)
-
-        # 5. Finalisasi View
-        self.scene.setSceneRect(0, 0, total_width, height)
-        if not hasattr(self, '_initial_fit'):
-            self.view.fitInView(self.scene.sceneRect(), Qt.KeepAspectRatio)
-            self._initial_fit = True
+        trans = QTransform()
+        if QTransform.quadToQuad(source_quad, QPolygonF(dest_points), trans):
+            item = self.scene.addPixmap(cropped)
+            item.setTransform(trans)
+            item.setZValue(self.scene.items()[-1].zValue() + 0.1)
 
     def _load_raw_pixmap(self, path):
         if not path or path == "https://": return None
         pix = QPixmap()
         try:
             if path.startswith(("http://", "https://")):
-                resp = requests.get(path, timeout=5)
-                pix.loadFromData(resp.content)
-            elif os.path.exists(path):
-                pix.load(path)
+                resp = requests.get(path, timeout=5); pix.loadFromData(resp.content)
+            elif os.path.exists(path): pix.load(path)
             return pix if not pix.isNull() else None
-        except:
-            return None
+        except: return None
