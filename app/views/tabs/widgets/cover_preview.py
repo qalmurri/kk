@@ -3,13 +3,18 @@ from views.tabs.widgets.graphics_view import InteractiveGraphicsView
 from PySide6.QtGui import QPixmap, QBrush, QColor, QPen, QTransform, QPolygonF, QPainter
 from PySide6.QtCore import Qt, QPointF, QRectF
 import math, os, requests
+from PySide6.QtOpenGLWidgets import QOpenGLWidget
 
 class CoverPreview(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         layout = QVBoxLayout(self)
         self.view = InteractiveGraphicsView()
+# --- PERBAIKAN 1: GUNAKAN OPENGL UNTUK KUALITAS TAJAM ---
+        self.view.setViewport(QOpenGLWidget()) 
+        # -------------------------------------------------------
         self.scene = QGraphicsScene(self)
+        self.scene.setBackgroundBrush(QColor("#121212"))
         self.view.setScene(self.scene)
         self.view.setStyleSheet("background-color: #151515;")
         layout.addWidget(self.view)
@@ -49,6 +54,10 @@ class CoverPreview(QWidget):
         self.scene.clear()
         if not self.last_cover_data: return
 
+        # Pengaturan Resolusi (Multiplier)
+        # Ubah ke 2.0 atau 4.0 untuk hasil yang JAUH lebih tajam (Supersampling)
+        q = 4.0 
+
         w = self.last_cover_data.get("width", 160)
         h = self.last_cover_data.get("height", 250)
         t = self.last_cover_data.get("length", 20)
@@ -60,38 +69,41 @@ class CoverPreview(QWidget):
 
         cx, cy, cz = w/2, h/2, t/2
 
-        # 1. BUAT MASTER WRAP CANVAS (Bentangan Kertas Putih)
+        # --- PERBAIKAN 2: MASTER CANVAS DENGAN RESOLUSI TINGGI ---
         total_w = (w * 2) + t
-        master_canvas = QPixmap(total_w, h)
+        # Kita kalikan ukuran kanvas dengan faktor kualitas 'q'
+        master_canvas = QPixmap(int(total_w * q), int(h * q))
         master_canvas.fill(QColor("#ffffff"))
 
         if self.base_pixmap:
             painter = QPainter(master_canvas)
+            # Aktifkan semua fitur penghalus
+            painter.setRenderHint(QPainter.Antialiasing)
             painter.setRenderHint(QPainter.SmoothPixmapTransform)
             
-            # Hitung ukuran gambar (Original * Zoom)
-            tw, th = self.base_pixmap.width() * zoom, self.base_pixmap.height() * zoom
+            # Gambar thumbnail dengan skala yang sudah dikalikan multiplier
+            tw = self.base_pixmap.width() * zoom * q
+            th = self.base_pixmap.height() * zoom * q
             
-            # --- PERBAIKAN: TITIK ACUAN DARI KIRI (0,0) ---
-            # Jika x_off=0 dan y_off=0, gambar mulai dari pojok kiri atas Back Cover
-            dx = x_off
-            dy = y_off
-            # ----------------------------------------------
+            # Koordinat juga dikalikan multiplier
+            dx = x_off * q
+            dy = y_off * q
             
             painter.drawPixmap(QRectF(dx, dy, tw, th), self.base_pixmap, QRectF(self.base_pixmap.rect()))
             painter.end()
 
-        # 2. DEFINISI BIDANG 3D (Tetap sama)
+        # 2. DEFINISI BIDANG 3D
+        # (Crop rect juga harus dikalikan dengan multiplier 'q')
         faces_def = [
-            ([(0-cx,0-cy,0-cz), (w-cx,0-cy,0-cz), (w-cx,h-cy,0-cz), (0-cx,h-cy,0-cz)], "front", (w+t, 0, w, h)),
-            ([(w-cx,0-cy,t-cz), (0-cx,0-cy,t-cz), (0-cx,h-cy,t-cz), (w-cx,h-cy,t-cz)], "back", (0, 0, w, h)),
-            ([(0-cx,0-cy,t-cz), (0-cx,0-cy,0-cz), (0-cx,h-cy,0-cz), (0-cx,h-cy,t-cz)], "spine", (w, 0, t, h)),
+            ([(0-cx,0-cy,0-cz), (w-cx,0-cy,0-cz), (w-cx,h-cy,0-cz), (0-cx,h-cy,0-cz)], "front", ((w+t)*q, 0, w*q, h*q)),
+            ([(w-cx,0-cy,t-cz), (0-cx,0-cy,t-cz), (0-cx,h-cy,t-cz), (w-cx,h-cy,t-cz)], "back", (0, 0, w*q, h*q)),
+            ([(0-cx,0-cy,t-cz), (0-cx,0-cy,0-cz), (0-cx,h-cy,0-cz), (0-cx,h-cy,t-cz)], "spine", (w*q, 0, t*q, h*q)),
             ([(w-cx,0-cy,0-cz), (w-cx,0-cy,t-cz), (w-cx,h-cy,t-cz), (w-cx,h-cy,0-cz)], "pages", None),
             ([(0-cx,0-cy,t-cz), (w-cx,0-cy,t-cz), (w-cx,0-cy,0-cz), (0-cx,0-cy,0-cz)], "top", None),
             ([(0-cx,h-cy,0-cz), (w-cx,h-cy,0-cz), (w-cx,h-cy,t-cz), (0-cx,h-cy,t-cz)], "bottom", None),
         ]
 
-        # 3. PROYEKSI & SORTING (Agar tidak terlihat kopong/terbalik)
+        # 3. PROYEKSI & SORTING
         rendered_faces = []
         for v_list, name, crop in faces_def:
             pts, sum_z = [], 0
@@ -99,34 +111,36 @@ class CoverPreview(QWidget):
                 p2d, z_d = self.project(v[0], v[1], v[2])
                 pts.append(p2d); sum_z += z_d
             
-            # Shading sederhana berdasarkan arah hadap
             it = {"front":1.0, "top":0.9, "spine":0.7, "pages":0.6, "back":0.4, "bottom":0.3}.get(name, 1.0)
             color = QColor(int(255*it), int(255*it), int(255*it))
             rendered_faces.append((sum_z / 4, pts, color, name, crop))
 
-        # Painter's Algorithm: Gambar yang terjauh (Z besar) duluan
         rendered_faces.sort(key=lambda x: x[0], reverse=True)
 
         # 4. DRAWING
         for _, pts, color, name, crop in rendered_faces:
             poly = QPolygonF(pts)
-            # Gunakan pen warna sama agar tidak bocor (kopong)
             self.scene.addPolygon(poly, QPen(color, 0.5), QBrush(color))
 
-            # Tempel Tekstur jika sisi sampul
             if crop:
+                # Potong bagian HD dari master_canvas
                 section = master_canvas.copy(QRectF(*crop).toRect())
                 self._apply_texture(section, pts)
             
-            # Tekstur kertas untuk sisi lainnya
             if name in ["pages", "top", "bottom"]:
                 self._draw_paper_texture(pts, name, color)
 
     def _apply_texture(self, pix, dest_pts):
-        source_quad = QPolygonF([QPointF(0,0), QPointF(pix.width(),0), QPointF(pix.width(),pix.height()), QPointF(0,pix.height())])
+        source_quad = QPolygonF([QPointF(0,0), QPointF(pix.width(),0), 
+                                 QPointF(pix.width(),pix.height()), QPointF(0,pix.height())])
         trans = QTransform()
         if QTransform.quadToQuad(source_quad, QPolygonF(dest_pts), trans):
             item = self.scene.addPixmap(pix)
+            
+            # --- PERBAIKAN 3: MODE TRANSFORMASI HALUS ---
+            item.setTransformationMode(Qt.SmoothTransformation) 
+            # ---------------------------------------------
+            
             item.setTransform(trans)
             item.setZValue(self.scene.items()[-1].zValue() + 0.01)
 

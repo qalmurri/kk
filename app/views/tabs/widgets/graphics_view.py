@@ -1,11 +1,25 @@
 from PySide6.QtWidgets import QGraphicsView
 from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QPainter
 
 class InteractiveGraphicsView(QGraphicsView):
     rotationChanged = Signal(float, float) 
 
     def __init__(self, parent=None):
         super().__init__(parent)
+
+        # --- TAMBAHKAN RENDER HINTS UNTUK KUALITAS ---
+        self.setRenderHint(QPainter.Antialiasing)
+        self.setRenderHint(QPainter.SmoothPixmapTransform)
+        self.setRenderHint(QPainter.TextAntialiasing)
+        # --------------------------------------------
+# --- TAMBAHKAN BARIS INI UNTUK MENGHILANGKAN BAYANGAN ---
+        # Memaksa view membersihkan seluruh area setiap frame
+        self.setViewportUpdateMode(QGraphicsView.FullViewportUpdate)
+        # -------------------------------------------------------
+        self.setRenderHint(QPainter.Antialiasing)
+        self.setRenderHint(QPainter.SmoothPixmapTransform)
+
         self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
         self._last_pos = None
         
