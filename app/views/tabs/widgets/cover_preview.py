@@ -23,6 +23,10 @@ class CoverPreview(QWidget):
         self.last_cover_data = None
         self.base_pixmap = None
 
+# --- LOAD GAMBAR KERTAS PUTIH ---
+        # Pastikan file ini ada di folder proyek Anda
+        self.paper_pixmap = QPixmap("white_paper.jpg")
+
     def update_rotation(self, rx, ry):
         self.rot_x, self.rot_y = rx, ry
         self.render_scene()
@@ -96,9 +100,16 @@ class CoverPreview(QWidget):
         for _, pts, color, crop in rendered:
             poly = QPolygonF(pts)
             self.scene.addPolygon(poly, QPen(color, 0.5), QBrush(color))
+            
+            # --- LOGIKA PENEMPELAN TEKSTUR ---
             if crop:
+                # Sisi sampul (front, back, spine)
                 section = master_canvas.copy(QRectF(*crop).toRect())
                 self._apply_texture(section, pts)
+            else:
+                # Sisi yang None (pages, top, bottom) diganti gambar putih
+                if not self.paper_pixmap.isNull():
+                    self._apply_texture(self.paper_pixmap, pts)
 
     def _apply_texture(self, pix, dest_pts):
         source_quad = QPolygonF([QPointF(0,0), QPointF(pix.width(),0), QPointF(pix.width(),pix.height()), QPointF(0,pix.height())])

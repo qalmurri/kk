@@ -11,12 +11,12 @@ class CoverTableModel(QAbstractTableModel):
                 "title": "Cover A",
                 "status": "Draft",
                 "thumbnail": "cover2.jpeg",
-                "length": 10,
-                "height": 250,
-                "width": 160,
-                "x_axis": 0,
+                "length": 12,
+                "height": 210,
+                "width": 148,
+                "x_axis": -2,
                 "y_axis": 0,
-                "zoom": 0.205 
+                "zoom": 0.195 
             },
             {
                 "id": 2,
@@ -28,7 +28,7 @@ class CoverTableModel(QAbstractTableModel):
                 "width": 160,
                 "x_axis": 0,
                 "y_axis": 0,
-                "zoom": 0.2
+                "zoom": 0.3
             },
             {
                 "id": 3,
