@@ -7,6 +7,9 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QTabWidget,
     QLabel,
+    QListWidget,
+    QStackedWidget,
+    QFrame
 )
 from PySide6.QtCore import QSize, Qt
 from core.session import Session
@@ -21,93 +24,124 @@ class MainWindow(QWidget):
         super().__init__()
         self.setWindowTitle("Main Window")
 
-        # WEBSOCKET
+        # --- INITIALIZATION ---
         self.ws = WebSocketClient()
         self.ws.connected.connect(self.on_ws_connected)
         self.ws.disconnected.connect(self.on_ws_disconnected)
         self.ws.error.connect(self.on_ws_error)
         self.ws.connect()
 
-        # PENYIMPANAN SIZE WINDOW
         size = Session.load_main_window_size()
-        if isinstance(size, QSize):
-            self.resize(size)
-        else:
-            self.resize(500, 500)
-
-        # CONTROLLER
+        self.resize(size if isinstance(size, QSize) else QSize(1000, 700))
         self.controller = LogoutController(self)
 
-        # MASTER & MENU FILE
+        # --- UI COMPONENTS ---
+        self._setup_menu_bar()
+        self._setup_sidebar()
+        self._setup_main_content()
+        self._setup_footer()
+
+        # --- MAIN LAYOUT ---
+        # Horizontal layout untuk Sidebar + Content Area
+        self.body_layout = QHBoxLayout()
+        self.body_layout.setContentsMargins(0, 0, 0, 0)
+        self.body_layout.setSpacing(0)
+        self.body_layout.addWidget(self.sidebar)
+        self.body_layout.addWidget(self.main_stack)
+
+        # Vertical layout utama
+        self.main_layout = QVBoxLayout(self)
+        self.main_layout.setMenuBar(self.menu_bar)
+        self.main_layout.setContentsMargins(0, 0, 0, 0)
+        self.main_layout.addLayout(self.body_layout)
+        self.main_layout.addLayout(self.footer_layout)
+
+    def _setup_sidebar(self):
+        """Membuat navigasi samping"""
+        self.sidebar = QListWidget()
+        self.sidebar.setFixedWidth(160)
+        self.sidebar.addItems(["Beranda", "Profile"])
+        
+        # Signal: Pindah halaman utama saat menu sidebar diklik
+        self.sidebar.currentRowChanged.connect(self.on_sidebar_changed)
+
+    def _setup_main_content(self):
+        """Membuat kontainer halaman (Stacked Widget)"""
+        self.main_stack = QStackedWidget()
+
+        # --- HALAMAN 1: BERANDA (Berisi Tab Widget) ---
+        self.beranda_page = QWidget()
+        beranda_layout = QVBoxLayout(self.beranda_page)
+        beranda_layout.setContentsMargins(0, 0, 0, 0)
+
+        self.tabs = QTabWidget()
+        self.tabs.addTab(DashboardTab(self), "Dashboard")
+        self.tabs.addTab(DataTab(self), "Data")
+        self.tabs.addTab(ActivityTab(self), "Activity")
+        self.tabs.addTab(CoverTab(self), "Cover")
+        
+        beranda_layout.addWidget(self.tabs)
+        self.main_stack.addWidget(self.beranda_page)
+
+        # --- HALAMAN 2: PROFILE (Kosongan) ---
+        self.profile_page = QWidget()
+        profile_layout = QVBoxLayout(self.profile_page)
+        profile_layout.addWidget(QLabel("Halaman Profile (Kosong)"), alignment=Qt.AlignCenter)
+        
+        self.main_stack.addWidget(self.profile_page)
+
+    def _setup_menu_bar(self):
         self.menu_bar = QMenuBar(self)
-        file_menu = QMenu("File", self)
-        self.menu_bar.addMenu(file_menu)
+        
+        file_menu = self.menu_bar.addMenu("File")
         logout_action = file_menu.addAction("Logout")
         exit_action = file_menu.addAction("Exit")
 
-        # MENU OPTION
-        options_menu = QMenu("Options", self)
-        self.menu_bar.addMenu(options_menu)
+        options_menu = self.menu_bar.addMenu("Options")
         preferences_action = options_menu.addAction("Preferences")
 
-        # MENU HELP
-        help_menu = QMenu("Help", self)
-        self.menu_bar.addMenu(help_menu)
+        help_menu = self.menu_bar.addMenu("Help")
         about_action = help_menu.addAction("About")
 
-        # FOOTER
-        self.status_label = QLabel("offline")
-        self.status_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.status_label.setStyleSheet("color: gray;")
-
-        footer_layout = QHBoxLayout()
-        footer_layout.addStretch()
-        footer_layout.addWidget(self.status_label)
-
-        # SIGNALS
         logout_action.triggered.connect(self.controller.logout)
         exit_action.triggered.connect(self.close)
         preferences_action.triggered.connect(self.show_preferences)
         about_action.triggered.connect(self.show_about)
 
-        # TAB WIDGET (CONTENT)
-        self.tabs = QTabWidget(self)
-        self.tabs.addTab(DashboardTab(self), "Dashboard")
-        self.tabs.addTab(DataTab(self), "Data")
-        self.tabs.addTab(ActivityTab(self), "Activity")
-        self.tabs.addTab(CoverTab(self), "Cover")
+    def _setup_footer(self):
+        self.status_label = QLabel("offline")
+        self.status_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.status_label.setStyleSheet("color: gray; padding: 5px;")
 
-        # CONTENT
-        layout = QVBoxLayout(self)
-        layout.setMenuBar(self.menu_bar)
-        layout.addWidget(self.tabs)
-        layout.addLayout(footer_layout)
+        self.footer_layout = QHBoxLayout()
+        self.footer_layout.addStretch()
+        self.footer_layout.addWidget(self.status_label)
 
-    def closeEvent(self, event):
-        if self.ws:
-            self.ws.disconnect()
+    def on_sidebar_changed(self, index):
+        """Mengatur perpindahan StackedWidget berdasarkan klik sidebar"""
+        self.main_stack.setCurrentIndex(index)
 
-        Session.save_main_window_size(self.size())
-        return super().closeEvent(event)
-
+    # --- WS HANDLERS ---
     def on_ws_connected(self):
         self.status_label.setText("🟢 Online")
-        self.status_label.setStyleSheet("color: green;")
+        self.status_label.setStyleSheet("color: green; padding: 5px;")
 
     def on_ws_disconnected(self):
         self.status_label.setText("🔴 Offline")
-        self.status_label.setStyleSheet("color: red;")
+        self.status_label.setStyleSheet("color: red; padding: 5px;")
 
     def on_ws_error(self, message):
         self.status_label.setText("⚠️ Error")
-        self.status_label.setStyleSheet("color: orange;")
+        self.status_label.setStyleSheet("color: orange; padding: 5px;")
+
+    # --- EVENTS ---
+    def closeEvent(self, event):
+        if self.ws: self.ws.disconnect()
+        Session.save_main_window_size(self.size())
+        super().closeEvent(event)
 
     def show_about(self):
-        QMessageBox.information(
-            self,
-            "About",
-            "Gae dewe iki bro APP ne xixi"
-        )
+        QMessageBox.information(self, "About", "Gae dewe iki bro APP ne xixi")
 
     def show_preferences(self):
         dialog = PreferencesDialog(self)
