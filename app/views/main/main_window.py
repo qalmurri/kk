@@ -61,6 +61,7 @@ class MainWindow(QWidget):
         self.sidebar = QListWidget()
         self.sidebar.setFixedWidth(160)
         self.sidebar.addItems(["Beranda", "Profile"])
+        self.sidebar.setCurrentRow(0)
         
         # Signal: Pindah halaman utama saat menu sidebar diklik
         self.sidebar.currentRowChanged.connect(self.on_sidebar_changed)
