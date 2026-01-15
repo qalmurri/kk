@@ -53,3 +53,6 @@ class CoverTab(QWidget):
 
         # Kirim data ke previewer
         self.preview.update_preview(data)
+
+
+
