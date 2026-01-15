@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt, QAbstractTableModel
 
 class CoverTableModel(QAbstractTableModel):
-    HEADERS = ["ID", "Title", "Status"]
+    HEADERS = ["ID", "Title", "Status", "length", "height", "width", "x_axis", "y_axis", "zoom"]
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -102,7 +102,19 @@ class CoverTableModel(QAbstractTableModel):
             return row["title"]
         if column == 2:
             return row["status"]
-
+        if column == 3:
+            return row["length"]
+        if column == 4:
+            return row["height"]
+        if column == 5:
+            return row["width"]
+        if column == 6:
+            return row["x_axis"]
+        if column == 7:
+            return row["y_axis"]
+        if column == 8:
+            return row["zoom"]
+        
     def headerData(self, section, orientation, role):
         if role == Qt.DisplayRole and orientation == Qt.Horizontal:
             return self.HEADERS[section]
