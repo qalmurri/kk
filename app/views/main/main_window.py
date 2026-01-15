@@ -1,4 +1,6 @@
+from os import wait
 from PySide6.QtWidgets import (
+    QCommandLinkButton,
     QWidget,
     QVBoxLayout,
     QHBoxLayout,
@@ -60,7 +62,7 @@ class MainWindow(QWidget):
         """Membuat navigasi samping"""
         self.sidebar = QListWidget()
         self.sidebar.setFixedWidth(160)
-        self.sidebar.addItems(["Beranda", "Profile"])
+        self.sidebar.addItems(["Beranda", "Pear", "statis", "Profile"])
         self.sidebar.setCurrentRow(0)
         
         # Signal: Pindah halaman utama saat menu sidebar diklik
@@ -84,7 +86,21 @@ class MainWindow(QWidget):
         beranda_layout.addWidget(self.tabs)
         self.main_stack.addWidget(self.beranda_page)
 
-        # --- HALAMAN 2: PROFILE (Kosongan) ---
+        # --- HALAMAN 2: PEAR (KOSONGAN) ---
+        self.pear_page = QWidget()
+        pear_layout = QVBoxLayout(self.pear_page)
+        pear_layout.addWidget(QLabel("Halaman Pear (kosong)"), alignment=Qt.AlignCenter)
+
+        self.main_stack.addWidget(self.pear_page)
+        
+        # --- HALAMAN 3: STATIS (KOSONGAN) ---
+        self.statis_page = QWidget()
+        statis_layout = QVBoxLayout(self.statis_page)
+        statis_layout.addWidget(QLabel("Halaman Statis (kosong)"), alignment=Qt.AlignCenter)
+
+        self.main_stack.addWidget(self.statis_page)
+
+        # --- HALAMAN 4: PROFILE (Kosongan) ---
         self.profile_page = QWidget()
         profile_layout = QVBoxLayout(self.profile_page)
         profile_layout.addWidget(QLabel("Halaman Profile (Kosong)"), alignment=Qt.AlignCenter)
