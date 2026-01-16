@@ -35,7 +35,7 @@ class CoverTab(QWidget):
         splitter.setSizes([300, 500])
         main_layout.addWidget(splitter)
 
-        # SIGNAL
+        # SIGNAL/
         self.table.selectionModel().selectionChanged.connect(
             self.on_row_selected
         )
