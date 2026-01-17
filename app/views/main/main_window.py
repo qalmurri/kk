@@ -1,25 +1,19 @@
-from os import wait
 from PySide6.QtWidgets import (
-    QCommandLinkButton,
     QWidget,
     QVBoxLayout,
     QHBoxLayout,
     QMenuBar,
-    QMenu,
     QMessageBox,
-    QTabWidget,
     QLabel,
     QListWidget,
     QStackedWidget,
-    QFrame
 )
 from PySide6.QtCore import QSize, Qt
 from core.session import Session
 from network.ws_client import WebSocketClient
 from controllers.auth.logout_controller import LogoutController
-from views.preferences_dialog import PreferencesDialog
-
-from views.tabs import DataTab, ActivityTab, DashboardTab, CoverTab
+from .widgets.preferences_dialog import PreferencesDialog
+from .sidebar.scripts.scripts_page import ScriptsPage
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -62,7 +56,7 @@ class MainWindow(QWidget):
         """Membuat navigasi samping"""
         self.sidebar = QListWidget()
         self.sidebar.setFixedWidth(160)
-        self.sidebar.addItems(["Beranda", "Pear", "statis", "Profile"])
+        self.sidebar.addItems(["Beranda", "Scripts", "Pear"])
         self.sidebar.setCurrentRow(0)
         
         # Signal: Pindah halaman utama saat menu sidebar diklik
@@ -72,19 +66,17 @@ class MainWindow(QWidget):
         """Membuat kontainer halaman (Stacked Widget)"""
         self.main_stack = QStackedWidget()
 
-        # --- HALAMAN 1: BERANDA (Berisi Tab Widget) ---
-        self.beranda_page = QWidget()
-        beranda_layout = QVBoxLayout(self.beranda_page)
-        beranda_layout.setContentsMargins(0, 0, 0, 0)
 
-        self.tabs = QTabWidget()
-        self.tabs.addTab(DashboardTab(self), "Dashboard")
-        self.tabs.addTab(DataTab(self), "Data")
-        self.tabs.addTab(ActivityTab(self), "Activity")
-        self.tabs.addTab(CoverTab(self), "Cover")
-        
-        beranda_layout.addWidget(self.tabs)
-        self.main_stack.addWidget(self.beranda_page)
+        # --- HALAMAM 0: BERANDA
+        self.pear_page = QWidget()
+        pear_layout = QVBoxLayout(self.pear_page)
+        pear_layout.addWidget(QLabel("Halaman Pear (kosong)"), alignment=Qt.AlignCenter)
+
+        self.main_stack.addWidget(self.pear_page)
+
+        # --- HALAMAN 1: Scripts  ---
+        self.scripts_page = ScriptsPage(self)
+        self.main_stack.addWidget(self.scripts_page)
 
         # --- HALAMAN 2: PEAR (KOSONGAN) ---
         self.pear_page = QWidget()
@@ -93,20 +85,6 @@ class MainWindow(QWidget):
 
         self.main_stack.addWidget(self.pear_page)
         
-        # --- HALAMAN 3: STATIS (KOSONGAN) ---
-        self.statis_page = QWidget()
-        statis_layout = QVBoxLayout(self.statis_page)
-        statis_layout.addWidget(QLabel("Halaman Statis (kosong)"), alignment=Qt.AlignCenter)
-
-        self.main_stack.addWidget(self.statis_page)
-
-        # --- HALAMAN 4: PROFILE (Kosongan) ---
-        self.profile_page = QWidget()
-        profile_layout = QVBoxLayout(self.profile_page)
-        profile_layout.addWidget(QLabel("Halaman Profile (Kosong)"), alignment=Qt.AlignCenter)
-        
-        self.main_stack.addWidget(self.profile_page)
-
     def _setup_menu_bar(self):
         self.menu_bar = QMenuBar(self)
         

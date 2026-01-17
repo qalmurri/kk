@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QGraphicsScene
-from views.tabs.widgets.graphics_view import InteractiveGraphicsView
+from .graphics_view import InteractiveGraphicsView
 from PySide6.QtGui import QPixmap, QBrush, QColor, QPen, QTransform, QPolygonF, QPainter
 from PySide6.QtCore import Qt, QPointF, QRectF
 from PySide6.QtOpenGLWidgets import QOpenGLWidget

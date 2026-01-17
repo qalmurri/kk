@@ -1,0 +1,2 @@
+from .cover_tab import CoverTab
+from .data_tab import DataTab

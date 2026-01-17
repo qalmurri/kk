@@ -7,8 +7,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt
 
 from models.table.cover_table_model import CoverTableModel
-# 1. PERBAIKAN: Import Class-nya, bukan method-nya
-from views.tabs.widgets.cover_preview import CoverPreview 
+from .widgets.cover_preview import CoverPreview
 
 class CoverTab(QWidget):
     def __init__(self, parent=None):
