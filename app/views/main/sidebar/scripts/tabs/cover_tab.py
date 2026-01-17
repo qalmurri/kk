@@ -1,57 +1,65 @@
-from PySide6.QtWidgets import (
-    QWidget,
-    QHBoxLayout,
-    QTableView,
-    QSplitter
-)
-from PySide6.QtCore import Qt
-
-from models.table.cover_table_model import CoverTableModel
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QSplitter
 from .widgets.cover_preview import CoverPreview
+from PySide6.QtCore import QSortFilterProxyModel, Qt
 
 class CoverTab(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, model, parent=None):
         super().__init__(parent)
-
-        main_layout = QHBoxLayout(self)
+        layout = QVBoxLayout(self)
         
-        # TABLE
+        splitter = QSplitter(Qt.Horizontal)
+        
+        self.proxy_model = QSortFilterProxyModel()
+        self.proxy_model.setSourceModel(model)
+
+        # 1. SETUP TABLE
         self.table = QTableView(self)
-        self.model = CoverTableModel(self)
-        self.table.setModel(self.model)
-        self.table.setSelectionBehavior(QTableView.SelectRows)
+        self.table.setModel(self.proxy_model)
+
+        self.table.setSortingEnabled(True)
+
+        # --- TAMBAHKAN DUA BARIS INI UNTUK SELEKSI 1 BARIS ---
+        # Memastikan yang terpilih adalah seluruh baris, bukan sel individu
+        self.table.setSelectionBehavior(QTableView.SelectRows) 
+        # Memastikan hanya bisa pilih satu baris dalam satu waktu
         self.table.setSelectionMode(QTableView.SingleSelection)
+        # ---------------------------------------------------
+
+        self.table.setAlternatingRowColors(True)
         self.table.horizontalHeader().setStretchLastSection(True)
         
-        # 2. PERBAIKAN: Inisialisasi sebagai Widget
-        self.preview = CoverPreview(self) 
-
-        # SPLITTER
-        splitter = QSplitter(Qt.Horizontal, self)
+        # Sembunyikan kolom teknis jika diperlukan (contoh kolom 3 ke atas)
+        # self.table.setColumnHidden(3, True) 
+        
+        # 2. SETUP PREVIEW
+        self.preview = CoverPreview(self)
+        
         splitter.addWidget(self.table)
-        splitter.addWidget(self.preview) # Sekarang ini adalah widget yang valid
+        splitter.addWidget(self.preview)
+        splitter.setSizes([400, 600]) # Atur proporsi awal
+        layout.addWidget(splitter)
 
-        splitter.setSizes([300, 500])
-        main_layout.addWidget(splitter)
+        # Connect signal
+        self.table.selectionModel().selectionChanged.connect(self.on_selection_changed)
 
-        # SIGNAL/
-        self.table.selectionModel().selectionChanged.connect(
-            self.on_row_selected
-        )
-
-    def on_row_selected(self, selected, deselected):
-        if not selected.indexes():
+    def on_selection_changed(self, selected, deselected):
+        indexes = selected.indexes()
+        if not indexes:
             return
-        
-        # Ambil baris yang diklik
-        row = selected.indexes()[0].row()
-        
-        # 3. Ambil data dictionary lengkap dari model
-        # Pastikan model Anda menyimpan data lengkap di self._data
-        data = self.model._data[row]
 
-        # Kirim data ke previewer
+        # 1. Ambil index dari tabel (Proxy Index)
+        proxy_index = indexes[0]
+
+        # 2. Petakan ke index model asli (Source Index)
+        # Penting agar data tetap benar meski tabel sedang di-sort atau di-filter
+        source_index = self.proxy_model.mapToSource(proxy_index)
+        source_row = source_index.row()
+
+        # 3. Ambil model asli (ScriptsTableModel) melalui proxy
+        source_model = self.proxy_model.sourceModel()
+
+        # 4. Ambil data dari list _data milik model asli
+        data = source_model._data[source_row]
+
+        # Kirim ke previewer
         self.preview.update_preview(data)
-
-
-

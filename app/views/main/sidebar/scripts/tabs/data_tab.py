@@ -1,22 +1,22 @@
+from PySide6.QtCore import QSortFilterProxyModel
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView
-from models.table.item_table_model import ItemTableModel
 
 class DataTab(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, model, parent=None): # Terima model dari parent
         super().__init__(parent)
-
         layout = QVBoxLayout(self)
 
+        # buar proxy model
+        self.proxy_model = QSortFilterProxyModel()
+        self.proxy_model.setSourceModel(model)
+        
         self.table = QTableView(self)
-        self.model = ItemTableModel(self.table)
+        self.table.setModel(self.proxy_model) # Gunakan model bersama
 
-        self.table.setModel(self.model)
+        self.table.setSortingEnabled(True)
 
-        # === TABLE BEHAVIOR ===
+        self.table.setColumnHidden(3, True)
+
         self.table.setSelectionBehavior(QTableView.SelectRows)
-        self.table.setSelectionMode(QTableView.SingleSelection)
-        self.table.setAlternatingRowColors(True)
         self.table.horizontalHeader().setStretchLastSection(True)
-        self.table.setSortingEnabled(False)
-
         layout.addWidget(self.table)
