@@ -1,1 +1,1 @@
-from .scripts.scripts_page import ScriptsSidebar
+from .scripts.scripts_page import ScriptsPage
