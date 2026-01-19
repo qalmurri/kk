@@ -56,7 +56,7 @@ class MainWindow(QWidget):
         """Membuat navigasi samping"""
         self.sidebar = QListWidget()
         self.sidebar.setFixedWidth(160)
-        self.sidebar.addItems(["Beranda", "Scripts", "Pear"])
+        self.sidebar.addItems(["Beranda", "Scripts", "Pear", "Chart"])
         self.sidebar.setCurrentRow(0)
         
         # Signal: Pindah halaman utama saat menu sidebar diklik
@@ -84,6 +84,13 @@ class MainWindow(QWidget):
         pear_layout.addWidget(QLabel("Halaman Pear (kosong)"), alignment=Qt.AlignCenter)
 
         self.main_stack.addWidget(self.pear_page)
+        
+        # --- HALAMAN 3: Chart (KOSONGAN) ---
+        self.chart_page = QWidget()
+        chart_layout = QVBoxLayout(self.chart_page)
+        chart_layout.addWidget(QLabel("Halaman chart (kosong)"), alignment=Qt.AlignCenter)
+
+        self.main_stack.addWidget(self.chart_page)
         
     def _setup_menu_bar(self):
         self.menu_bar = QMenuBar(self)
@@ -126,6 +133,7 @@ class MainWindow(QWidget):
         self.status_label.setStyleSheet("color: red; padding: 5px;")
 
     def on_ws_error(self, message):
+        # belum ada handler
         self.status_label.setText("⚠️ Error")
         self.status_label.setStyleSheet("color: orange; padding: 5px;")
 

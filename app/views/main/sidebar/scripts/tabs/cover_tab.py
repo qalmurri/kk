@@ -25,7 +25,9 @@ class CoverTab(QWidget):
         self.table.setSelectionMode(QTableView.SingleSelection)
         # ---------------------------------------------------
 
-        self.table.setAlternatingRowColors(True)
+        # setAlternatingRowColors untuk selang seling warna
+        #self.table.setAlternatingRowColors(True)
+
         self.table.horizontalHeader().setStretchLastSection(True)
         
         # Sembunyikan kolom teknis jika diperlukan (contoh kolom 3 ke atas)
