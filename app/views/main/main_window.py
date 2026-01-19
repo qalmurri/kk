@@ -12,9 +12,14 @@ from PySide6.QtCore import QSize, Qt
 from core.session import Session
 from network.ws_client import WebSocketClient
 from controllers.auth.logout_controller import LogoutController
+<<<<<<< HEAD
 
 from .sub_menu import PreferencesDialog
 from .sidebar import ScriptsSidebar
+=======
+from .widgets.preferences_dialog import PreferencesDialog
+from .sidebar.scripts.scripts_page import ScriptsPage
+>>>>>>> 6ec9f6e7845e0345b41b9d186459677b7ce1988d
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -57,7 +62,11 @@ class MainWindow(QWidget):
         """Membuat navigasi samping"""
         self.sidebar = QListWidget()
         self.sidebar.setFixedWidth(160)
+<<<<<<< HEAD
         self.sidebar.addItems(["Beranda", "Scripts", "Pear", "statis", "Profile"])
+=======
+        self.sidebar.addItems(["Beranda", "Scripts", "Pear", "Chart"])
+>>>>>>> 6ec9f6e7845e0345b41b9d186459677b7ce1988d
         self.sidebar.setCurrentRow(0)
         
         # Signal: Pindah halaman utama saat menu sidebar diklik
@@ -67,12 +76,26 @@ class MainWindow(QWidget):
         """Membuat kontainer halaman (Stacked Widget)"""
         self.main_stack = QStackedWidget()
 
+<<<<<<< HEAD
         # --- HALAMAN 0: beranda (Berisi Tab Widget) ---
         self.beranda_page = QWidget()
         beranda_layout = QVBoxLayout(self.beranda_page)
         beranda_layout.addWidget(QLabel("Halaman beranda (kosong)"), alignment=Qt.AlignCenter)
 
         self.main_stack.addWidget(self.beranda_page)
+=======
+
+        # --- HALAMAM 0: BERANDA
+        self.pear_page = QWidget()
+        pear_layout = QVBoxLayout(self.pear_page)
+        pear_layout.addWidget(QLabel("Halaman Pear (kosong)"), alignment=Qt.AlignCenter)
+
+        self.main_stack.addWidget(self.pear_page)
+
+        # --- HALAMAN 1: Scripts  ---
+        self.scripts_page = ScriptsPage(self)
+        self.main_stack.addWidget(self.scripts_page)
+>>>>>>> 6ec9f6e7845e0345b41b9d186459677b7ce1988d
 
         # --- HALAMAN 1: Scripts (Berisi Tab Widget) ---
         self.scripts_sidebar = ScriptsSidebar(self)
@@ -85,20 +108,13 @@ class MainWindow(QWidget):
 
         self.main_stack.addWidget(self.pear_page)
         
-        # --- HALAMAN 3: STATIS (KOSONGAN) ---
-        self.statis_page = QWidget()
-        statis_layout = QVBoxLayout(self.statis_page)
-        statis_layout.addWidget(QLabel("Halaman Statis (kosong)"), alignment=Qt.AlignCenter)
+        # --- HALAMAN 3: Chart (KOSONGAN) ---
+        self.chart_page = QWidget()
+        chart_layout = QVBoxLayout(self.chart_page)
+        chart_layout.addWidget(QLabel("Halaman chart (kosong)"), alignment=Qt.AlignCenter)
 
-        self.main_stack.addWidget(self.statis_page)
-
-        # --- HALAMAN 4: PROFILE (Kosongan) ---
-        self.profile_page = QWidget()
-        profile_layout = QVBoxLayout(self.profile_page)
-        profile_layout.addWidget(QLabel("Halaman Profile (Kosong)"), alignment=Qt.AlignCenter)
+        self.main_stack.addWidget(self.chart_page)
         
-        self.main_stack.addWidget(self.profile_page)
-
     def _setup_menu_bar(self):
         self.menu_bar = QMenuBar(self)
         
@@ -140,6 +156,7 @@ class MainWindow(QWidget):
         self.status_label.setStyleSheet("color: red; padding: 5px;")
 
     def on_ws_error(self, message):
+        # belum ada handler
         self.status_label.setText("⚠️ Error")
         self.status_label.setStyleSheet("color: orange; padding: 5px;")
 
