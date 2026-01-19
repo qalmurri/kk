@@ -12,8 +12,8 @@ from PySide6.QtCore import QSize, Qt
 from core.session import Session
 from network.ws_client import WebSocketClient
 from controllers.auth.logout_controller import LogoutController
-from .widgets.preferences_dialog import PreferencesDialog
-from .sidebar.scripts.scripts_page import ScriptsPage
+from .sub_menu import PreferencesDialog
+from .sidebar import ScriptsPage
 
 class MainWindow(QWidget):
     def __init__(self):
