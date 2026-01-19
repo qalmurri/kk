@@ -1,13 +1,9 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QGraphicsScene
-<<<<<<< HEAD
-=======
 from .graphics_view import InteractiveGraphicsView
->>>>>>> 6ec9f6e7845e0345b41b9d186459677b7ce1988d
 from PySide6.QtGui import QPixmap, QBrush, QColor, QPen, QTransform, QPolygonF, QPainter
 from PySide6.QtCore import Qt, QPointF, QRectF
 from PySide6.QtOpenGLWidgets import QOpenGLWidget
-import math, requests
-from .graphics_view import InteractiveGraphicsView
+import math, os, requests
 
 class CoverPreview(QWidget):
     def __init__(self, parent=None):

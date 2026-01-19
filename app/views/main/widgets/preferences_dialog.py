@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QCheckBox,
     QPushButton,
+    QLabel
 )
 
 class PreferencesDialog(QDialog):
