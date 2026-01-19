@@ -11,8 +11,10 @@ class BaseViewSet(ViewSet):
     """
     Base ViewSet untuk semua resource
     """
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    #authentication_classes = [JWTAuthentication]
+    #permission_classes = [IsAuthenticated]
+    authentication_classes = []
+    permission_classes = []
     throttle_classes = []
 
     # ---------- Response Helpers ----------
