@@ -1,8 +1,8 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QToolBar
-from PySide6.QtGui import QAction # Digunakan untuk membuat item di toolbar
+from PySide6.QtGui import QAction
 from PySide6.QtCore import Qt
 from .tabs import DataTab, CoverTab
-from models.table.cover_table_model import CoverTableModel
+from models.table.item_table_model import DataTableModel
 
 class ScriptsPage(QWidget):
     def __init__(self, parent=None):
@@ -27,7 +27,7 @@ class ScriptsPage(QWidget):
         layout.addWidget(self.toolbar)
 
         # 3. Inisialisasi Tab Widget (Area Utama)
-        self.shared_model = CoverTableModel(self)
+        self.shared_model = DataTableModel(self)
         self.tabs = QTabWidget()
         self.tab_data = DataTab(model=self.shared_model, parent=self)
         self.tab_cover = CoverTab(model=self.shared_model, parent=self)

@@ -6,7 +6,7 @@ class ScriptsQueryRepository(BaseQueryRepository):
     model = Script
 
     @classmethod
-    def get_queryset(cls):
+    def get_detail_queryset(cls):
         return (
             cls.model.objects
             .select_related("institute", "size")
@@ -16,6 +16,23 @@ class ScriptsQueryRepository(BaseQueryRepository):
                 "scripts_Flag",
                 "scripts_Description",
                 "scripts_Note",
+                "scripts_ISBN",
+                "scripts_ScriptsProcess",
+                "scripts_Cover",
+            )
+        )
+
+    @classmethod
+    def get_queryset(cls):
+        return (
+            cls.model.objects
+            .select_related("institute", "size")
+            .prefetch_related(
+                "scripts_ScriptsOrderer__orderer__institute",
+                "scripts_Status",
+                "scripts_Flag",
+                #"scripts_Description",
+                #"scripts_Note",
                 "scripts_ISBN",
                 "scripts_ScriptsProcess",
                 "scripts_Cover",

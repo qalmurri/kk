@@ -46,16 +46,16 @@ class ScriptsReadSerializer(BaseReadSerializer):
         many=True,
         read_only=True
     )
-    descriptions = DescriptionReadSerializer(
-        source="scripts_Description",
-        many=True,
-        read_only=True
-    )
-    notes = NoteReadSerializer(
-        source="scripts_Note",
-        many=True,
-        read_only=True
-    )
+    #descriptions = DescriptionReadSerializer(
+    #    source="scripts_Description",
+    #    many=True,
+    #    read_only=True
+    #)
+    #notes = NoteReadSerializer(
+    #    source="scripts_Note",
+    #    many=True,
+    #    read_only=True
+    #)
     identification = IsbnReadSerializer(
         source="scripts_ISBN",
         many=True,
@@ -78,8 +78,8 @@ class ScriptsReadSerializer(BaseReadSerializer):
             "orderers",
             "status",
             "flag",
-            "descriptions",
-            "notes",
+            #"descriptions",
+            #"notes",
             "identification",
             "process",
             "cover",

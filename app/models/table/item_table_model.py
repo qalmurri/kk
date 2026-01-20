@@ -1,46 +1,153 @@
-from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
+from PySide6.QtCore import Qt, QAbstractTableModel
+
+class DataTableModel(QAbstractTableModel):
+    HEADERS = [
+        "id",
+        #"created_at",
+        #"updated_at",
+        "title",
+        "alias",
+        "is_active",
+        "entry_date",
+        "finish_date",
+
+        #one-to-one
+        "institute", 
+        "size",
+
+        #one-to-many
+        "orderers",
+        "status",
+        "flag",
+        "descriptions",
+        "notes",
+        "identification",
+        "process",
+        "cover",
 
 
-class ItemTableModel(QAbstractTableModel):
+
+        "Status",
+        "length",
+        "height",
+        "width",
+        "x_axis",
+        "y_axis",
+        "zoom"
+    ]
+
     def __init__(self, parent=None):
         super().__init__(parent)
+        self._data = [
+            {
+                "id": 1,
+                "created_at": "",
+                "updated_at": "",
+                "thumbnail": "cover2.jpeg",
+                "length": 12,
+                "height": 210,
+                "width": 148,
+                "x_axis": -2,
+                "y_axis": 0,
+                "zoom": 0.195 ,
 
-        # === NAMA KOLOM (PONDASI) ===
-        self.headers = [
-            "ID",
-            "Name",
-            "Category",
-            "Status",
-            "Created At",
-            "Updated At"
+                "title": "Cover A", #script_id
+                "status": "Draft"
+            },
+            {
+                "id": 2,
+                "created_at": "",
+                "updated_at": "",
+                "thumbnail": "cover.jpeg",
+                "length": 15,
+                "height": 100,
+                "width": 50,
+                "x_axis": 0,
+                "y_axis": 0,
+                "zoom": 0.3,
+
+                "title": "Cover B", #script_id
+                "status": "Published",
+            },
+            {
+                "id": 3,
+                "created_at": "",
+                "updated_at": "",
+                "thumbnail": "None",
+                "length": 20,
+                "height": 50,
+                "width": 25,
+                "x_axis": 0,
+                "y_axis": 0,
+                "zoom": 0.2,
+
+                "title": "Cover C",
+                "status": "Published",
+            },
+            {
+                "id": 4,
+                "created_at": "",
+                "updated_at": "",
+                "thumbnail": "None",
+                "length": 25,
+                "height": 330,
+                "width": 215,
+                "x_axis": 0,
+                "y_axis": 0,
+                "zoom": 0.2,
+
+                "title": "Cover C", #script_id
+                "status": "Published",
+            },
+            {
+                "id": 5,
+                "created_at": "",
+                "updated_at": "",
+                "thumbnail": "None",
+                "length": 25,
+                "height": 210,
+                "width": 148,
+                "x_axis": 0,
+                "y_axis": 0,
+                "zoom": 0.2,
+
+                "title": "Cover C", #script_id
+                "status": "Published",
+            }
         ]
 
-        # === DATA KOSONG DULU ===
-        self._data = []
-
-    # ======================
-    # REQUIRED METHODS
-    # ======================
-    def rowCount(self, parent=QModelIndex()):
+    def rowCount(self, parent=None):
         return len(self._data)
 
-    def columnCount(self, parent=QModelIndex()):
-        return len(self.headers)
+    def columnCount(self, parent=None):
+        return len(self.HEADERS)
 
     def data(self, index, role=Qt.DisplayRole):
-        if not index.isValid():
+        if not index.isValid() or role != Qt.DisplayRole:
             return None
 
-        if role == Qt.DisplayRole:
-            return ""  # kosong dulu
+        row = self._data[index.row()]
+        column = index.column()
 
-        return None
-
-    def headerData(self, section, orientation, role=Qt.DisplayRole):
-        if role != Qt.DisplayRole:
-            return None
-
-        if orientation == Qt.Horizontal:
-            return self.headers[section]
-
-        return section + 1
+        if column == 0:
+            return row["id"]
+        if column == 1:
+            return row["title"]
+        if column == 2:
+            return row["status"]
+        if column == 3:
+            return row["length"]
+        if column == 4:
+            return row["height"]
+        if column == 5:
+            return row["width"]
+        if column == 6:
+            return row["x_axis"]
+        if column == 7:
+            return row["y_axis"]
+        if column == 8:
+            return row["zoom"]
+        
+    def headerData(self, section, orientation, role):
+        if role == Qt.DisplayRole and orientation == Qt.Horizontal:
+            return self.HEADERS[section]
