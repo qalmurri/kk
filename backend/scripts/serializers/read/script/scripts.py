@@ -84,3 +84,27 @@ class ScriptsReadSerializer(BaseReadSerializer):
             "process",
             "cover",
         )
+
+class ScriptsPartReadSerializer(BaseReadSerializer):
+    institute = InstituteReadSerializer(
+        read_only=True
+    )
+
+    class Meta(BaseReadSerializer.Meta):
+        model = Script
+        fields = (
+            "id",
+            "title",
+            "alias",
+            "is_active",
+            "institute",
+        )
+
+class ScriptsCardReadSerializer(BaseReadSerializer):
+    class Meta(BaseReadSerializer.Meta):
+        model = Script
+        fields = (
+            "id",
+            "title",
+            "is_active",
+        )

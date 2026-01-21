@@ -1,6 +1,7 @@
 from scripts.serializers import PolicyBasedSerializer
+from .mixins import DynamicFieldsMixin
 
-class BaseReadSerializer(PolicyBasedSerializer):
+class BaseReadSerializer(PolicyBasedSerializer, DynamicFieldsMixin):
     class Meta:
         abstract = True
         fields = (

@@ -22,9 +22,36 @@ class ScriptsQueryRepository(BaseQueryRepository):
             )
         )
 
+# ORI    @classmethod
+# ORI    def query(cls, params):
+# ORI        qs = cls.get_queryset()
+# ORI
+# ORI#        if "active" not in params:
+# ORI#            qs = qs.filter(is_active=True)
+# ORI
+# ORI        if params.get("active") in ("0", "1"):
+# ORI            qs = qs.filter(
+# ORI                is_active=bool(int(params["active"]))
+# ORI            )
+# ORI
+# ORI        if keyword := params.get("title"):
+# ORI            qs = qs.filter(
+# ORI                Q(title__icontains=keyword) |
+# ORI                Q(alias__icontains=keyword)
+# ORI            )
+# ORI
+# ORI        return qs
+
     @classmethod
     def query(cls, params):
-        qs = cls.get_queryset()
+        view = params.get("view", "data")
+
+        if view == "part":
+            qs = cls.model.objects.select_related(
+                "institute"
+            )
+        else:
+            qs = cls.get_queryset()
 
 #        if "active" not in params:
 #            qs = qs.filter(is_active=True)

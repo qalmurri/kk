@@ -7,18 +7,59 @@ from scripts.repositories.query.script import ScriptsQueryRepository
 
 class ScriptViewSet(BaseViewSet):
     # GET /scripts/ = /scripts/?title=...&active=...
-    def list(self, request):
+    # =====
+    # GET /script/?view=data
+    # GET /script/?view=part
+    # GET /script/?view=card
+    # GET /script/?fields=title,alias,institute
+    # GET /script/?view=part&include=cover,status
+    def get_serializer_class(self):
+        view_mode = self.request.query_params.get("view", "data")
+
+        if view_mode == "part":
+            from scripts.serializers.read.script.scripts import (
+                ScriptsPartReadSerializer
+            )
+            return ScriptsPartReadSerializer
+        
+        if view_mode == "card":
+            from scripts.serializers.read.script.scripts import (
+                ScriptsCardReadSerializer
+            )
+            return ScriptsCardReadSerializer
+        
+        return ScriptsReadSerializer
+
+# ORI    def list(self, request):
+# ORI        queryset = ScriptsQueryRepository.query(
+# ORI            request.query_params
+# ORI            )
+# ORI        serializer = ScriptsReadSerializer(
+# ORI            queryset,
+# ORI            many=True
+# ORI        )
+# ORI        return self.success(
+# ORI            serializer.data
+# ORI        )
+
+    def list (self, request):
         queryset = ScriptsQueryRepository.query(
             request.query_params
-            )
-        serializer = ScriptsReadSerializer(
+        )
+        serializer_class = self.get_serializer_class()
+
+        fields = request.query_params.get("fields") #
+        field_list = fields.split(",") if fields else None #
+
+        serializer = serializer_class(
             queryset,
-            many=True
+            many=True,
+            fields=field_list
         )
-        return self.success(
-            serializer.data
-        )
-    
+
+        return self.success(serializer.data)
+
+    # ===========================
     # POST /scripts/
     def create(self, request):
         serializer = ScriptsWriteSerializer(
