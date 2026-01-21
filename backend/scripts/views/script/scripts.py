@@ -30,18 +30,6 @@ class ScriptViewSet(BaseViewSet):
         
         return ScriptsReadSerializer
 
-# ORI    def list(self, request):
-# ORI        queryset = ScriptsQueryRepository.query(
-# ORI            request.query_params
-# ORI            )
-# ORI        serializer = ScriptsReadSerializer(
-# ORI            queryset,
-# ORI            many=True
-# ORI        )
-# ORI        return self.success(
-# ORI            serializer.data
-# ORI        )
-
     def list (self, request):
         queryset = ScriptsQueryRepository.query(
             request.query_params
