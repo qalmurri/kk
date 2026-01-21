@@ -1,0 +1,20 @@
+meta {
+  name: Card
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://127.0.01:8000/script/?view=card
+  body: none
+  auth: inherit
+}
+
+params:query {
+  view: card
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

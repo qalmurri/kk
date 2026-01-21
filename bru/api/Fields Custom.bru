@@ -1,13 +1,17 @@
 meta {
-  name: Data
+  name: Fields Custom
   type: http
   seq: 1
 }
 
 get {
-  url: http://127.0.0.1:8000/script/
+  url: http://127.0.0.1:8000/script/?fields=title,alias,institute
   body: none
   auth: none
+}
+
+params:query {
+  fields: title,alias,institute
 }
 
 headers {
