@@ -88,6 +88,30 @@ class ScriptsReadSerializer(BaseReadSerializer):
             "cover",
         )
 
+# DATA UNTUK TABEL DIBAGI MENJADI BEBERAPA TABS; DATA, COVER! BELUM DI IMPLEMENTASI 
+class ScriptSidebarReadSerializer(
+        ExpandableFieldsMixin,
+        BaseReadSerializer
+):
+    institute = InstituteReadSerializer(
+        read_only=True
+    )
+    size = SizeReadSerializer(
+        read_only = True
+    )
+
+    class Meta(BaseReadSerializer.Meta):
+        model = Script
+        fields = (
+            "id",
+            "title",
+            "alias",
+            "is_active",
+            "institute",
+            "size",
+        )
+
+#testing SUDAH IMPLEMENTASI
 class ScriptsPartReadSerializer(
     ExpandableFieldsMixin,
     BaseReadSerializer,
@@ -107,6 +131,7 @@ class ScriptsPartReadSerializer(
             "institute",
         )
 
+# testing SUDAH DI IMPLEMENTASI
 class ScriptsCardReadSerializer(BaseReadSerializer):
     class Meta(BaseReadSerializer.Meta):
         model = Script
@@ -115,3 +140,5 @@ class ScriptsCardReadSerializer(BaseReadSerializer):
             "title",
             "is_active",
         )
+
+

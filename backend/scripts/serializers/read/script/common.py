@@ -12,6 +12,9 @@ class SizeReadSerializer(BaseReadSerializer):
             "name",
         )
 
+class SizeMainReadSerializer():
+    pass
+
 class InstituteReadSerializer(BaseReadSerializer):
     '''institute read serializer'''
     class Meta(BaseReadSerializer.Meta):
