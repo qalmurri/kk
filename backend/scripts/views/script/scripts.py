@@ -4,6 +4,7 @@ from scripts.serializers.read.script import ScriptsReadSerializer
 from scripts.serializers.write.script import ScriptsWriteSerializer
 from scripts.repositories.command.script import ScriptsCommandRepository
 from scripts.repositories.query.script import ScriptsQueryRepository
+from scripts.include import parse_include_param
 
 class ScriptViewSet(BaseViewSet):
     # GET /scripts/ = /scripts/?title=...&active=...
@@ -34,15 +35,20 @@ class ScriptViewSet(BaseViewSet):
         queryset = ScriptsQueryRepository.query(
             request.query_params
         )
+
         serializer_class = self.get_serializer_class()
 
         fields = request.query_params.get("fields") #
         field_list = fields.split(",") if fields else None #
-
+        includes = parse_include_param(
+            request.query_params.get("include")
+        )
+        print(includes)
         serializer = serializer_class(
             queryset,
             many=True,
-            fields=field_list
+            fields=field_list,
+            context={"includes": includes}
         )
 
         return self.success(serializer.data)

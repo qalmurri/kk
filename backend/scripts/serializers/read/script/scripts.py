@@ -4,6 +4,9 @@ from .common import (
     InstituteReadSerializer,
     SizeReadSerializer
 )
+from scripts.serializers.read.base_expandable import ExpandableFieldsMixin
+from scripts.serializers.read.mixins import DynamicFieldsMixin
+
 from .flag import FlagReadSerializer
 from .isbn import IsbnReadSerializer
 from .cover import CoverReadSerializer
@@ -85,7 +88,11 @@ class ScriptsReadSerializer(BaseReadSerializer):
             "cover",
         )
 
-class ScriptsPartReadSerializer(BaseReadSerializer):
+class ScriptsPartReadSerializer(
+    ExpandableFieldsMixin,
+    BaseReadSerializer,
+    #DynamicFieldsMixin,
+):
     institute = InstituteReadSerializer(
         read_only=True
     )
