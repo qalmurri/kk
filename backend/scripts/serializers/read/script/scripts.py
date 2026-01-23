@@ -115,7 +115,6 @@ class ScriptSidebarReadSerializer(
 class ScriptsPartReadSerializer(
     ExpandableFieldsMixin,
     BaseReadSerializer,
-    #DynamicFieldsMixin,
 ):
     institute = InstituteReadSerializer(
         read_only=True
