@@ -26,7 +26,10 @@ SCRIPTS_BASE_FIELDS = (
             "size",
 )
 
-class ScriptsReadSerializer(BaseReadSerializer):
+class ScriptsReadSerializer(
+        ExpandableFieldsMixin,
+        BaseReadSerializer
+):
     institute = InstituteReadSerializer(
         read_only=True
     )
