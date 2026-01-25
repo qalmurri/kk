@@ -31,6 +31,7 @@ class ScriptViewSet(BaseViewSet):
         
         return ScriptsReadSerializer
 
+    # ini jangan di rubah! Diperlukan untuk pengambilkan data dengan field custom. 
     def list (self, request):
         queryset = ScriptsQueryRepository.query(
             request.query_params
@@ -69,6 +70,10 @@ class ScriptViewSet(BaseViewSet):
         )
 
     # GET /scripts/{id}/
+    # GET /api/scripts/1?include=*
+    # lazy expand 
+# GET /api/scripts/1/status
+# GET /api/scripts/1/notes
     def retrieve(self, request, pk=None):
         obj = ScriptsQueryRepository.get_by_id(
             pk

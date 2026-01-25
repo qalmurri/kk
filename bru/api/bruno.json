@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "api",
+  "name": "API",
   "type": "collection",
   "ignore": [
     "node_modules",

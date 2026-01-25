@@ -1,17 +1,17 @@
 meta {
-  name: Fields Custom
+  name: Data (Belum Implementasi)
   type: http
   seq: 1
 }
 
 get {
-  url: http://127.0.0.1:8000/script/?fields=title,alias,institute
+  url: http://127.0.0.1:8000/script/1?include=cover
   body: none
   auth: none
 }
 
 params:query {
-  fields: title,alias,institute
+  include: cover
 }
 
 headers {
