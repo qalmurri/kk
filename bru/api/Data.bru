@@ -1,0 +1,20 @@
+meta {
+  name: Data
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://127.0.01:8000/script/?view=data
+  body: none
+  auth: inherit
+}
+
+params:query {
+  view: data
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

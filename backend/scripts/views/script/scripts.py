@@ -43,7 +43,6 @@ class ScriptViewSet(BaseViewSet):
         includes = parse_include_param(
             request.query_params.get("include")
         )
-        print(includes)
         serializer = serializer_class(
             queryset,
             many=True,
