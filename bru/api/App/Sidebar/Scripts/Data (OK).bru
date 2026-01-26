@@ -1,18 +1,18 @@
 meta {
-  name: Testing
+  name: Data (OK)
   type: http
-  seq: 3
+  seq: 1
 }
 
 get {
-  url: http://127.0.0.1:8000/script/?view=part&include=cover
+  url: http://127.0.0.1:8000/script/?fields=id,title,alias,is_active,entry_date,finish_date,institute,size&include=orderers,status,flag,identification,process,cover
   body: none
   auth: none
 }
 
 params:query {
-  view: part
-  include: cover
+  fields: id,title,alias,is_active,entry_date,finish_date,institute,size
+  include: orderers,status,flag,identification,process,cover
 }
 
 headers {

@@ -44,6 +44,11 @@ class CoverTab(QWidget):
         # Connect signal
         self.table.selectionModel().selectionChanged.connect(self.on_selection_changed)
 
+        self.table.setColumnHidden(2, True)
+        self.table.setColumnHidden(3, True)
+        self.table.setColumnHidden(4, True)
+        self.table.setColumnHidden(5, True)
+        
     def on_selection_changed(self, selected, deselected):
         indexes = selected.indexes()
         if not indexes:

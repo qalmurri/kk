@@ -9,6 +9,6 @@ class BaseReadSerializer(
         abstract = True
         fields = (
             "id",
-            "created_at",
-            "updated_at",
+#             "created_at",
+#             "updated_at",
         )

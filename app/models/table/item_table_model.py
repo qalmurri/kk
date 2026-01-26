@@ -3,37 +3,33 @@ from PySide6.QtCore import Qt, QAbstractTableModel
 class DataTableModel(QAbstractTableModel):
     HEADERS = [
         "id",
-        #"created_at",
-        #"updated_at",
         "title",
         "alias",
         "is_active",
         "entry_date",
         "finish_date",
 
-        #one-to-one
-        "institute", 
-        "size",
-
-        #one-to-many
-        "orderers",
-        "status",
-        "flag",
-        "descriptions",
-        "notes",
-        "identification",
-        "process",
-        "cover",
+#         #one-to-one
+#         "institute", 
+#         "size",
+# 
+#         #one-to-many
+#         "orderers",
+#         "status",
+#         "flag",
+#         "identification",
+#         "process",
+#         "cover",
 
 
-
-        "Status",
-        "length",
-        "height",
-        "width",
-        "x_axis",
-        "y_axis",
-        "zoom"
+# 
+#         "Status",
+#         "length",
+#         "height",
+#         "width",
+#         "x_axis",
+#         "y_axis",
+#         "zoom"
     ]
 
     def transform_api_data(self, scripts: list[dict]) -> list[dict]:
@@ -106,8 +102,6 @@ class DataTableModel(QAbstractTableModel):
         self._data = [
             {
                 "id": 1,
-                "created_at": "",
-                "updated_at": "",
                 "thumbnail": "cover2.jpeg",
                 "length": 12,
                 "height": 210,
@@ -121,8 +115,6 @@ class DataTableModel(QAbstractTableModel):
             },
             {
                 "id": 2,
-                "created_at": "",
-                "updated_at": "",
                 "thumbnail": "cover.jpeg",
                 "length": 15,
                 "height": 100,
@@ -136,8 +128,6 @@ class DataTableModel(QAbstractTableModel):
             },
             {
                 "id": 3,
-                "created_at": "",
-                "updated_at": "",
                 "thumbnail": "None",
                 "length": 20,
                 "height": 50,
@@ -151,8 +141,6 @@ class DataTableModel(QAbstractTableModel):
             },
             {
                 "id": 4,
-                "created_at": "",
-                "updated_at": "",
                 "thumbnail": "None",
                 "length": 25,
                 "height": 330,
@@ -166,8 +154,6 @@ class DataTableModel(QAbstractTableModel):
             },
             {
                 "id": 5,
-                "created_at": "",
-                "updated_at": "",
                 "thumbnail": "None",
                 "length": 25,
                 "height": 210,
@@ -199,20 +185,32 @@ class DataTableModel(QAbstractTableModel):
         if column == 1:
             return row["title"]
         if column == 2:
-            return row["status"]
+            return row["alias"]
         if column == 3:
-            return row["length"]
+            return row["is_active"]
         if column == 4:
-            return row["height"]
+            return row["entry_date"]
         if column == 5:
-            return row["width"]
-        if column == 6:
-            return row["x_axis"]
-        if column == 7:
-            return row["y_axis"]
-        if column == 8:
-            return row["zoom"]
+            return row["finish_date"]
         
+#         if column == 6:
+#             return row["institute"]
+#         if column == 7:
+#             return row["size"]
+#         
+#         if column == 8:
+#             return row["orderers"]
+#         if column == 9:
+#             return row["status"]
+#         if column == 10:
+#             return row["flag"]
+#         if column == 11:
+#             return row["identification"]
+#         if column == 12:
+#             return row["process"]
+#         if column == 13:
+#             return row["cover"]
+
     def headerData(self, section, orientation, role):
         if role == Qt.DisplayRole and orientation == Qt.Horizontal:
             return self.HEADERS[section]
