@@ -13,10 +13,11 @@ class DataTab(QWidget):
         self.table = QTableView(self)
         self.table.setModel(self.proxy_model) # Gunakan model bersama
 
-        self.table.setSortingEnabled(True)
+        # self.table.setSortingEnabled(True)
 
         self.table.setColumnHidden(3, True)
 
         self.table.setSelectionBehavior(QTableView.SelectRows)
+        self.table.setSelectionMode(QTableView.SingleSelection)
         self.table.horizontalHeader().setStretchLastSection(True)
         layout.addWidget(self.table)

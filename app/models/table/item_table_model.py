@@ -1,6 +1,11 @@
 from PySide6.QtCore import Qt, QAbstractTableModel
 
 class DataTableModel(QAbstractTableModel):
+#      def set_data(self, data):
+#         self.beginResetModel()
+#         self._data = data
+#         self.endResetModel()
+        
     HEADERS = [
         "id",
         "title",

@@ -16,7 +16,7 @@ class CoverTab(QWidget):
         self.table = QTableView(self)
         self.table.setModel(self.proxy_model)
 
-        self.table.setSortingEnabled(True)
+        # self.table.setSortingEnabled(True)
 
         # --- TAMBAHKAN DUA BARIS INI UNTUK SELEKSI 1 BARIS ---
         # Memastikan yang terpilih adalah seluruh baris, bukan sel individu
