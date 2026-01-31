@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QSplitter
 from .widgets.cover_preview import CoverPreview
-from PySide6.QtCore import QSortFilterProxyModel, Qt
+from PySide6.QtCore import Qt
 
 class CoverTab(QWidget):
     def __init__(self, proxy, selection_model, parent=None):
@@ -11,28 +11,8 @@ class CoverTab(QWidget):
 
         self.table = QTableView(self)
         self.table.setModel(proxy)
-
-        # self.table.setSortingEnabled(True)
-
-        # --- TAMBAHKAN DUA BARIS INI UNTUK SELEKSI 1 BARIS ---
-        # Memastikan yang terpilih adalah seluruh baris, bukan sel individu
-        self.table.setSelectionBehavior(QTableView.SelectRows) 
-        # Memastikan hanya bisa pilih satu baris dalam satu waktu
-        self.table.setSelectionMode(QTableView.SingleSelection)
-        # ---------------------------------------------------
-
-        # setAlternatingRowColors untuk selang seling warna
-        #self.table.setAlternatingRowColors(True)
-
-        self.table.horizontalHeader().setStretchLastSection(True)
-        
-        # Sembunyikan kolom teknis jika diperlukan (contoh kolom 3 ke atas)
-        # self.table.setColumnHidden(3, True) 
-        
-        # shared selection
         self.table.setSelectionModel(selection_model)
 
-        # 2. SETUP PREVIEW
         self.preview = CoverPreview(self)
         
         splitter.addWidget(self.table)
@@ -40,8 +20,6 @@ class CoverTab(QWidget):
         splitter.setSizes([400, 600]) # Atur proporsi awal
         layout.addWidget(splitter)
 
-        # Connect signal seleksi data sinkon untuk preview
-        # self.table.selectionModel().selectionChanged.connect(self.on_selection_changed)
         selection_model.selectionChanged.connect(
                 self.on_selection_changed
                 )
@@ -55,23 +33,6 @@ class CoverTab(QWidget):
         indexes = selected.indexes()
         if not indexes:
             return
-
-        # 1. Ambil index dari tabel (Proxy Index)
-        # proxy_index = indexes[0]
-
-        # # 2. Petakan ke index model asli (Source Index)
-        # # Penting agar data tetap benar meski tabel sedang di-sort atau di-filter
-        # source_index = self.proxy_model.mapToSource(proxy_index)
-        # source_row = source_index.row()
-
-        # # 3. Ambil model asli (ScriptsTableModel) melalui proxy
-        # source_model = self.proxy_model.sourceModel()
-
-        # # 4. Ambil data dari list _data milik model asli
-        # data = source_model._data[source_row]
-
-        # # Kirim ke previewer
-        # self.preview.update_preview(data)
         proxy_index = indexes[0]
         source_index = proxy_index.model().mapToSource(proxy_index)
 

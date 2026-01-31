@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView
 
-class DataTab(QWidget):
+class KesekTab(QWidget):
     def __init__(self, proxy, selection_model, parent=None):
         super().__init__(parent)
 
