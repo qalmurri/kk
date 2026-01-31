@@ -23,4 +23,18 @@ SCRIPT_INCLUDES = {
         "prefetch": "scripts_ScriptsProcess",
         "many": True,
     },
+    "flag": {
+        "serializer": "scripts.serializers.read.script.flag.FlagReadSerializer",
+        "source": "scripts_Flag",
+        "prefetch": "scripts_Flag",
+        "many": True,
+        },
+    "identification": {
+        "serializer": "scripts.serializers.read.script.isbn.IsbnReadSerializer",
+        "source": "scripts_ISBN",
+        "prefetch": "scripts_ISBN",
+        "many": True,
+        }
+
+
 }

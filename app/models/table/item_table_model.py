@@ -13,28 +13,38 @@ class DataTableModel(QAbstractTableModel):
         "is_active",
         "entry_date",
         "finish_date",
+        "institute", 
+        "size",
 
-#         #one-to-one
-#         "institute", 
-#         "size",
-# 
-#         #one-to-many
-#         "orderers",
-#         "status",
-#         "flag",
-#         "identification",
-#         "process",
-#         "cover",
+#DESAINER/COVER
+        "Desainer" # <= Status (labelstatus & sectionstatus)
+        "process", # <= process (bymade & sectionmade)
+        "length",
+        "height",
+        "width",
+        "x_axis",
+        "y_axis",
+        "zoom",
 
+#LAYOTER
+        "Layouter", # <= Status (labelstatus & sectionstatus)
+        "process", # <= Process (bymade & sectionmade)
+        "file", # flag <= (sectionflag & is_active)
+        "photo", # flag <= (sectionflag & is_active)
+        "cv", # flag <= (sectionflag & is_active)
+        "sinopsis", # flag <= (sectionflag & is_active)
+        "editor", # flag <= (sectionflag & is_active)
+        "kata pengantar", # flag <= (sectionflag & is_active)
+        "daftar isi", # flag <= (sectionflag & is_active)
+        "daftar pustaka", # flag <= (sectionflag & is_active)
 
-# 
-#         "Status",
-#         "length",
-#         "height",
-#         "width",
-#         "x_axis",
-#         "y_axis",
-#         "zoom"
+#ISBN
+        "isbn", # <= status (labelstatus & sectionstatus)
+        "identification", # <= (typeisbn & isbn)
+        
+#PRODUKSI
+        "Produksi" # <= status (labelstatus & sectionstatus)
+        "process", # <= process (bymade & sectionmade)
     ]
 
     def transform_api_data(self, scripts: list[dict]) -> list[dict]:

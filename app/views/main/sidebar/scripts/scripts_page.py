@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QToolBar, QAbstractItemView, QLineEdit
 from PySide6.QtGui import QAction
 from PySide6.QtCore import QSortFilterProxyModel, Qt, QItemSelectionModel
-from .tabs import DataTab, CoverTab, KesekTab
+from .tabs import DataTab, Data2Tab, CoverTab, KesekTab
 from models.table.item_table_model import DataTableModel
 
 class ScriptsPage(QWidget):
@@ -39,6 +39,13 @@ class ScriptsPage(QWidget):
             selection_model=self.shared_selection,
             parent=self
         )
+        
+        self.tab_data2 = Data2Tab(
+            proxy=self.shared_proxy,
+            selection_model=self.shared_selection,
+            parent=self
+        )
+        
         self.tab_kesek = KesekTab(
             proxy=self.shared_proxy,
             selection_model=self.shared_selection,
@@ -51,9 +58,11 @@ class ScriptsPage(QWidget):
         )
 
         self._apply_global_table_settings(self.tab_data.table)
+        self._apply_global_table_settings(self.tab_data2.table)
         self._apply_global_table_settings(self.tab_cover.table)
         self._apply_global_table_settings(self.tab_kesek.table)
 
+        self.tabs.addTab(self.tab_data2, "Data2")
         self.tabs.addTab(self.tab_data, "Data")
         self.tabs.addTab(self.tab_cover, "Cover")
         self.tabs.addTab(self.tab_kesek, "Kesek")

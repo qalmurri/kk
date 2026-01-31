@@ -5,14 +5,14 @@ meta {
 }
 
 get {
-  url: http://127.0.0.1:8000/script/?fields=id,title,alias,is_active,entry_date,finish_date,institute,size&include=orderers,status,flag,identification,process,cover
+  url: http://127.0.0.1:8000/script/?fields=id,title,alias,is_active,entry_date,finish_date,institute,size&include=orderers,status,flag,identification,process,cover,flag
   body: none
   auth: none
 }
 
 params:query {
   fields: id,title,alias,is_active,entry_date,finish_date,institute,size
-  include: orderers,status,flag,identification,process,cover
+  include: orderers,status,flag,identification,process,cover,flag
 }
 
 headers {
