@@ -1,11 +1,53 @@
 from PySide6.QtCore import Qt, QAbstractTableModel
 
 class DataTableModel(QAbstractTableModel):
-#      def set_data(self, data):
-#         self.beginResetModel()
-#         self._data = data
-#         self.endResetModel()
+    COLUMNS = [
+        # Scripts
+        {"key": "id", "label": "ID"},
+        {"key": "title", "label": "Title"},
+        {"key": "alias", "label": "Alias"},
+        {"key": "is_active", "label": "Active"},
+        {"key": "entry_date", "label": "Entry Date"},
+        {"key": "finish_date", "label": "Finish Date"},
+
+        {"key": "institute.name", "label": "Institute"},
+        {"key": "size.name", "label": "Size"},
+
+        # Cover
+        {"key": "cover.length", "label": "Length"},
+        {"key": "cover.height", "label": "Height"},
+        {"key": "cover.width", "label": "Width"},
+        {"key": "cover.x_axis", "label": "X_Axis"},
+        {"key": "cover.y_axis", "label": "Y_Axis"},
+        {"key": "cover.zoom", "label": "Zoom"},
+        {"key": "cover.thumbnail", "label": "Thumbnail"},
+        {"key": "status.sectionstatus", "label": "Status Cover"}, #labelstatus=desainer
+        {"key": "process.bymade.user.username", "label": "Pembuat"}, #sectionmade=desainer 
         
+        # Layouter
+        {"key": "status.sectionstatus", "label": "Status Layouter"}, #labelstatus=layouter
+        {"key": "process.bymade.user.username", "label": "Pembuat"}, #sectionmade=layouter
+        {"key": "flag.is_active", "label": "File"}, #sectionflag=file
+        {"key": "flag.is_active", "label": "Photo"},#sectionflag=photo
+        {"key": "flag.is_active", "label": "CV"},#sectionflag=cv
+        {"key": "flag.is_active", "label": "Sinopsis"},#sectionflag=sinopsis
+        {"key": "flag.is_active", "label": "Editor"},#sectionflag=editor
+        {"key": "flag.is_active", "label": "Kata Pengantar"},#sectionflag=kata_pengantar
+        {"key": "flag.is_active", "label": "Daftar Isi"},#sectionflag=daftar_isi
+        {"key": "flag.is_active", "label": "Daftar Pustaka"},#sectionflag=daftar_pustaka
+
+        # Isbn
+        {"key": "identification.isbn", "label": "ISBN"},
+        {"key": "identificaiton.typeisbn", "label": "Type"},
+        
+        # Produksi
+        {"key": "status.sectionstatus", "label": "Produksi"}, #labelstatus=produksi
+        {"key": "process.bymade.user.username", "label": "Pembuat"}, #sectionmade=produksi
+
+        # orderers
+        {"key": "orderers.orderer.name", "label": "Order"},
+ 
+    ],
     HEADERS = [
         "id",
         "title",
@@ -46,71 +88,6 @@ class DataTableModel(QAbstractTableModel):
         "Produksi" # <= status (labelstatus & sectionstatus)
         "process", # <= process (bymade & sectionmade)
     ]
-
-    def transform_api_data(self, scripts: list[dict]) -> list[dict]:
-        rows = []
-
-        for script in scripts:
-            covers = script.get("cover", [])
-
-            # Kalau tidak ada cover → tetap buat 1 row
-            if not covers:
-                rows.append(self._base_row(script, cover=None))
-                continue
-
-            # Kalau ada cover → 1 cover = 1 row
-            for cover in covers:
-                rows.append(self._base_row(script, cover))
-
-        return rows
-
-    def _base_row(self, script: dict, cover: dict | None):
-        institute = script.get("institute") or {}
-        size = script.get("size") or {}
-
-        return {
-            "id": script.get("id"),
-            "title": script.get("title"),
-            "alias": script.get("alias"),
-            "is_active": script.get("is_active"),
-
-            # one-to-one (diringkas)
-            "institute": institute.get("name"),
-            "size": size.get("name"),
-
-            # status ringkas (Layouter: Belum | ISBN: Sudah)
-            "status": self._format_status(script.get("status", [])),
-
-            # cover
-            "thumbnail": cover.get("thumbnail") if cover else None,
-            "length": cover.get("length") if cover else None,
-            "height": cover.get("height") if cover else None,
-            "width": cover.get("width") if cover else None,
-            "x_axis": cover.get("x_axis") if cover else 0,
-            "y_axis": cover.get("y_axis") if cover else 0,
-            "zoom": self._calc_zoom(size, cover),
-        }
-
-    def _format_status(self, statuses: list[dict]) -> str:
-        result = []
-
-        for s in statuses:
-            label = s.get("labelstatus", {}).get("name")
-            section = s.get("sectionstatus", {}).get("name")
-
-            if label and section:
-                result.append(f"{label}: {section}")
-
-        return " | ".join(result)
-
-    def _calc_zoom(self, size: dict, cover: dict | None):
-        if not cover:
-            return 0.2
-    
-        try:
-            return round(160 / cover["width"], 3)
-        except Exception:
-            return 0.2
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -187,6 +164,23 @@ class DataTableModel(QAbstractTableModel):
 
     def columnCount(self, parent=None):
         return len(self.HEADERS)
+    
+#     def columnCount(self, parent=None):
+#         return len(self.COLUMNS)
+
+#     def data(self, index, role=Qt.DisplayRole):
+#         if not index.isValid() or role != Qt.DisplayRole:
+#             return None
+# 
+#         row = self._data[index.row()]
+#         column_def = self.COLUMNS[index.column()]
+#         key = column_def["key"]
+# 
+#         return row.get[key]
+
+#     def headerData(self, section, orientation, role):
+#         if role == Qt.DisplayRole and orientation == Qt.Horizontal:
+#             return self.COLUMNS[section]["label"]
 
     def data(self, index, role=Qt.DisplayRole):
         if not index.isValid() or role != Qt.DisplayRole:
@@ -207,25 +201,9 @@ class DataTableModel(QAbstractTableModel):
             return row["entry_date"]
         if column == 5:
             return row["finish_date"]
+        if column == 6:
+            return row["x_axis"]
         
-#         if column == 6:
-#             return row["institute"]
-#         if column == 7:
-#             return row["size"]
-#         
-#         if column == 8:
-#             return row["orderers"]
-#         if column == 9:
-#             return row["status"]
-#         if column == 10:
-#             return row["flag"]
-#         if column == 11:
-#             return row["identification"]
-#         if column == 12:
-#             return row["process"]
-#         if column == 13:
-#             return row["cover"]
-
     def headerData(self, section, orientation, role):
         if role == Qt.DisplayRole and orientation == Qt.Horizontal:
             return self.HEADERS[section]
