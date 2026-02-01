@@ -1,8 +1,8 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QMenu
 from PySide6.QtCore import Qt
-from .detail.data_window import DataDetailWindow
+from .detail.data2_window import Data2DetailWindow
 
-class DataTab(QWidget):
+class Data2Tab(QWidget):
     def __init__(self, proxy, selection_model, parent=None):
         super().__init__(parent)
 
@@ -35,7 +35,7 @@ class DataTab(QWidget):
         index = self.table.indexAt(pos)
         if not index.isValid():
             return
-
+        
         menu = QMenu(self)
 
         detail_action = menu.addAction("Detail")
@@ -45,6 +45,7 @@ class DataTab(QWidget):
             self.open_detail_window()
 
     def open_detail_window(self):
-        dialog = DataDetailWindow(self)
+        dialog = Data2DetailWindow(self)
         dialog.exec()
+
 
