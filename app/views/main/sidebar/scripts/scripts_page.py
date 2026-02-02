@@ -1,10 +1,24 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QToolBar, QAbstractItemView, QLineEdit
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QToolBar, QAbstractItemView
 from PySide6.QtGui import QAction
 from PySide6.QtCore import QSortFilterProxyModel, Qt, QItemSelectionModel
 from .tabs import DataTab, Data2Tab, CoverTab, KesekTab
 from models.table.item_table_model import DataTableModel
+from network.data_service import fetch_scripts
 
 class ScriptsPage(QWidget):
+    def load_data(self):
+        params = {
+            "fields": "id,title,alias,is_active,entry_date,finish_date,institute,size",
+            "include": "orderers,status,flag,identification,process,cover"
+        }
+
+        data = fetch_scripts(params)
+
+#         print("TYPE data:", type(data))
+#         print("ROWS:", len(data))
+
+        self.shared_model.set_api_data(data)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         
@@ -68,6 +82,8 @@ class ScriptsPage(QWidget):
         self.tabs.addTab(self.tab_kesek, "Kesek")
 
         layout.addWidget(self.tabs)
+
+        self.load_data()
 
     def _apply_global_table_settings(self, table: QAbstractItemView):
         table.setSelectionBehavior(QAbstractItemView.SelectRows)

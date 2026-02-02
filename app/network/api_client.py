@@ -1,19 +1,12 @@
-#from core.session import Session
-#import requests
-#
-#class ApiClient:
-#    @staticmethod
-#    def get_headers():
-#        token = Session.get_access_token()
-#        return {
-#            "Authorization": f"Bearer {token}"
-#        } if token else {}
-#    
-#    @staticmethod
-#    def get(url: str):
-#        return requests.get(
-#            f"http://{Session.get_backend_ip()}{url}",
-#            headers=ApiClient.get_headers(),
-#            timeout=10
-#        )
-#    
+import requests
+from core.config import DEFAULT_BACKEND_IP
+from core.session import Session
+
+class APIClient:
+    def get(self, endpoint, params=None):
+        url = f"http://{DEFAULT_BACKEND_IP}{endpoint}"
+        response = Session.get(url, params=params)
+        response.raise_for_status()
+        return response.json()
+
+api_client=APIClient()

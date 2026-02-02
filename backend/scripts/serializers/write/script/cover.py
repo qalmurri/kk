@@ -8,6 +8,7 @@ cover_fields = (
     "width",
     "x_axis",
     "y_axis",
+    "zoom",
 )
 
 class CoverWriteSerializer(BaseWriteSerializer):

@@ -20,6 +20,9 @@ class Cover(TimeStampedModel):
     y_axis = models.IntegerField(
         default=0
     )
+    zoom = models.IntegerField(
+            default=0
+            )
     class Meta:
         db_table = "cover"
         verbose_name = "Cover"

@@ -1,3 +1,4 @@
+import requests
 from PySide6.QtCore import QSettings
 from core.config import (
     APP_NAME, ORG_NAME, KEY_BACKEND_IP, KEY_ACCESS_TOKEN, KEY_REFRESH_TOKEN, DEFAULT_BACKEND_IP
@@ -43,3 +44,13 @@ class Session:
     @classmethod
     def load_main_window_size(cls):
         return cls._settings.value("main_window/size")
+
+    @classmethod
+    def get(cls, url, params=None):
+        headers = {}
+
+        token = cls.get_access_token()
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+        
+        return requests.get(url, params=params, headers=headers)
