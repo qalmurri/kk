@@ -1,10 +1,13 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QSplitter
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QSplitter, QMenu
 from .widgets.cover_preview import CoverPreview
 from PySide6.QtCore import Qt
+from .detail.cover_window import CoverDetailWindow
 
 class CoverTab(QWidget):
     def __init__(self, proxy, selection_model, parent=None):
         super().__init__(parent)
+
+        self.proxy = proxy
         
         layout = QVBoxLayout(self)
         splitter = QSplitter(Qt.Horizontal)
@@ -17,7 +20,17 @@ class CoverTab(QWidget):
         
         splitter.addWidget(self.table)
         splitter.addWidget(self.preview)
-        splitter.setSizes([400, 600]) # Atur proporsi awal
+        splitter.setSizes([400, 600])
+
+        # Double Click
+        self.table.doubleClicked.connect(self.on_double_click)
+
+        # Right Click
+        self.table.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.table.customContextMenuRequested.connect(
+                self.on_right_click
+                )
+
         layout.addWidget(splitter)
 
         selection_model.selectionChanged.connect(
@@ -40,3 +53,26 @@ class CoverTab(QWidget):
         data = source_model._data[source_index.row()]
 
         self.preview.update_preview(data) 
+
+    def on_double_click(self, index):
+        if not index.isValid():
+            return
+
+        self.open_detail_window()
+
+    def on_right_click(self, pos):
+        index = self.table.indexAt(pos)
+        if not index.isValid():
+            return
+
+        menu = QMenu(self)
+
+        detail_action = menu.addAction("Detail")
+        action = menu.exec(self.table.viewport().mapToGlobal(pos))
+
+        if action == detail_action:
+            self.open_detail_window()
+
+    def open_detail_window(self):
+        dialog = CoverDetailWindow(self)
+        dialog.exec()
