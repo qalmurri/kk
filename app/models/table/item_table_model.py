@@ -133,7 +133,6 @@ class DataTableModel(QAbstractTableModel):
          value = self.get_value_by_path(row, key)
          return value
 
-    # MULAI REPATCH
     def get_value_by_path(self, data, path):
         parts = path.split(".")
         current = data

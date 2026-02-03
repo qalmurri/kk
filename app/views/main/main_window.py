@@ -20,6 +20,9 @@ class MainWindow(QWidget):
         super().__init__()
         self.setWindowTitle("Main Window")
 
+        self.sidebar_visible = True
+        self.sidebar_width = 160
+
         # --- INITIALIZATION ---
         self.ws = WebSocketClient()
         self.ws.connected.connect(self.on_ws_connected)
@@ -52,6 +55,8 @@ class MainWindow(QWidget):
         self.main_layout.addLayout(self.body_layout)
         self.main_layout.addLayout(self.footer_layout)
 
+        # self.toggle_sidebar()
+
     def _setup_sidebar(self):
         """Membuat navigasi samping"""
         self.sidebar = QListWidget()
@@ -66,13 +71,11 @@ class MainWindow(QWidget):
         """Membuat kontainer halaman (Stacked Widget)"""
         self.main_stack = QStackedWidget()
 
-
         # --- HALAMAM 0: BERANDA
-        self.pear_page = QWidget()
-        pear_layout = QVBoxLayout(self.pear_page)
+        self.beranda_page = QWidget()
+        pear_layout = QVBoxLayout(self.beranda_page)
         pear_layout.addWidget(QLabel("Halaman Pear (kosong)"), alignment=Qt.AlignCenter)
-
-        self.main_stack.addWidget(self.pear_page)
+        self.main_stack.addWidget(self.beranda_page)
 
         # --- HALAMAN 1: Scripts  ---
         self.scripts_page = ScriptsPage(self)
@@ -82,32 +85,31 @@ class MainWindow(QWidget):
         self.pear_page = QWidget()
         pear_layout = QVBoxLayout(self.pear_page)
         pear_layout.addWidget(QLabel("Halaman Pear (kosong)"), alignment=Qt.AlignCenter)
-
         self.main_stack.addWidget(self.pear_page)
         
         # --- HALAMAN 3: Chart (KOSONGAN) ---
         self.chart_page = QWidget()
         chart_layout = QVBoxLayout(self.chart_page)
         chart_layout.addWidget(QLabel("Halaman chart (kosong)"), alignment=Qt.AlignCenter)
-
         self.main_stack.addWidget(self.chart_page)
         
     def _setup_menu_bar(self):
         self.menu_bar = QMenuBar(self)
-        
         file_menu = self.menu_bar.addMenu("File")
+        options_menu = self.menu_bar.addMenu("Options")
+        view_menu = self.menu_bar.addMenu("View")
+        help_menu = self.menu_bar.addMenu("Help")
+    
         logout_action = file_menu.addAction("Logout")
         exit_action = file_menu.addAction("Exit")
-
-        options_menu = self.menu_bar.addMenu("Options")
         preferences_action = options_menu.addAction("Preferences")
-
-        help_menu = self.menu_bar.addMenu("Help")
+        toggle_sidebar_action = view_menu.addAction("Toggle Sidebar")
         about_action = help_menu.addAction("About")
-
+    
         logout_action.triggered.connect(self.controller.logout)
         exit_action.triggered.connect(self.close)
         preferences_action.triggered.connect(self.show_preferences)
+        toggle_sidebar_action.triggered.connect(self.toggle_sidebar)
         about_action.triggered.connect(self.show_about)
 
     def _setup_footer(self):
@@ -122,6 +124,23 @@ class MainWindow(QWidget):
     def on_sidebar_changed(self, index):
         """Mengatur perpindahan StackedWidget berdasarkan klik sidebar"""
         self.main_stack.setCurrentIndex(index)
+
+    def show_about(self):
+        QMessageBox.information(self, "About", "Gae dewe iki bro APP ne xixi")
+
+    def show_preferences(self):
+        dialog = PreferencesDialog(self)
+        dialog.exec()
+
+    def toggle_sidebar(self):
+        if self.sidebar_visible:
+            self.sidebar_width = self.sidebar.width()
+            self.sidebar.hide()
+        else:
+            self.sidebar.show()
+            self.sidebar.setFixedWidth(self.sidebar_width)
+
+        self.sidebar_visible = not self.sidebar_visible
 
     # --- WS HANDLERS ---
     def on_ws_connected(self):
@@ -142,10 +161,3 @@ class MainWindow(QWidget):
         if self.ws: self.ws.disconnect()
         Session.save_main_window_size(self.size())
         super().closeEvent(event)
-
-    def show_about(self):
-        QMessageBox.information(self, "About", "Gae dewe iki bro APP ne xixi")
-
-    def show_preferences(self):
-        dialog = PreferencesDialog(self)
-        dialog.exec()

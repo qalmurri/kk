@@ -1,9 +1,17 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QToolBar, QAbstractItemView
-from PySide6.QtGui import QAction
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QToolBar, QAbstractItemView, QDialog
 from PySide6.QtCore import QSortFilterProxyModel, Qt, QItemSelectionModel
-from .tabs import DataTab, Data2Tab, CoverTab, KesekTab
-from models.table.item_table_model import DataTableModel
+from PySide6.QtGui import QAction
+
 from network.data_service import fetch_scripts
+from models.table.item_table_model import DataTableModel
+from .tabs import (
+    DataTab,
+    ProductionTab,
+    CoverTab,
+    LayouterTab,
+    IsbnTab
+)
+from .toolbar.search import SearchData
 
 class ScriptsPage(QWidget):
     def load_data(self):
@@ -13,9 +21,6 @@ class ScriptsPage(QWidget):
         }
 
         data = fetch_scripts(params)
-
-#         print("TYPE data:", type(data))
-#         print("ROWS:", len(data))
 
         self.shared_model.set_api_data(data)
 
@@ -34,7 +39,11 @@ class ScriptsPage(QWidget):
         export_action.triggered.connect(self.on_export_clicked)
         self.toolbar.addAction(export_action)
 
-        searching_action = QAction("search", self)
+        refresh_action = QAction("Refresh", self)
+        refresh_action.triggered.connect(self.on_refresh_clicked)
+        self.toolbar.addAction(refresh_action)
+
+        searching_action = QAction("Search", self)
         searching_action.triggered.connect(self.on_search_clicked)
         self.toolbar.addAction(searching_action)
 
@@ -54,13 +63,19 @@ class ScriptsPage(QWidget):
             parent=self
         )
         
-        self.tab_data2 = Data2Tab(
+        self.tab_production = ProductionTab(
             proxy=self.shared_proxy,
             selection_model=self.shared_selection,
             parent=self
         )
         
-        self.tab_kesek = KesekTab(
+        self.tab_layouter = LayouterTab(
+            proxy=self.shared_proxy,
+            selection_model=self.shared_selection,
+            parent=self
+        )
+
+        self.tab_isbn = IsbnTab(
             proxy=self.shared_proxy,
             selection_model=self.shared_selection,
             parent=self
@@ -72,14 +87,16 @@ class ScriptsPage(QWidget):
         )
 
         self._apply_global_table_settings(self.tab_data.table)
-        self._apply_global_table_settings(self.tab_data2.table)
+        self._apply_global_table_settings(self.tab_production.table)
         self._apply_global_table_settings(self.tab_cover.table)
-        self._apply_global_table_settings(self.tab_kesek.table)
+        self._apply_global_table_settings(self.tab_isbn.table)
+        self._apply_global_table_settings(self.tab_layouter.table)
 
-        self.tabs.addTab(self.tab_data2, "Data2")
         self.tabs.addTab(self.tab_data, "Data")
         self.tabs.addTab(self.tab_cover, "Cover")
-        self.tabs.addTab(self.tab_kesek, "Kesek")
+        self.tabs.addTab(self.tab_layouter, "Layouter")
+        self.tabs.addTab(self.tab_isbn, "Isbn")
+        self.tabs.addTab(self.tab_production, "Production")
 
         layout.addWidget(self.tabs)
 
@@ -91,7 +108,11 @@ class ScriptsPage(QWidget):
         table.horizontalHeader().setStretchLastSection(True)
 
     def on_export_clicked(self):
-        print("Mengekspor data ke file...")
+        print("Export")
 
     def on_search_clicked(self):
-        print("Searhing")
+        dialog = SearchData(self)
+        dialog.exec()
+
+    def on_refresh_clicked(self):
+        print("Refresh")

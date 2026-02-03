@@ -1,8 +1,9 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QMenu
 from PySide6.QtCore import Qt
-from .detail.kesek_window import KesekDetailWindow
+from shiboken6 import wrapInstance
+from .detail.production_window import ProductionDetailWindow
 
-class KesekTab(QWidget):
+class ProductionTab(QWidget):
     def __init__(self, proxy, selection_model, parent=None):
         super().__init__(parent)
 
@@ -12,7 +13,8 @@ class KesekTab(QWidget):
         self.table = QTableView(self)
         self.table.setModel(proxy)
         self.table.setSelectionModel(selection_model)
-        self.table.setColumnHidden(3, True)
+
+        self.table.setColumnHidden(0, True)
 
         # Double Click
         self.table.doubleClicked.connect(self.on_double_click)
@@ -35,7 +37,7 @@ class KesekTab(QWidget):
         index = self.table.indexAt(pos)
         if not index.isValid():
             return
-
+        
         menu = QMenu(self)
 
         detail_action = menu.addAction("Detail")
@@ -45,6 +47,7 @@ class KesekTab(QWidget):
             self.open_detail_window()
 
     def open_detail_window(self):
-        dialog = KesekDetailWindow(self)
+        dialog = Data2DetailWindow(self)
         dialog.exec()
+
 

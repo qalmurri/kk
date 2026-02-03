@@ -1,4 +1,5 @@
 from .cover_tab import CoverTab
 from .data_tab import DataTab
-from .kesek_tab import KesekTab
-from .data2_tab import Data2Tab
+from .layouter_tab import LayouterTab
+from .production_tab import ProductionTab
+from .isbn_tab import IsbnTab
