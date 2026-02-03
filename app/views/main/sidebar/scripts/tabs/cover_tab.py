@@ -4,6 +4,20 @@ from PySide6.QtCore import Qt
 from .detail.cover_window import CoverDetailWindow
 
 class CoverTab(QWidget):
+    VISIBLE_COLUMNS = {
+        "id",
+        "title",
+        "status_cover",
+        "process_desainer",
+        "cover.length",
+        "cover.height",
+        "cover.width",
+        "cover.x_axis",
+        "cover.y_axis",
+        "cover.zoom",
+        "cover.thumbnail",
+    }
+
     def __init__(self, proxy, selection_model, parent=None):
         super().__init__(parent)
 
@@ -33,14 +47,12 @@ class CoverTab(QWidget):
 
         layout.addWidget(splitter)
 
+        self.apply_visible_columns()
+
         selection_model.selectionChanged.connect(
                 self.on_selection_changed
                 )
 
-        self.table.setColumnHidden(2, True)
-        self.table.setColumnHidden(3, True)
-        self.table.setColumnHidden(4, True)
-        self.table.setColumnHidden(5, True)
         
     def on_selection_changed(self, selected, deselected):
         indexes = selected.indexes()
@@ -76,3 +88,18 @@ class CoverTab(QWidget):
     def open_detail_window(self):
         dialog = CoverDetailWindow(self)
         dialog.exec()
+
+    def apply_visible_columns(self):
+        proxy = self.table.model()
+        model = proxy.sourceModel()
+
+        # hide semua kolom
+        for col in range(model.columnCount()):
+            self.table.setColumnHidden(col, True)
+
+        # show kolom yang diizinkan
+        for col in model.column_indexes_by_keys(self.VISIBLE_COLUMNS):
+            self.table.setColumnHidden(col, False)
+
+        for col in model.column_indexes_by_ids(self.VISIBLE_COLUMNS):
+            self.table.setColumnHidden(col, False)

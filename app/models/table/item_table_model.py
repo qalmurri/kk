@@ -3,50 +3,202 @@ from PySide6.QtCore import Qt, QAbstractTableModel
 class DataTableModel(QAbstractTableModel):
     COLUMNS = [
         # Scripts
-        {"key": "id", "label": "ID"},
-        {"key": "title", "label": "Title"},
-        {"key": "alias", "label": "Alias"},
-        {"key": "is_active", "label": "Active"},
-        {"key": "entry_date", "label": "Entry Date"},
-        {"key": "finish_date", "label": "Finish Date"},
+        {
+            "id": "id",
+            "key": "id",
+            "label": "ID"
+        },
+        {
+            "id": "title",
+            "key": "title",
+            "label": "Title"
+        },
+        {
+            "id": "alias",
+            "key": "alias",
+            "label": "Alias"
+        },
+        {
+            "id": "is_active",
+            "key": "is_active",
+            "label": "Active"
+        },
+        {
+            "id": "entry_date",
+            "key": "entry_date",
+            "label": "Entry Date"
+        },
+        {
+            "id": "finish_date",
+            "key": "finish_date",
+            "label": "Finish Date"
+        },
 
-        {"key": "institute.name", "label": "Institute"},
-        {"key": "size.name", "label": "Size"},
+        {
+            "id": "institute",
+            "key": "institute.name", 
+            "label": "Institute"
+        },
+        {
+            "id": "size",
+            "key": "size.name",
+            "label": "Size"
+        },
 
         # Cover
-        {"key": "cover.length", "label": "Length"},
-        {"key": "cover.height", "label": "Height"},
-        {"key": "cover.width", "label": "Width"},
-        {"key": "cover.x_axis", "label": "X_Axis"},
-        {"key": "cover.y_axis", "label": "Y_Axis"},
-        {"key": "cover.zoom", "label": "Zoom"},
-        {"key": "cover.thumbnail", "label": "Thumbnail"},
-        {"key": "status.sectionstatus.name", "label": "Status Cover"}, #labelstatus=desainer
-        {"key": "process.bymade.user.username", "label": "Pembuat"}, #sectionmade=desainer 
+        {
+            "id": "process_desainer",
+            "key": "process.bymade.user.username",
+            "label": "Desainer",
+            "where": {
+                "process.sectionmade.name": "Desainer"
+            }
+        }, #sectionmade=desainer 
+        {
+            "id": "status_cover",
+            "key": "status.sectionstatus.name",
+            "label": "Status Cover",
+            "where": {
+                "status.labelstatus.name": "Desainer"
+        }
+        }, #labelstatus=desainer
+        {
+            "id": "cover.length",
+            "key": "cover.length",
+            "label": "Length"
+        },
+        {
+            "id": "cover.height",
+            "key": "cover.height",
+            "label": "Height"
+        },
+        {
+            "id": "cover.width",
+            "key": "cover.width",
+            "label": "Width"
+        },
+        {
+            "id": "cover.x_axis",
+            "key": "cover.x_axis",
+            "label": "X_Axis"
+        },
+        {
+            "id": "cover.y_axis",
+            "key": "cover.y_axis",
+            "label": "Y_Axis"
+        },
+        {
+            "id": "cover.zoom",
+            "key": "cover.zoom",
+            "label": "Zoom"
+        },
+        {
+            "id": "cover.thumbnail",
+            "key": "cover.thumbnail",
+            "label": "Thumbnail"
+        },
         
         # Layouter
-        {"key": "status.sectionstatus.name", "label": "Status Layouter"}, #labelstatus=layouter
-        {"key": "process.bymade.user.username", "label": "Pembuat"}, #sectionmade=layouter
-        {"key": "flag.is_active", "label": "File"}, #sectionflag=file
-        {"key": "flag.is_active", "label": "Photo"},#sectionflag=photo
-        {"key": "flag.is_active", "label": "CV"},#sectionflag=cv
-        {"key": "flag.is_active", "label": "Sinopsis"},#sectionflag=sinopsis
-        {"key": "flag.is_active", "label": "Editor"},#sectionflag=editor
-        {"key": "flag.is_active", "label": "Kata Pengantar"},#sectionflag=kata_pengantar
-        {"key": "flag.is_active", "label": "Daftar Isi"},#sectionflag=daftar_isi
-        {"key": "flag.is_active", "label": "Daftar Pustaka"},#sectionflag=daftar_pustaka
+        {
+            "id": "status_layouter",
+            "key": "status.sectionstatus.name",
+            "label": "Status Layouter"
+        }, #labelstatus=layouter
+        {
+            "id": "pembuat_layouter",
+            "key": "process.bymade.user.username",
+            "label": "Pembuat"
+        }, #sectionmade=layouter
+        {
+            "id": "flag_file",
+            "key": "flag.is_active",
+            "label": "File",
+            "where": {
+                "flag.sectionflag.name": "File"
+                }
+        }, #sectionflag=file
+        {
+            "id": "flag_photo",
+            "key": "flag.is_active", 
+            "label": "Photo",
+            "where": {
+                "flag.sectionflag.name": "Photo"
+                }
+        },#sectionflag=photo
+        {
+            "id": "flag_cv",
+            "key": "flag.is_active",
+            "label": "CV",
+            "where": {
+                "flag.sectionflag.name": "CV"
+                }
+        },#sectionflag=cv
+        {
+            "id": "flag_sinopsis",
+            "key": "flag.is_active",
+            "label": "Sinopsis",
+            "where": {
+                "flag.sectionflag.name": "Sinopsis"
+                }
+        },#sectionflag=sinopsis
+        {
+            "id": "flag_editor",
+            "key": "flag.is_active",
+            "label": "Editor",
+            "where": {
+                "flag.sectionflag.name": "Editor"
+                }
+        },#sectionflag=editor
+        {
+            "id": "flag_kata_pengantar",
+            "key": "flag.is_active",
+            "label": "Kata Pengantar",
+            "where": {
+                "flag.sectionflag.name": "Kata Pengantar"
+                }
+        },#sectionflag=kata_pengantar
+        {
+            "id": "flag_daftar_isi",
+            "key": "flag.is_active",
+            "label": "Daftar Isi",
+            "where": {
+                "flag.sectionflag.name": "Daftar Isi"
+                }
+        },#sectionflag=daftar_isi
+        {
+            "id": "flag_daftar_pustaka",
+            "key": "flag.is_active",
+            "label": "Daftar Pustaka",
+            "where": {
+                "flag.sectionflag.name": "Daftar Pustaka"
+                }
+        },#sectionflag=daftar_pustaka
 
         # Isbn
-        {"key": "identification.isbn", "label": "ISBN"},
-        {"key": "identification.typeisbn.name", "label": "Type"},
+        {
+            "key": "identification.isbn",
+            "label": "ISBN"
+        },
+        {
+            "key": "identification.typeisbn.name",
+            "label": "Type"
+        },
         
         # Produksi
-        {"key": "status.sectionstatus.name", "label": "Produksi"}, #labelstatus=produksi
-        {"key": "process.bymade.user.username", "label": "Pembuat"}, #sectionmade=produksi
+        {
+            "key": "status.sectionstatus.name",
+            "label": "Produksi"
+        }, #labelstatus=produksi
+        {
+            "key": "process.bymade.user.username",
+            "label": "Pembuat"
+        }, #sectionmade=produksi
 
         # orderers
-        {"key": "orderers.orderer.name", "label": "Order"},
- 
+        {
+            "key": "orderers.orderer.name",
+            "label": "Order"
+        },
     ]
 
     def __init__(self, parent=None):
@@ -123,15 +275,19 @@ class DataTableModel(QAbstractTableModel):
         return len(self._data)
 
     def data(self, index, role=Qt.DisplayRole):
-         if not index.isValid() or role != Qt.DisplayRole:
-             return None
- 
-         row = self._data[index.row()]
-         column_def = self.COLUMNS[index.column()]
-         key = column_def["key"]
- 
-         value = self.get_value_by_path(row, key)
-         return value
+        if not index.isValid() or role != Qt.DisplayRole:
+            return None
+    
+        row = self._data[index.row()]
+        column = self.COLUMNS[index.column()]
+    
+        key = column["key"]
+        where = column.get("where")
+    
+        if where:
+            return self.get_value_with_where(row, key, where)
+    
+        return self.get_value_by_path(row, key)
 
     def get_value_by_path(self, data, path):
         parts = path.split(".")
@@ -203,3 +359,36 @@ class DataTableModel(QAbstractTableModel):
             i for i, col in enumerate(cls.COLUMNS)
             if col["key"] in keys
         ]
+
+    @classmethod
+    def column_indexes_by_ids(cls, ids: set[str]) -> list[int]:
+        return [
+            i for i, col in enumerate(cls.COLUMNS)
+            if col.get("id") in ids
+        ]
+
+    def get_value_with_where(self, row, key, where: dict):
+        root = key.split(".")[0]        # status
+        items = row.get(root, [])
+    
+        if not isinstance(items, list):
+            return None
+    
+        key_path = ".".join(key.split(".")[1:])  # sectionstatus.name
+    
+        for item in items:
+            matched = True
+    
+            for where_key, expected in where.items():
+                # where_key: status.labelstatus.name
+                where_path = ".".join(where_key.split(".")[1:])  # labelstatus.name
+                actual = self.get_value_by_path(item, where_path)
+    
+                if actual != expected:
+                    matched = False
+                    break
+    
+            if matched:
+                return self.get_value_by_path(item, key_path)
+    
+        return None

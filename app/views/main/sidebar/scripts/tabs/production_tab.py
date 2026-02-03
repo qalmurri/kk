@@ -3,6 +3,16 @@ from PySide6.QtCore import Qt
 from .detail.production_window import ProductionDetailWindow
 
 class ProductionTab(QWidget):
+    VISIBLE_COLUMNS = {
+        "id",
+        "title",
+        "alias",
+        "entry_date",
+        "finish_date",
+        "institute.name",
+        "size.name",
+    }
+
     def __init__(self, proxy, selection_model, parent=None):
         super().__init__(parent)
 
@@ -12,8 +22,6 @@ class ProductionTab(QWidget):
         self.table = QTableView(self)
         self.table.setModel(proxy)
         self.table.setSelectionModel(selection_model)
-
-        self.table.setColumnHidden(0, True)
 
         # Double Click
         self.table.doubleClicked.connect(self.on_double_click)
@@ -25,6 +33,8 @@ class ProductionTab(QWidget):
                 )
 
         layout.addWidget(self.table)
+
+        self.apply_visible_columns()
 
     def on_double_click(self, index):
         if not index.isValid():
@@ -49,4 +59,14 @@ class ProductionTab(QWidget):
         dialog = ProductionDetailWindow(self)
         dialog.exec()
 
+    def apply_visible_columns(self):
+        proxy = self.table.model()
+        model = proxy.sourceModel()
 
+        # hide semua kolom
+        for col in range(model.columnCount()):
+            self.table.setColumnHidden(col, True)
+
+        # show kolom yang diizinkan
+        for col in model.column_indexes_by_keys(self.VISIBLE_COLUMNS):
+            self.table.setColumnHidden(col, False)

@@ -342,6 +342,18 @@ def create_default_table(sender, **kwargs):
         
     for item in [
         {
+            "made": 2,
+            "user": 1
+        },
+        {
+            "made": 2,
+            "user": 2
+        },
+        {
+            "made": 2,
+            "user": 3
+        },
+        {
             "made": 1,
             "user": 1
         },
