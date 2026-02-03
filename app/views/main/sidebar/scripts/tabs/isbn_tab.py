@@ -4,13 +4,12 @@ from .detail.isbn_window import IsbnDetailWindow
 
 class IsbnTab(QWidget):
     VISIBLE_COLUMNS = {
+        "id",
         "title",
-        "alias",
-        "entry_date",
-        "finish_date",
-        "institute.name",
-        "size.name",
-    }
+        "status_isbn",
+        "isbn",
+        "eisbn",
+        }
 
     def __init__(self, proxy, selection_model, parent=None):
         super().__init__(parent)
@@ -21,7 +20,6 @@ class IsbnTab(QWidget):
         self.table = QTableView(self)
         self.table.setModel(proxy)
         self.table.setSelectionModel(selection_model)
-        self.table.setColumnHidden(3, True)
 
         # Double Click
         self.table.doubleClicked.connect(self.on_double_click)
@@ -69,4 +67,7 @@ class IsbnTab(QWidget):
 
         # show kolom yang diizinkan
         for col in model.column_indexes_by_keys(self.VISIBLE_COLUMNS):
+            self.table.setColumnHidden(col, False)
+
+        for col in model.column_indexes_by_ids(self.VISIBLE_COLUMNS):
             self.table.setColumnHidden(col, False)

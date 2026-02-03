@@ -4,12 +4,20 @@ from .detail.data_window import DataDetailWindow
 
 class DataTab(QWidget):
     VISIBLE_COLUMNS = {
+        "id",
         "title",
         "alias",
         "entry_date",
         "finish_date",
         "institute.name",
         "size.name",
+        "process_desainer",
+        "status_cover",
+        "status_layouter",
+        "status_isbn",
+        "pembuat_layouter",
+        "pemesan",
+
     }
 
     def __init__(self, proxy, selection_model, parent=None):
@@ -68,4 +76,7 @@ class DataTab(QWidget):
 
         # show kolom yang diizinkan
         for col in model.column_indexes_by_keys(self.VISIBLE_COLUMNS):
+            self.table.setColumnHidden(col, False)
+
+        for col in model.column_indexes_by_ids(self.VISIBLE_COLUMNS):
             self.table.setColumnHidden(col, False)

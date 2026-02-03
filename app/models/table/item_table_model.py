@@ -33,7 +33,6 @@ class DataTableModel(QAbstractTableModel):
             "key": "finish_date",
             "label": "Finish Date"
         },
-
         {
             "id": "institute",
             "key": "institute.name", 
@@ -44,7 +43,6 @@ class DataTableModel(QAbstractTableModel):
             "key": "size.name",
             "label": "Size"
         },
-
         # Cover
         {
             "id": "process_desainer",
@@ -97,17 +95,22 @@ class DataTableModel(QAbstractTableModel):
             "key": "cover.thumbnail",
             "label": "Thumbnail"
         },
-        
         # Layouter
         {
             "id": "status_layouter",
             "key": "status.sectionstatus.name",
-            "label": "Status Layouter"
+            "label": "Status Layouter",
+            "where": {
+                "status.labelstatus.name": "Layouter"
+                }
         }, #labelstatus=layouter
         {
             "id": "pembuat_layouter",
             "key": "process.bymade.user.username",
-            "label": "Pembuat"
+            "label": "Layouter",
+            "where": {
+                "process.sectionmade.name": "Layouter"
+                }
         }, #sectionmade=layouter
         {
             "id": "flag_file",
@@ -173,17 +176,37 @@ class DataTableModel(QAbstractTableModel):
                 "flag.sectionflag.name": "Daftar Pustaka"
                 }
         },#sectionflag=daftar_pustaka
-
         # Isbn
         {
+            "id": "status_isbn",
+            "key": "status.sectionstatus.name",
+            "label": "Status",
+            "where": {
+                "status.labelstatus.name": "ISBN"
+                }
+        }, #labelstatus=layouter
+        {
+            "id": "isbn",
             "key": "identification.isbn",
-            "label": "ISBN"
+            "label": "ISBN",
+            "where": {
+                "identification.typeisbn.name": "ISBN"
+                }
         },
         {
-            "key": "identification.typeisbn.name",
-            "label": "Type"
+            "id": "eisbn",
+            "key": "identification.isbn",
+            "label": "E-ISBN",
+            "where": {
+                "identification.typeisbn.name": "E-ISBN"
+                }
         },
-        
+        # orderers
+        {
+            "id": "pemesan",
+            "key": "orderers.orderer.name",
+            "label": "Order"
+        },
         # Produksi
         {
             "key": "status.sectionstatus.name",
@@ -193,12 +216,6 @@ class DataTableModel(QAbstractTableModel):
             "key": "process.bymade.user.username",
             "label": "Pembuat"
         }, #sectionmade=produksi
-
-        # orderers
-        {
-            "key": "orderers.orderer.name",
-            "label": "Order"
-        },
     ]
 
     def __init__(self, parent=None):
