@@ -1,6 +1,5 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QMenu
 from PySide6.QtCore import Qt
-from shiboken6 import wrapInstance
 from .detail.production_window import ProductionDetailWindow
 
 class ProductionTab(QWidget):
@@ -47,7 +46,7 @@ class ProductionTab(QWidget):
             self.open_detail_window()
 
     def open_detail_window(self):
-        dialog = Data2DetailWindow(self)
+        dialog = ProductionDetailWindow(self)
         dialog.exec()
 
 

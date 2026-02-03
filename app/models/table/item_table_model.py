@@ -190,5 +190,16 @@ class DataTableModel(QAbstractTableModel):
         self._data = rows
         self.endResetModel()
 
+    @classmethod
+    def column_index_by_key(cls, key: str) -> int:
+        for i, col in enumerate(cls.COLUMNS):
+            if col["key"] == key:
+                return i
+        return -1
 
-
+    @classmethod
+    def column_indexes_by_keys(cls, keys: set[str]) -> list[int]:
+        return [
+            i for i, col in enumerate(cls.COLUMNS)
+            if col["key"] in keys
+        ]

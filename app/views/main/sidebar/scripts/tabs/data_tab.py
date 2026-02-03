@@ -3,6 +3,15 @@ from PySide6.QtCore import Qt
 from .detail.data_window import DataDetailWindow
 
 class DataTab(QWidget):
+    VISIBLE_COLUMNS = {
+        "title",
+        "alias",
+        "entry_date",
+        "finish_date",
+        "institute.name",
+        "size.name",
+    }
+
     def __init__(self, proxy, selection_model, parent=None):
         super().__init__(parent)
 
@@ -12,7 +21,6 @@ class DataTab(QWidget):
         self.table = QTableView(self)
         self.table.setModel(proxy)
         self.table.setSelectionModel(selection_model)
-        self.table.setColumnHidden(3, True)
 
         # Double Click
         self.table.doubleClicked.connect(self.on_double_click)
@@ -24,6 +32,8 @@ class DataTab(QWidget):
                 )
 
         layout.addWidget(self.table)
+
+        self.apply_visible_columns()
 
     def on_double_click(self, index):
         if not index.isValid():
@@ -48,3 +58,14 @@ class DataTab(QWidget):
         dialog = DataDetailWindow(self)
         dialog.exec()
 
+    def apply_visible_columns(self):
+        proxy = self.table.model()
+        model = proxy.sourceModel()
+
+        # hide semua kolom
+        for col in range(model.columnCount()):
+            self.table.setColumnHidden(col, True)
+
+        # show kolom yang diizinkan
+        for col in model.column_indexes_by_keys(self.VISIBLE_COLUMNS):
+            self.table.setColumnHidden(col, False)
