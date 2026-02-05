@@ -5,11 +5,16 @@ from .detail.layouter_window import LayouterDetailWindow
 class LayouterTab(QWidget):
     VISIBLE_COLUMNS = {
         "title",
-        "alias",
-        "entry_date",
-        "finish_date",
-        "institute.name",
         "size.name",
+        "flag_file",
+        "flag_photo",
+        "flag_cv",
+        "flag_sinopsis",
+        "flag_editor",
+        "flag_kata_pengantar",
+        "flag_daftar_pustaka",
+        "pembuat_layouter",
+        "status_layouter"
     }
     
     def __init__(self, proxy, selection_model, parent=None):
@@ -70,3 +75,5 @@ class LayouterTab(QWidget):
         for col in model.column_indexes_by_keys(self.VISIBLE_COLUMNS):
             self.table.setColumnHidden(col, False)
 
+        for col in model.column_indexes_by_ids(self.VISIBLE_COLUMNS):
+            self.table.setColumnHidden(col, False)

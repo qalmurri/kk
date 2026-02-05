@@ -31,10 +31,13 @@ class CoverPreview(QWidget):
         self.rot_x, self.rot_y = rx, ry
         self.render_scene()
 
-    def update_preview(self, cover: dict = None):
-        if cover:
-            self.last_cover_data = cover
-            self.base_pixmap = self._load_raw_pixmap(cover.get("thumbnail"))
+    def update_preview(self, data: dict = None):
+        if data:
+            self.last_cover_data = data
+            cover = data.get("cover", {})
+            self.base_pixmap = self._load_raw_pixmap(
+                cover.get("thumbnail")
+            )
         self.render_scene()
 
     def project(self, x, y, z):
@@ -50,13 +53,15 @@ class CoverPreview(QWidget):
         self.scene.clear()
         if not self.last_cover_data: return
 
-        q = 4.0 # High Quality Multiplier
-        w = self.last_cover_data.get("width", 160)
-        h = self.last_cover_data.get("height", 250)
-        t = self.last_cover_data.get("length", 20)
-        x_off, y_off = self.last_cover_data.get("x_axis", 0), self.last_cover_data.get("y_axis", 0)
-        zoom = self.last_cover_data.get("zoom", 1.0)
-        if zoom <= 0: zoom = 1.0
+        cover = self.last_cover_data.get("cover", {})
+
+        q = 4.0
+        w = cover.get("width", 160)
+        h = cover.get("height", 250)
+        t = cover.get("length", 20)
+        x_off = cover.get("x_axis", 0)
+        y_off = cover.get("y_axis", 0)
+        zoom = cover.get("zoom", 1.0)
 
         cx, cy, cz = w/2, h/2, t/2
 
