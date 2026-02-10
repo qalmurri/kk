@@ -13,7 +13,7 @@ from core.session import Session
 from network.ws_client import WebSocketClient
 from controllers.auth.logout_controller import LogoutController
 from .sub_menu import PreferencesDialog
-from .sidebar import ScriptsPage
+from .sidebar import ScriptsPage, ChartPage
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -74,7 +74,7 @@ class MainWindow(QWidget):
         # --- HALAMAM 0: BERANDA
         self.beranda_page = QWidget()
         pear_layout = QVBoxLayout(self.beranda_page)
-        pear_layout.addWidget(QLabel("Halaman Pear (kosong)"), alignment=Qt.AlignCenter)
+        pear_layout.addWidget(QLabel("Halaman Beranda (kosong)"), alignment=Qt.AlignCenter)
         self.main_stack.addWidget(self.beranda_page)
 
         # --- HALAMAN 1: Scripts  ---
@@ -88,9 +88,7 @@ class MainWindow(QWidget):
         self.main_stack.addWidget(self.pear_page)
         
         # --- HALAMAN 3: Chart (KOSONGAN) ---
-        self.chart_page = QWidget()
-        chart_layout = QVBoxLayout(self.chart_page)
-        chart_layout.addWidget(QLabel("Halaman chart (kosong)"), alignment=Qt.AlignCenter)
+        self.chart_page = ChartPage(self)
         self.main_stack.addWidget(self.chart_page)
         
     def _setup_menu_bar(self):

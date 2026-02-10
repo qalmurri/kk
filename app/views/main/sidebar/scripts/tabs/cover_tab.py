@@ -9,13 +9,13 @@ class CoverTab(QWidget):
         "title",
         "status_cover",
         "process_desainer",
-        "cover.length",
-        "cover.height",
-        "cover.width",
-        "cover.x_axis",
-        "cover.y_axis",
-        "cover.zoom",
-        "cover.thumbnail",
+        # "cover.length",
+        # "cover.height",
+        # "cover.width",
+        # "cover.x_axis",
+        # "cover.y_axis",
+        # "cover.zoom",
+        # "cover.thumbnail",
     }
 
     def __init__(self, proxy, selection_model, parent=None):
