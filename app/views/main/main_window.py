@@ -51,7 +51,6 @@ class MainWindow(QWidget):
         self.main_layout.addLayout(self.footer_layout)
 
     def _setup_sidebar(self):
-        """Membuat navigasi samping"""
         self.sidebar = QListWidget()
         self.sidebar.setFixedWidth(160)
         self.sidebar.addItems(["Beranda", "Scripts", "Pear", "Chart"])
@@ -60,7 +59,6 @@ class MainWindow(QWidget):
         self.sidebar.currentRowChanged.connect(self.on_sidebar_changed)
 
     def _setup_main_content(self):
-        """Membuat kontainer halaman (Stacked Widget)"""
         self.main_stack = QStackedWidget()
 
         self.beranda_page = QWidget()

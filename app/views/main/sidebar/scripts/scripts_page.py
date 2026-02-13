@@ -58,8 +58,6 @@ class ScriptsPage(QWidget):
 
         self.tabs = QTabWidget()
 
-        
-
         self.tab_data = DataTab(
             proxy=self.shared_proxy,
             selection_model=self.shared_selection,

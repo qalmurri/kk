@@ -99,11 +99,9 @@ class CoverTab(QWidget, BaseTableTab):
         proxy = self.table.model()
         model = proxy.sourceModel()
 
-        # hide semua kolom
         for col in range(model.columnCount()):
             self.table.setColumnHidden(col, True)
 
-        # show kolom yang diizinkan
         for col in model.column_indexes_by_keys(self.VISIBLE_COLUMNS):
             self.table.setColumnHidden(col, False)
 
