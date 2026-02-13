@@ -1,8 +1,10 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QMenu
+from PySide6.QtWidgets import QVBoxLayout, QTableView, QMenu
 from PySide6.QtCore import Qt
+from .base_persistent_table_tab import BasePersistentTableTab
 from .detail.production_window import ProductionDetailWindow
 
-class ProductionTab(QWidget):
+class ProductionTab(BasePersistentTableTab):
+    TAB_KEY = "production"
     VISIBLE_COLUMNS = {
         "id",
         "title",
@@ -34,6 +36,7 @@ class ProductionTab(QWidget):
 
         layout.addWidget(self.table)
 
+        self.enable_column_persistence()
         self.apply_visible_columns()
 
     def on_double_click(self, index):

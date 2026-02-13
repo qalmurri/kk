@@ -1,8 +1,10 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QMenu
 from PySide6.QtCore import Qt
+from .base_persistent_table_tab import BasePersistentTableTab
 from .detail.isbn_window import IsbnDetailWindow
 
-class IsbnTab(QWidget):
+class IsbnTab(BasePersistentTableTab):
+    TAB_KEY = "isbn"
     VISIBLE_COLUMNS = {
         "id",
         "title",
@@ -32,6 +34,7 @@ class IsbnTab(QWidget):
 
         layout.addWidget(self.table)
 
+        self.enable_column_persistence()
         self.apply_visible_columns()
 
     def on_double_click(self, index):

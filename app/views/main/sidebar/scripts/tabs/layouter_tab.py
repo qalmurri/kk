@@ -1,8 +1,11 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QMenu
+from PySide6.QtWidgets import QVBoxLayout, QTableView, QMenu
 from PySide6.QtCore import Qt
+
+from .base_persistent_table_tab import BasePersistentTableTab
 from .detail.layouter_window import LayouterDetailWindow
 
-class LayouterTab(QWidget):
+class LayouterTab(BasePersistentTableTab):
+    TAB_KEY = "layouter"
     VISIBLE_COLUMNS = {
         "title",
         "size.name",
@@ -37,7 +40,7 @@ class LayouterTab(QWidget):
         )
 
         layout.addWidget(self.table)
-
+        self.enable_column_persistence()
         self.apply_visible_columns()
 
     def on_double_click(self, index):

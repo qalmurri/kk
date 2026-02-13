@@ -1,8 +1,10 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QMenu
 from PySide6.QtCore import Qt
+from .base_persistent_table_tab import BasePersistentTableTab
 from .detail.data_window import DataDetailWindow
 
-class DataTab(QWidget):
+class DataTab(BasePersistentTableTab):
+    TAB_KEY = "data"
     VISIBLE_COLUMNS = {
         "id",
         "title",
@@ -30,16 +32,15 @@ class DataTab(QWidget):
         self.table.setModel(proxy)
         self.table.setSelectionModel(selection_model)
 
-        # Double Click
         self.table.doubleClicked.connect(self.on_double_click)
-
-        # Right Click
         self.table.setContextMenuPolicy(Qt.CustomContextMenu)
         self.table.customContextMenuRequested.connect(
                 self.on_right_click
                 )
 
         layout.addWidget(self.table)
+
+        self.enable_column_persistence()
 
         self.apply_visible_columns()
 

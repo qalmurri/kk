@@ -56,15 +56,29 @@ class Session:
     def get_scripts_last_tab(cls):
         return cls._settings.value("scripts/last_tab", 0, type=int)
 
-    @classmethod
-    def set_table_column_width(cls, tab_name: str, column_id: str, width: int):
-        key = f"scripts/tabs/{tab_name}/columns/{column_id}"
-        cls._settings.setValue(key, width)
+#     @classmethod
+#     def set_table_column_width(cls, tab_name: str, column_id: str, width: int):
+#         key = f"scripts/tabs/{tab_name}/columns/{column_id}"
+#         cls._settings.setValue(key, width)
+# 
+#     @classmethod
+#     def get_table_column_width(cls, tab_name: str, column_id: str) -> int | None:
+#         key = f"scripts/tabs/{tab_name}/columns/{column_id}"
+#         return cls._settings.value(key, None, type=int)
 
     @classmethod
-    def get_table_column_width(cls, tab_name: str, column_id: str) -> int | None:
-        key = f"scripts/tabs/{tab_name}/columns/{column_id}"
-        return cls._settings.value(key, None, type=int)
+    def set_table_column_width(cls, tab: str, column: str, width: int):
+        cls._settings.setValue(
+            f"tables/{tab}/columns/{column}",
+            width
+        )
+
+    @classmethod
+    def get_table_column_width(cls, tab: str, column: str):
+        return cls._settings.value(
+            f"tables/{tab}/columns/{column}",
+            None
+        )
 
     @classmethod
     def get(cls, url, params=None):
