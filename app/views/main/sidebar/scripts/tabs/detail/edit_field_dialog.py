@@ -1,6 +1,5 @@
 from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton
 
-
 class EditFieldDialog(QDialog):
     def __init__(self, field_name: str, value="", parent=None):
         super().__init__(parent)

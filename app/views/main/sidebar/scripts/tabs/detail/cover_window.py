@@ -1,19 +1,11 @@
-# from PySide6.QtWidgets import QDialog
-# 
-# class CoverDetailWindow(QDialog):
-#     def __init__(self, parent=None):
-#         super().__init__(parent)
-#         self.setWindowTitle("Detail Cover")
-#         self.resize (400, 300)
-
 from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QTabWidget, QWidget,
     QGroupBox, QFormLayout, QLabel, QHBoxLayout
 )
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QSplitter, QListWidget
 from .edit_field_dialog import EditFieldDialog
 from .widgets.editable_row import EditableRow
-from PySide6.QtWidgets import QSplitter, QListWidget
 
 class CoverDetailWindow(QDialog):
     def __init__(self, parent=None):
