@@ -2,8 +2,11 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QSplitter, QMenu
 from .widgets.cover_preview import CoverPreview
 from PySide6.QtCore import Qt
 from .detail.cover_window import CoverDetailWindow
+from .base_table_tab import BaseTableTab
+from core.session import Session
 
-class CoverTab(QWidget):
+class CoverTab(QWidget, BaseTableTab):
+    TAB_KEY = "cover"
     VISIBLE_COLUMNS = {
         "id",
         "title",
@@ -48,6 +51,9 @@ class CoverTab(QWidget):
         layout.addWidget(splitter)
 
         self.apply_visible_columns()
+        # self.setup_column_persistence()
+        self._restore_column_sizes()
+        self._connect_column_resize()
 
         selection_model.selectionChanged.connect(
                 self.on_selection_changed
@@ -103,3 +109,35 @@ class CoverTab(QWidget):
 
         for col in model.column_indexes_by_ids(self.VISIBLE_COLUMNS):
             self.table.setColumnHidden(col, False)
+
+    
+    def _connect_column_resize(self):
+        header = self.table.horizontalHeader()
+        header.sectionResized.connect(self._on_column_resized)
+
+    def _on_column_resized(self, index, old_size, new_size):
+        model = self.table.model().sourceModel()
+        col = model.COLUMNS[index]
+
+        col_id = col.get("id")
+        if not col_id:
+            return  # kolom tanpa id tidak disimpan
+
+        Session.set_table_column_width(
+            self.TAB_KEY,
+            col_id,
+            new_size
+        )
+
+    def _restore_column_sizes(self):
+        model = self.table.model().sourceModel()
+        header = self.table.horizontalHeader()
+    
+        for i, col in enumerate(model.COLUMNS):
+            col_id = col.get("id")
+            if not col_id:
+                continue
+            
+            size = Session.get_table_column_width(self.TAB_KEY, col_id)
+            if size:
+                header.resizeSection(i, int(size))

@@ -4,6 +4,9 @@ from core.config import (
     APP_NAME, ORG_NAME, KEY_BACKEND_IP, KEY_ACCESS_TOKEN, KEY_REFRESH_TOKEN, DEFAULT_BACKEND_IP
 )
 
+s = QSettings(ORG_NAME, APP_NAME)
+print(s.allKeys())
+
 class Session:
     _settings = QSettings(ORG_NAME, APP_NAME)
 
@@ -44,6 +47,24 @@ class Session:
     @classmethod
     def load_main_window_size(cls):
         return cls._settings.value("main_window/size")
+    
+    @classmethod
+    def set_scripts_last_tab(cls, index: int):
+        cls._settings.setValue("scripts/last_tab", index)
+
+    @classmethod
+    def get_scripts_last_tab(cls):
+        return cls._settings.value("scripts/last_tab", 0, type=int)
+
+    @classmethod
+    def set_table_column_width(cls, tab_name: str, column_id: str, width: int):
+        key = f"scripts/tabs/{tab_name}/columns/{column_id}"
+        cls._settings.setValue(key, width)
+
+    @classmethod
+    def get_table_column_width(cls, tab_name: str, column_id: str) -> int | None:
+        key = f"scripts/tabs/{tab_name}/columns/{column_id}"
+        return cls._settings.value(key, None, type=int)
 
     @classmethod
     def get(cls, url, params=None):

@@ -23,7 +23,6 @@ class MainWindow(QWidget):
         self.sidebar_visible = True
         self.sidebar_width = 160
 
-        # --- INITIALIZATION ---
         self.ws = WebSocketClient()
         self.ws.connected.connect(self.on_ws_connected)
         self.ws.disconnected.connect(self.on_ws_disconnected)
@@ -34,28 +33,22 @@ class MainWindow(QWidget):
         self.resize(size if isinstance(size, QSize) else QSize(1000, 700))
         self.controller = LogoutController(self)
 
-        # --- UI COMPONENTS ---
         self._setup_menu_bar()
         self._setup_sidebar()
         self._setup_main_content()
         self._setup_footer()
 
-        # --- MAIN LAYOUT ---
-        # Horizontal layout untuk Sidebar + Content Area
         self.body_layout = QHBoxLayout()
         self.body_layout.setContentsMargins(0, 0, 0, 0)
         self.body_layout.setSpacing(0)
         self.body_layout.addWidget(self.sidebar)
         self.body_layout.addWidget(self.main_stack)
 
-        # Vertical layout utama
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setMenuBar(self.menu_bar)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.addLayout(self.body_layout)
         self.main_layout.addLayout(self.footer_layout)
-
-        # self.toggle_sidebar()
 
     def _setup_sidebar(self):
         """Membuat navigasi samping"""
@@ -64,30 +57,25 @@ class MainWindow(QWidget):
         self.sidebar.addItems(["Beranda", "Scripts", "Pear", "Chart"])
         self.sidebar.setCurrentRow(0)
         
-        # Signal: Pindah halaman utama saat menu sidebar diklik
         self.sidebar.currentRowChanged.connect(self.on_sidebar_changed)
 
     def _setup_main_content(self):
         """Membuat kontainer halaman (Stacked Widget)"""
         self.main_stack = QStackedWidget()
 
-        # --- HALAMAM 0: BERANDA
         self.beranda_page = QWidget()
         pear_layout = QVBoxLayout(self.beranda_page)
         pear_layout.addWidget(QLabel("Halaman Beranda (kosong)"), alignment=Qt.AlignCenter)
         self.main_stack.addWidget(self.beranda_page)
 
-        # --- HALAMAN 1: Scripts  ---
         self.scripts_page = ScriptsPage(self)
         self.main_stack.addWidget(self.scripts_page)
 
-        # --- HALAMAN 2: PEAR (KOSONGAN) ---
         self.pear_page = QWidget()
         pear_layout = QVBoxLayout(self.pear_page)
         pear_layout.addWidget(QLabel("Halaman Pear (kosong)"), alignment=Qt.AlignCenter)
         self.main_stack.addWidget(self.pear_page)
         
-        # --- HALAMAN 3: Chart (KOSONGAN) ---
         self.chart_page = ChartPage(self)
         self.main_stack.addWidget(self.chart_page)
         
@@ -120,7 +108,6 @@ class MainWindow(QWidget):
         self.footer_layout.addWidget(self.status_label)
 
     def on_sidebar_changed(self, index):
-        """Mengatur perpindahan StackedWidget berdasarkan klik sidebar"""
         self.main_stack.setCurrentIndex(index)
 
     def show_about(self):
@@ -140,7 +127,6 @@ class MainWindow(QWidget):
 
         self.sidebar_visible = not self.sidebar_visible
 
-    # --- WS HANDLERS ---
     def on_ws_connected(self):
         self.status_label.setText("🟢 Online")
         self.status_label.setStyleSheet("color: green; padding: 5px;")
@@ -154,7 +140,6 @@ class MainWindow(QWidget):
         self.status_label.setText("⚠️ Error")
         self.status_label.setStyleSheet("color: orange; padding: 5px;")
 
-    # --- EVENTS ---
     def closeEvent(self, event):
         if self.ws: self.ws.disconnect()
         Session.save_main_window_size(self.size())

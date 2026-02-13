@@ -12,6 +12,7 @@ from .tabs import (
     IsbnTab
 )
 from .toolbar.search import SearchData
+from core.session import Session
 
 class ScriptsPage(QWidget):
     def load_data(self):
@@ -57,6 +58,8 @@ class ScriptsPage(QWidget):
 
         self.tabs = QTabWidget()
 
+        
+
         self.tab_data = DataTab(
             proxy=self.shared_proxy,
             selection_model=self.shared_selection,
@@ -98,8 +101,12 @@ class ScriptsPage(QWidget):
         self.tabs.addTab(self.tab_isbn, "Isbn")
         self.tabs.addTab(self.tab_production, "Production")
 
-        layout.addWidget(self.tabs)
+        last_tab = Session.get_scripts_last_tab()
+        self.tabs.setCurrentIndex(last_tab)
 
+        self.tabs.currentChanged.connect(self.on_tab_changed)
+
+        layout.addWidget(self.tabs)
         self.load_data()
 
     def _apply_global_table_settings(self, table: QAbstractItemView):
@@ -116,3 +123,6 @@ class ScriptsPage(QWidget):
 
     def on_refresh_clicked(self):
         print("Refresh")
+
+    def on_tab_changed(self, index: int):
+        Session.set_scripts_last_tab(index)

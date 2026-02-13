@@ -1,5 +1,5 @@
-APP_NAME = "kk"
-ORG_NAME = "kkcom"
+APP_NAME = "kk1"
+ORG_NAME = "kkcom1"
 
 KEY_BACKEND_IP = "backend/ip"
 KEY_ACCESS_TOKEN = "auth/access"
