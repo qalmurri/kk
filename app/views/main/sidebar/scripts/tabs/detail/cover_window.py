@@ -130,5 +130,7 @@ class CoverDetailWindow(QDialog):
             row_widget.value.text(),
             self
         )
-        if dialog.exec():
-            row_widget.set_value(dialog.get_value())
+
+        dialog.setWindowFlag(Qt.Window, True)
+        dialog.setWindowModality(Qt.NonModal)
+        dialog.show()
