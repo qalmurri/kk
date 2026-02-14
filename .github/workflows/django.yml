@@ -17,21 +17,18 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12' # Sesuaikan dengan versi Python Anda
+        python-version: '3.12'
 
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r backend/requirements.txt
+        if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
 
-    - name: Run Makemigrations
+    - name: Check Database Migrations
       run: |
-        python backend/manage.py makemigrations
-
-    - name: Run Migrate
-      run: |
+        python backend/manage.py makemigrations --check --dry-run
         python backend/manage.py migrate
 
-    - name: Run Server
+    - name: Run Unit Tests
       run: |
-        python backend/manage.py runserver
+        python backend/manage.py test
