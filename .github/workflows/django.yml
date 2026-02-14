@@ -24,6 +24,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r backend/requirements.txt
 
-    - name: Run Tests
+    - name: Run Makemigrations
       run: |
-        python backend/manage.py test
+        python backend/manage.py makemigrations
+
+    - name: Run Migrate
+      run: |
+        python backend/manage.py migrate
+
+    - name: Run Daphne
+      run: |
+        daphne -p 8000 kk.asgi:application
+
