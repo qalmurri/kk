@@ -32,7 +32,6 @@ jobs:
       run: |
         python backend/manage.py migrate
 
-    - name: Run Daphne
+    - name: Run Server
       run: |
-        daphne -p 8000 kk.asgi:application
-
+        python runserver
