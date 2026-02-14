@@ -34,4 +34,4 @@ jobs:
 
     - name: Run Server
       run: |
-        python runserver
+        python manage.py runserver
