@@ -64,12 +64,14 @@ class CoverTab(BasePersistentTableTab):
         indexes = selected.indexes()
         if not indexes:
             return
+
         proxy_index = indexes[0]
         source_index = proxy_index.model().mapToSource(proxy_index)
 
         source_model = source_index.model()
         data = source_model._data[source_index.row()]
 
+        self.current_data = data
         self.preview.update_preview(data) 
 
     def on_double_click(self, index):
@@ -92,7 +94,10 @@ class CoverTab(BasePersistentTableTab):
             self.open_detail_window()
 
     def open_detail_window(self):
-        dialog = CoverDetailWindow(self)
+        if not hasattr(self, "current_data") or not self.current_data:
+            return
+        
+        dialog = CoverDetailWindow(self.current_data, self)
         dialog.exec()
 
     def apply_visible_columns(self):

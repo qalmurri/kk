@@ -44,6 +44,9 @@ class DataTab(BasePersistentTableTab):
 
         self.apply_visible_columns()
 
+    def on_selection_changed(self, selected, deselected):
+        pass
+
     def on_double_click(self, index):
         if not index.isValid():
             return
