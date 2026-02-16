@@ -1,18 +1,9 @@
-# from PySide6.QtWidgets import QDialog
-# 
-# class DataDetailWindow(QDialog):
-#     def __init__(self, parent=None):
-#         super().__init__(parent)
-#         self.setWindowTitle("Detail Data")
-#         self.resize (400, 300)
-
 from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QWidget, QHBoxLayout,
     QGroupBox, QFormLayout, QLabel
 )
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QSplitter, QListWidget, QPushButton
-from .edit_status_dialog import EditStatusCoverDialog
 
 class DataDetailWindow(QDialog):
     def __init__(self, data: dict, parent=None):
