@@ -39,13 +39,24 @@ class DataTab(BasePersistentTableTab):
                 )
 
         layout.addWidget(self.table)
-
         self.enable_column_persistence()
-
         self.apply_visible_columns()
+        selection_model.selectionChanged.connect(
+                self.on_selection_changed
+                )
 
     def on_selection_changed(self, selected, deselected):
-        pass
+        indexes = selected.indexes()
+        if not indexes:
+            return
+
+        proxy_index = indexes[0]
+        source_index = proxy_index.model().mapToSource(proxy_index)
+
+        source_model = source_index.model()
+        data = source_model._data[source_index.row()]
+
+        self.current_data = data
 
     def on_double_click(self, index):
         if not index.isValid():
@@ -67,7 +78,11 @@ class DataTab(BasePersistentTableTab):
             self.open_detail_window()
 
     def open_detail_window(self):
-        dialog = DataDetailWindow(self)
+        if not hasattr(self, "current_data") or not self.current_data:
+            return
+
+        #dialog = DataDetailWindow(self)
+        dialog = DataDetailWindow(self.current_data, self)
         dialog.exec()
 
     def apply_visible_columns(self):
