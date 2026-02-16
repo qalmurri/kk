@@ -48,7 +48,11 @@ class ProductionDetailWindow(QDialog):
         form = QFormLayout(group_info)
     
         form.addRow("Judul:", QLabel(self.data.get("title", "-")))
-        form.addRow("Desainer:", QLabel("-"))
+        form.addRow("Shrink:", QLabel("-"))
+        form.addRow("Binding:", QLabel("-"))
+        form.addRow("Laminasi:", QLabel("-"))
+        form.addRow("Potong Kertas:", QLabel("-"))
+        form.addRow("Sisir Buku:", QLabel("-"))
     
         parent_layout.addWidget(group_info)
     

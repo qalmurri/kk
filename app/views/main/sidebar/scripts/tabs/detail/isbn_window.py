@@ -57,7 +57,8 @@ class IsbnDetailWindow(QDialog):
         form = QFormLayout(group_info)
     
         form.addRow("Judul:", QLabel(self.data.get("title", "-")))
-        form.addRow("Desainer:", QLabel("-"))
+        form.addRow("ISBN:", QLabel("-"))
+        form.addRow("E-ISBN:", QLabel("-"))
     
         parent_layout.addWidget(group_info)
     

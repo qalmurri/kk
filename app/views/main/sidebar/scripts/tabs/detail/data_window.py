@@ -6,7 +6,6 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 
-
 class DataDetailWindow(QDialog):
     def __init__(self, data: dict, parent=None):
         super().__init__(parent)
@@ -69,9 +68,6 @@ class DataDetailWindow(QDialog):
         layout.addStretch()
         return tab
 
-    # ==========================================================
-    # TAB : STATUS
-    # ==========================================================
     def _build_status_tab(self):
         tab = QWidget()
         layout = QVBoxLayout(tab)
@@ -105,9 +101,6 @@ class DataDetailWindow(QDialog):
         layout.addStretch()
         return tab
 
-    # ==========================================================
-    # HELPER ROW INFORMASI UMUM
-    # ==========================================================
     def _info_row(self, value: str):
         label = QLabel(value)
 
@@ -125,9 +118,6 @@ class DataDetailWindow(QDialog):
 
         return row_widget
 
-    # ==========================================================
-    # AMBIL STATUS COVER
-    # ==========================================================
     def get_status_cover(self):
         statuses = self.data.get("status", [])
 
