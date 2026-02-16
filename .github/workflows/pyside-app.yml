@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "**/*.py"
-      - "requirements.txt"
+      - "app/requirements.txt"
   pull_request:
 
 jobs:
