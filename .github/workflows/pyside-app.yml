@@ -3,7 +3,7 @@ name: PySide6 App CI
 on:
   push:
     paths:
-      - "**/*.py"
+      # - "**/*.py"
       - "app/requirements.txt"
   pull_request:
 
