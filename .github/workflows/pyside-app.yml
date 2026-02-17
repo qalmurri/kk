@@ -49,6 +49,7 @@ jobs:
 
       - name: Smoke test core modules
         run: |
+          cd app
           python - <<EOF
           from core.session import Session
           from network.api_client import ApiClient
