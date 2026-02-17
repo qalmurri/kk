@@ -2,9 +2,6 @@ name: PySide6 App CI
 
 on:
   push:
-    paths:
-      # - "**/*.py"
-      - "requirements.txt"
   pull_request:
 
 jobs:
