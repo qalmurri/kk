@@ -1,4 +1,4 @@
-name: PySide6 App CI
+name: PySide6 CI
 
 on:
   push:
