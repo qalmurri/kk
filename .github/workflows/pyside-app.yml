@@ -52,7 +52,7 @@ jobs:
           cd app
           python - <<EOF
           from core.session import Session
-          from network.api_client import ApiClient
+          from ../network.api_client import ApiClient
           print("Core modules OK")
           EOF
 
