@@ -13,7 +13,7 @@ from core.session import Session
 from network.ws_client import WebSocketClient
 from controllers.auth.logout_controller import LogoutController
 from .sub_menu import PreferencesDialog
-from .sidebar import ScriptsPage, ChartPage, BerandaPage
+from .sidebar import ScriptsPage, ChartPage, BerandaPage, ProfilePage
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -64,9 +64,7 @@ class MainWindow(QWidget):
         self.beranda_page = BerandaPage(self)
         self.main_stack.addWidget(self.beranda_page)
 
-        self.profile_page = QWidget()
-        profile_layout = QVBoxLayout(self.profile_page)
-        profile_layout.addWidget(QLabel("Halaman Profile (kosong)"), alignment=Qt.AlignCenter)
+        self.profile_page = ProfilePage(self)
         self.main_stack.addWidget(self.profile_page)
 
         self.scripts_page = ScriptsPage(self)
