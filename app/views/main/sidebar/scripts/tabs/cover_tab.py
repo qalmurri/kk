@@ -27,7 +27,7 @@ class CoverTab(BasePersistentTableTab):
         self.proxy = proxy
         
         layout = QVBoxLayout(self)
-        splitter = QSplitter(Qt.Horizontal)
+        self.splitter = QSplitter(Qt.Horizontal)
 
         self.table = QTableView(self)
         self.table.setModel(proxy)
@@ -35,9 +35,9 @@ class CoverTab(BasePersistentTableTab):
 
         self.preview = CoverPreview(self)
         
-        splitter.addWidget(self.table)
-        splitter.addWidget(self.preview)
-        splitter.setSizes([400, 600])
+        self.splitter.addWidget(self.table)
+        self.splitter.addWidget(self.preview)
+#        self.splitter.setSizes([400, 600])
 
         # Double Click
         self.table.doubleClicked.connect(self.on_double_click)
@@ -48,7 +48,7 @@ class CoverTab(BasePersistentTableTab):
                 self.on_right_click
                 )
 
-        layout.addWidget(splitter)
+        layout.addWidget(self.splitter)
 
         self.apply_visible_columns()
         self.enable_column_persistence()
@@ -58,6 +58,9 @@ class CoverTab(BasePersistentTableTab):
         selection_model.selectionChanged.connect(
                 self.on_selection_changed
                 )
+
+        self._restore_splitter_state()
+        self.splitter.splitterMoved.connect(self._save_splitter_state)
 
         
     def on_selection_changed(self, selected, deselected):
@@ -112,3 +115,16 @@ class CoverTab(BasePersistentTableTab):
 
         for col in model.column_indexes_by_ids(self.VISIBLE_COLUMNS):
             self.table.setColumnHidden(col, False)
+
+    def _restore_splitter_state(self):
+        state = Session.get_splitter_state("cover_tab")
+        if state:
+            self.splitter.restoreState(state)
+        else:
+            self.splitter.setSizes([400, 600])
+
+    def _save_splitter_state(self, pos, index):
+        Session.set_splitter_state(
+                "cover_tab",
+                self.splitter.saveState()
+                )

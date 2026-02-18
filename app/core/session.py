@@ -1,5 +1,5 @@
 import requests
-from PySide6.QtCore import QSettings
+from PySide6.QtCore import QSettings, QByteArray
 from core.config import (
     APP_NAME, ORG_NAME, KEY_BACKEND_IP, KEY_ACCESS_TOKEN, KEY_REFRESH_TOKEN, DEFAULT_BACKEND_IP
 )
@@ -90,3 +90,11 @@ class Session:
             headers["Authorization"] = f"Bearer {token}"
         
         return requests.get(url, params=params, headers=headers)
+
+    @classmethod
+    def set_splitter_state(cls, key: str, state: QByteArray):
+        cls._settings.setValue(f"splitters/{key}", state)
+
+    @classmethod
+    def get_splitter_state(cls, key: str):
+        return cls._settings.value(f"splitters/{key}")
