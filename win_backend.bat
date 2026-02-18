@@ -1,0 +1,1 @@
+../fe/face4-3/core_modules/verification/Scripts/activate
