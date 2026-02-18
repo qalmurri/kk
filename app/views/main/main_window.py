@@ -13,7 +13,7 @@ from core.session import Session
 from network.ws_client import WebSocketClient
 from controllers.auth.logout_controller import LogoutController
 from .sub_menu import PreferencesDialog
-from .sidebar import ScriptsPage, ChartPage
+from .sidebar import ScriptsPage, ChartPage, BerandaPage
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -53,7 +53,7 @@ class MainWindow(QWidget):
     def _setup_sidebar(self):
         self.sidebar = QListWidget()
         self.sidebar.setFixedWidth(160)
-        self.sidebar.addItems(["Beranda", "Scripts", "Pear", "Chart"])
+        self.sidebar.addItems(["Beranda","Profile", "Scripts", "Pear", "Chart"])
         self.sidebar.setCurrentRow(0)
         
         self.sidebar.currentRowChanged.connect(self.on_sidebar_changed)
@@ -61,10 +61,13 @@ class MainWindow(QWidget):
     def _setup_main_content(self):
         self.main_stack = QStackedWidget()
 
-        self.beranda_page = QWidget()
-        pear_layout = QVBoxLayout(self.beranda_page)
-        pear_layout.addWidget(QLabel("Halaman Beranda (kosong)"), alignment=Qt.AlignCenter)
+        self.beranda_page = BerandaPage(self)
         self.main_stack.addWidget(self.beranda_page)
+
+        self.profile_page = QWidget()
+        profile_layout = QVBoxLayout(self.profile_page)
+        profile_layout.addWidget(QLabel("Halaman Profile (kosong)"), alignment=Qt.AlignCenter)
+        self.main_stack.addWidget(self.profile_page)
 
         self.scripts_page = ScriptsPage(self)
         self.main_stack.addWidget(self.scripts_page)
