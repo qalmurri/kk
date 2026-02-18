@@ -10,7 +10,7 @@ class CoverDetailWindow(QDialog):
     def __init__(self, data: dict, parent=None):
         super().__init__(parent)
 
-        print("DATA: ", data)
+        # print("DATA: ", data)
         self.data = data
 
         self.setWindowTitle("Detail Cover")

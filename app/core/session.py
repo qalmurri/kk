@@ -5,7 +5,8 @@ from core.config import (
 )
 
 s = QSettings(ORG_NAME, APP_NAME)
-print(s.allKeys())
+# DEBUG
+# print(s.allKeys())
 
 class Session:
     _settings = QSettings(ORG_NAME, APP_NAME)
