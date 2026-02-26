@@ -27,6 +27,8 @@ class ScriptsPage(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+
+        self._data_loaded = False
         
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -105,7 +107,7 @@ class ScriptsPage(QWidget):
         self.tabs.currentChanged.connect(self.on_tab_changed)
 
         layout.addWidget(self.tabs)
-        self.load_data()
+        # self.load_data()
 
     def _apply_global_table_settings(self, table: QAbstractItemView):
         table.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -120,7 +122,15 @@ class ScriptsPage(QWidget):
         dialog.exec()
 
     def on_refresh_clicked(self):
-        print("Refresh")
+        self._data_loaded = False
+        self.ensure_data_loaded()
 
     def on_tab_changed(self, index: int):
         Session.set_scripts_last_tab(index)
+
+    def ensure_data_loaded(self):
+        if self._data_loaded:
+            return
+        
+        self.load_data()
+        self._data_loaded = True

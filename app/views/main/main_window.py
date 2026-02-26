@@ -108,6 +108,11 @@ class MainWindow(QWidget):
 
     def on_sidebar_changed(self, index):
         self.main_stack.setCurrentIndex(index)
+        current_widget = self.main_stack.widget(index)
+
+        # lazy load scriptspage
+        if isinstance(current_widget, ScriptsPage):
+            current_widget.ensure_data_loaded()
 
     def show_about(self):
         QMessageBox.information(self, "About", "Gae dewe iki bro APP ne xixi")
