@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableView, QMenu
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QTableView, QMenu, QPushButton, QMessageBox
 from PySide6.QtCore import Qt
 from .base_persistent_table_tab import BasePersistentTableTab
 from .detail.data_window import DataDetailWindow
@@ -28,6 +28,12 @@ class DataTab(BasePersistentTableTab):
         self.proxy = proxy
 
         layout = QVBoxLayout(self)
+        tool_layout = QHBoxLayout()
+        self.btn_dummy = QPushButton("New Scripts")
+        tool_layout.addWidget(self.btn_dummy)
+        tool_layout.addStretch()
+        layout.addLayout(tool_layout)
+
         self.table = QTableView(self)
         self.table.setModel(proxy)
         self.table.setSelectionModel(selection_model)
