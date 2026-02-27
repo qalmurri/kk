@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QVBoxLayout, QTableView, QMenu
+from PySide6.QtWidgets import QVBoxLayout, QTableView, QMenu, QHBoxLayout, QPushButton
 from PySide6.QtCore import Qt
 from .base_persistent_table_tab import BasePersistentTableTab
 from .detail.production_window import ProductionDetailWindow
@@ -21,6 +21,11 @@ class ProductionTab(BasePersistentTableTab):
         self.proxy = proxy
 
         layout = QVBoxLayout(self)
+        tool_layout = QHBoxLayout()
+        self.tool01 = QPushButton("Potong Kertas")
+        tool_layout.addWidget(self.tool01)
+        tool_layout.addStretch()
+        layout.addLayout(tool_layout)
         self.table = QTableView(self)
         self.table.setModel(proxy)
         self.table.setSelectionModel(selection_model)
