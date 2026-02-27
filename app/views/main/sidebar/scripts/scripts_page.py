@@ -11,7 +11,7 @@ from .tabs import (
     LayouterTab,
     IsbnTab
 )
-from .toolbar.search import SearchData
+from .toolbar import SearchData, ExportData
 from core.session import Session
 
 class ScriptsPage(QWidget):
@@ -115,7 +115,8 @@ class ScriptsPage(QWidget):
         table.horizontalHeader().setStretchLastSection(True)
 
     def on_export_clicked(self):
-        print("Export")
+        dialog = ExportData(self)
+        dialog.exec()
 
     def on_search_clicked(self):
         dialog = SearchData(self)
