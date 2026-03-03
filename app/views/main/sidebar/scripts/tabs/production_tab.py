@@ -23,17 +23,15 @@ class ProductionTab(BasePersistentTableTab):
         layout = QVBoxLayout(self)
         tool_layout = QHBoxLayout()
         self.tool01 = QPushButton("Potong Kertas")
+        self.tool02 = QPushButton("testing")
         tool_layout.addWidget(self.tool01)
+        tool_layout.addWidget(self.tool02)
         tool_layout.addStretch()
         layout.addLayout(tool_layout)
         self.table = QTableView(self)
         self.table.setModel(proxy)
         self.table.setSelectionModel(selection_model)
-
-        # Double Click
         self.table.doubleClicked.connect(self.on_double_click)
-
-        # Right Click
         self.table.setContextMenuPolicy(Qt.CustomContextMenu)
         self.table.customContextMenuRequested.connect(
                 self.on_right_click
