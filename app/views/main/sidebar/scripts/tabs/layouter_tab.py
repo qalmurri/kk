@@ -7,6 +7,7 @@ from .detail.layouter_window import LayouterDetailWindow
 class LayouterTab(BasePersistentTableTab):
     TAB_KEY = "layouter"
     VISIBLE_COLUMNS = {
+        "id",
         "title",
         "size.name",
         "flag_file",
