@@ -76,9 +76,13 @@ class LayouterTab(BasePersistentTableTab):
         menu = QMenu(self)
 
         detail_action = menu.addAction("Detail")
+        detail_revision = menu.addAction("revisi")
         action = menu.exec(self.table.viewport().mapToGlobal(pos))
 
         if action == detail_action:
+            self.open_detail_window()
+
+        if action == detail_revision:
             self.open_detail_window()
 
     def open_detail_window(self):
