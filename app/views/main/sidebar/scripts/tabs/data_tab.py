@@ -19,7 +19,6 @@ class DataTab(BasePersistentTableTab):
         "status_isbn",
         "pembuat_layouter",
         "pemesan",
-
     }
 
     def __init__(self, proxy, selection_model, parent=None):
@@ -40,16 +39,12 @@ class DataTab(BasePersistentTableTab):
 
         self.table.doubleClicked.connect(self.on_double_click)
         self.table.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.table.customContextMenuRequested.connect(
-                self.on_right_click
-                )
+        self.table.customContextMenuRequested.connect(self.on_right_click)
 
         layout.addWidget(self.table)
         self.enable_column_persistence()
         self.apply_visible_columns()
-        selection_model.selectionChanged.connect(
-                self.on_selection_changed
-                )
+        selection_model.selectionChanged.connect(self.on_selection_changed)
 
     def on_selection_changed(self, selected, deselected):
         indexes = selected.indexes()
